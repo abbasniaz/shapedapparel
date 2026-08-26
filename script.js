@@ -1,31 +1,26 @@
-/* cart + menu minimal */
-let cart = JSON.parse(localStorage.getItem("shapedCart") || "[]");
+(function(){
+  /* menu */
+  document.querySelector(".menu-toggle")?.addEventListener("click",()=>{
+    const nav=document.querySelector(".nav");
+    if(!nav) return;
+    nav.classList.toggle("open");
+    document.querySelector(".menu-toggle")?.setAttribute("aria-expanded",String(nav.classList.contains("open")));
+  });
 
-function renderCartCount(){
-  const count=document.querySelector("#cart-count");
-  if(count) count.textContent=cart.reduce((s,i)=>s+(i.qty||0),0);
-}
-function toggleCart(open){
-  const cartEl=document.querySelector(".cart");
-  const overlay=document.querySelector(".overlay");
-  if(!cartEl||!overlay) return;
-  cartEl.classList.toggle("open",open);
-  overlay.classList.toggle("show",open);
-  cartEl.setAttribute("aria-hidden",String(!open));
-}
-document.querySelector(".cart-button")?.addEventListener("click",()=>toggleCart(true));
-document.querySelector(".cart-close")?.addEventListener("click",()=>toggleCart(false));
-document.querySelector(".overlay")?.addEventListener("click",()=>toggleCart(false));
-document.querySelector(".menu-toggle")?.addEventListener("click",()=>{
-  const nav=document.querySelector(".nav");
-  if(!nav) return;
-  nav.classList.toggle("open");
-  document.querySelector(".menu-toggle")?.setAttribute("aria-expanded",String(nav.classList.contains("open")));
-});
-renderCartCount();
+  /* cart */
+  function toggleCart(open){
+    const cartEl=document.querySelector(".cart");
+    const overlay=document.querySelector(".overlay");
+    if(!cartEl||!overlay) return;
+    cartEl.classList.toggle("open",open);
+    overlay.classList.toggle("show",open);
+    cartEl.setAttribute("aria-hidden",String(!open));
+  }
+  document.querySelector(".cart-button")?.addEventListener("click",()=>toggleCart(true));
+  document.querySelector(".cart-close")?.addEventListener("click",()=>toggleCart(false));
+  document.querySelector(".overlay")?.addEventListener("click",()=>toggleCart(false));
 
-/* Working slideshow */
-(function initHeroSlideshow(){
+  /* slideshow */
   const hero=document.querySelector(".hero-slideshow");
   if(!hero) return;
 
@@ -33,7 +28,7 @@ renderCartCount();
   const dots=[...hero.querySelectorAll(".hero-dot")];
   const nextBtn=hero.querySelector(".hero-next");
   const prevBtn=hero.querySelector(".hero-prev");
-  if(!slides.length || !dots.length || !nextBtn || !prevBtn) return;
+  if(!slides.length||!dots.length||!nextBtn||!prevBtn) return;
 
   let index=0, timer=null;
   const interval=4000, swipeThreshold=40;
@@ -65,17 +60,13 @@ renderCartCount();
     touchStartX=e.changedTouches[0].clientX;
     touchEndX=touchStartX;
   },{passive:true});
-
   hero.addEventListener("touchmove",(e)=>{
     touchEndX=e.changedTouches[0].clientX;
   },{passive:true});
-
   hero.addEventListener("touchend",(e)=>{
     touchEndX=e.changedTouches[0].clientX;
     const deltaX=touchEndX-touchStartX;
-    if(Math.abs(deltaX)>=swipeThreshold){
-      if(deltaX<0) next(); else prev();
-    }
+    if(Math.abs(deltaX)>=swipeThreshold){ deltaX<0 ? next() : prev(); }
     start();
   },{passive:true});
 
