@@ -3,7 +3,7 @@
 This PR adds a new product to the site and features it on the homepage.
 
 Changes:
-- Add placeholder product image: `assets/bright-graphic-shirt.svg`
+- Add placeholder product image asset for the featured card
 - Add product to `script.js` products array (id: 9)
 - Insert featured product card in `index.html` (below the hero)
 - Add responsive styles in `styles.css` for the featured card
@@ -22,7 +22,7 @@ Preview locally:
 ```
 
 Notes:
-- The product image is a placeholder SVG located at `assets/bright-graphic-shirt.svg`. Replace with a real photo if available.
+- The product image is a placeholder asset. Replace with a real photo if available.
 - If you'd like a dedicated product page URL (e.g. `/products/bright-colour-graphics-shirt`) I can add one in a follow-up.
 
 Checklist:
