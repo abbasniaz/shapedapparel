@@ -2,7 +2,7 @@
 
 ## Deploy
 1. Replace placeholder email and phone details in `index.html`.
-2. If desired, replace `assets/shaped-logo.svg` with your final logo while keeping the same filename, or update the image paths.
+2. If desired, replace the current logo URL references in `index.html` and `success.html` with your own hosted logo asset.
 3. Upload the contents of this folder to a GitHub repository and connect the repository to Netlify, or deploy the folder using Netlify's manual deployment interface.
 4. No build command is required. The publish directory is `.`.
 5. In Netlify, open Forms after deployment and verify that the `custom-order` form is detected.
@@ -19,5 +19,5 @@
 - `styles.css`: responsive visual design
 - `script.js`: product filtering, local shopping bag and interactions
 - `success.html`: quote-form confirmation page
-- `assets/shaped-logo.svg`: editable starter logo
+- `assets/shaped-logo.svg`: legacy starter logo asset (not currently referenced)
 - `netlify.toml`: Netlify configuration
