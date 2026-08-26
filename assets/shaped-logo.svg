@@ -1,4 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40" aria-hidden="true">
-  <rect width="100%" height="100%" fill="none"/>
-  <image href="assets/shaped-logo.png" width="160" height="40"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40" aria-hidden="true">
+  <style>
+    .mark { fill: var(--primary); }
+    .word { fill: var(--ink); font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; font-weight:700; font-size:16px; }
+  </style>
+
+  <g transform="translate(4,4)">
+    <circle class="mark" cx="16" cy="16" r="12" />
+    <text class="word" x="44" y="22">SHAPED</text>
+  </g>
 </svg>
