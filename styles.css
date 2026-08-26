@@ -37,7 +37,7 @@ img{max-width:100%;display:block}
   padding:10px 16px;
 }
 
-/* Header */
+/* Header - LOGO MOST LEFT */
 .site-header{
   position:sticky;
   top:0;
@@ -46,28 +46,41 @@ img{max-width:100%;display:block}
   backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
   display:grid;
-  grid-template-columns:auto auto 1fr auto; /* menu, logo, nav, bag */
+  grid-template-columns:auto auto 1fr auto; /* logo, menu, nav, bag */
   align-items:center;
   gap:14px;
   padding:0 22px;
-  height:76px;
+  height:84px;
 }
 
-/* Logo near left side (close to Home/menu) */
+/* LEFT-MOST LARGE LOGO */
 .brand-right{
+  order:1;
   justify-self:start;
   display:inline-flex;
   align-items:center;
-  margin-left:2px;
+  margin-left:0;
 }
 .brand-right img{
-  height:52px;   /* bigger logo */
+  height:64px;   /* large logo desktop */
   width:auto;
   object-fit:contain;
   display:block;
 }
 
+/* menu after logo */
+.menu-toggle{
+  order:2;
+  display:none;
+  border:0;
+  background:transparent;
+  font-size:24px;
+  cursor:pointer;
+}
+
+/* nav centered area */
 .nav{
+  order:3;
   display:flex;
   justify-content:center;
   gap:24px;
@@ -77,15 +90,9 @@ img{max-width:100%;display:block}
 .nav a{opacity:.82}
 .nav a:hover,.nav a:focus{opacity:1}
 
-.menu-toggle{
-  display:none;
-  border:0;
-  background:transparent;
-  font-size:24px;
-  cursor:pointer;
-}
-
+/* cart far right */
 .cart-button{
+  order:4;
   border:1px solid #111;
   background:#fff;
   padding:10px 14px;
@@ -273,14 +280,17 @@ footer img{height:26px}
 
 @media(max-width:900px){
   .site-header{
-    grid-template-columns:auto auto 1fr auto;
-    padding:0 14px;
-    gap:10px;
+    grid-template-columns:auto auto 1fr auto; /* logo, menu, nav, bag */
+    padding:0 12px;
+    gap:8px;
+    height:76px;
   }
 
-  .menu-toggle{display:block}
+  .brand-right img{height:50px} /* big but fits mobile */
+  .menu-toggle{display:block;order:2}
 
   .nav{
+    order:3;
     position:absolute;
     left:0;right:0;top:76px;
     background:#fff;
@@ -291,8 +301,6 @@ footer img{height:26px}
     padding:14px 20px;
   }
   .nav.open{display:flex}
-
-  .brand-right img{height:42px}
 
   .hero{grid-template-columns:1fr;gap:20px}
   .hero-copy{padding:28px}
@@ -313,4 +321,5 @@ footer img{height:26px}
   .feature-row,.why-grid{grid-template-columns:1fr}
   .form-row{grid-template-columns:1fr}
   .product-grid{grid-template-columns:1fr}
+  .brand-right img{height:46px}
 }
