@@ -18,7 +18,6 @@
 - `index.html`: website structure and content
 - `styles.css`: responsive visual design
 - `script.js`: product filtering, local shopping bag and interactions
-- `designer.js`: Design Studio custom shirt builder
 - `success.html`: quote-form confirmation page
 - `assets/shaped-logo.svg`: editable starter logo
 - `netlify.toml`: Netlify configuration
