@@ -28,9 +28,21 @@
         <p>Premium custom apparel for businesses, teams, events and everyday wear.</p>
         <div class="actions"><a class="button primary" href="#shop">Shop Collection</a><a class="button secondary" href="#custom">Start a Custom Order</a></div>
       </div>
-      <div class="hero-art" aria-label="SHAPED apparel presentation">
-        <div class="shirt shirt-back"><span>SH</span></div><div class="shirt shirt-front"><span>SHAPED</span><small>BUILT BY INTENT</small></div>
-        <div class="stamp">CHICAGO<br>CUSTOM<br>APPAREL</div>
+      <div class="hero-art" aria-label="SHAPED apparel slideshow" data-slideshow>
+        <div class="hero-slides">
+          <figure class="hero-slide is-active" data-slide><img src="assets/shaped-black-tee.jpg" alt="Black SHAPED tee"></figure>
+          <figure class="hero-slide" data-slide><img src="assets/shaped-white-tee.jpg" alt="White SHAPED tee"></figure>
+          <figure class="hero-slide" data-slide><img src="assets/hoodie-black.jpg" alt="Black SHAPED hoodie"></figure>
+          <figure class="hero-slide" data-slide><img src="assets/polo-black.jpg" alt="Black SHAPED polo"></figure>
+        </div>
+        <button class="hero-nav hero-nav-prev" type="button" aria-label="Previous slide" data-slide-prev>‹</button>
+        <button class="hero-nav hero-nav-next" type="button" aria-label="Next slide" data-slide-next>›</button>
+        <div class="hero-dots" aria-label="Slideshow indicators">
+          <button class="hero-dot is-active" type="button" aria-label="Slide 1" aria-current="true" data-slide-dot data-slide-index="0"></button>
+          <button class="hero-dot" type="button" aria-label="Slide 2" aria-current="false" data-slide-dot data-slide-index="1"></button>
+          <button class="hero-dot" type="button" aria-label="Slide 3" aria-current="false" data-slide-dot data-slide-index="2"></button>
+          <button class="hero-dot" type="button" aria-label="Slide 4" aria-current="false" data-slide-dot data-slide-index="3"></button>
+        </div>
       </div>
     </section>
 
