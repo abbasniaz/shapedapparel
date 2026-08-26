@@ -3,6 +3,20 @@
 @media(max-width:900px){.site-header{grid-template-columns:1fr auto auto;padding:0 18px}.menu-toggle{display:block;font-size:24px;margin-right:12px}.nav{position:absolute;left:0;right:0;top:82px;background:var(--paper);display:none;flex-direction:column;padding:25px;border-bottom:1px solid var(--line)}.nav.open{display:flex}.hero{grid-template-columns:1fr}.hero-copy{padding:80px 25px}.hero-art{min-height:500px}.benefits{grid-template-columns:1fr}.benefits div{border-right:0;border-bottom:1px solid var(--line);padding:20px 25px}.product-grid{grid-template-columns:repeat(2,1fr)}.custom-section,.about,.contact{grid-template-columns:1fr}.section{padding:75px 20px}.section-head{align-items:start;flex-direction:column;gap:18px}footer{grid-template-columns:1fr}footer div{justify-content:start}footer small{grid-column:auto}}@media(max-width:560px){.announcement{font-size:9px}.brand img{width:120px}.hero h1{font-size:58px}.hero-art{min-height:400px}.shirt{width:190px;height:240px}.shirt-front{left:42%;top:16%}.shirt-back{left:4%;top:32%}.stamp{width:100px;height:100px}.actions{flex-direction:column}.product-grid{grid-template-columns:1fr}.product-visual{height:300px}.filters{flex-wrap:wrap}.form-row{grid-template-columns:1fr}.quote-form{padding:24px}.custom-section{padding:70px 20px}.contact-links{margin-top:20px}}
 
 .studio-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px}
+.slideshow{padding-top:70px;padding-bottom:25px}
+.slideshow-wrap{max-width:var(--max);margin:auto}
+.slides{position:relative;overflow:hidden;background:#0f0f0f;border:1px solid #2a2a2a;min-height:420px}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .45s}
+.slide.active{opacity:1;pointer-events:auto}
+.slide img{width:100%;height:420px;object-fit:cover;display:block;filter:brightness(.72)}
+.slide-caption{position:absolute;left:24px;right:24px;bottom:20px;background:#0009;padding:16px 18px;color:#fff;border:1px solid #ffffff2e}
+.slide-caption b{display:block;font:700 28px 'Space Grotesk';margin-bottom:6px}
+.slide-caption span{color:#dedad2}
+.slideshow-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px}
+.slide-btn{border:1px solid var(--line);background:#fff;color:var(--ink);width:42px;height:42px;cursor:pointer;font-size:26px;line-height:1}
+.slide-dots{display:flex;gap:9px}
+.slide-dot{width:10px;height:10px;border-radius:50%;border:0;background:#b3aea2;cursor:pointer}
+.slide-dot.active{background:var(--ink)}
 .studio-canvas-wrap,.studio-panel{background:#fff;border:1px solid var(--line)}
 .studio-canvas-wrap{padding:26px}
 .tee-canvas{height:520px;background:#111;display:grid;place-items:center}
@@ -31,3 +45,5 @@
 .empty{color:var(--muted);font-size:14px}
 @media(max-width:900px){.studio-grid{grid-template-columns:1fr}.tee-canvas{height:420px}}
 @media(max-width:560px){.studio-actions{grid-template-columns:1fr}.tee-canvas{height:360px}}
+@media(max-width:900px){.slide img{height:360px}.slide-caption b{font-size:22px}}
+@media(max-width:560px){.slideshow{padding-top:50px}.slides{min-height:320px}.slide img{height:320px}.slide-caption{left:12px;right:12px;bottom:12px;padding:12px}.slide-caption b{font-size:18px}}
