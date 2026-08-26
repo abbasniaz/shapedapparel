@@ -13,69 +13,62 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <div class="announcement">Free local consultation — bulk & corporate orders welcome</div>
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="SHAPED home"><img src="assets/shaped-logo.svg" alt="SHAPED, Built by Intent"></a>
-    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-    <nav class="nav" aria-label="Main navigation">
-      <a href="#home">Home</a><a href="#shop">Shop</a><a href="#design">Design Studio</a><a href="#custom">Custom Orders</a><a href="#about">About</a><a href="#contact">Contact</a>
-    </nav>
-    <button class="cart-button" aria-label="Open cart">Bag <span id="cart-count">0</span></button>
+
+  <!-- Updated header to match stylesheet classes and improve alignment -->
+  <header class="header">
+    <div class="header-inner container">
+      <a class="brand" href="#home" aria-label="SHAPED home"><img src="assets/shaped-logo.svg" alt="SHAPED, Built by Intent"></a>
+      <nav class="nav desktop-only" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#design">Design Studio</a>
+        <a href="#custom">Custom Orders</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn desktop-only cart-button" aria-label="Open cart">Bag <span id="cart-count">0</span></button>
+        <button class="icon-btn mobile-only menu-toggle" aria-label="Open menu">☰</button>
+      </div>
+    </div>
   </header>
 
   <main id="main">
-    <section id="home" class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">CHICAGO CUSTOM APPAREL</p>
+    <section id="home" class="hero container">
+      <div class="hero-content">
+        <p class="kicker">CHICAGO CUSTOM APPAREL</p>
 
-<h1>
+<h2>
 Premium Apparel<br>
 <span>Built By Intent.</span>
-</h1>
+</h2>
 
-<p>
-Custom t-shirts, hoodies, polos, workwear and branded merchandise
-for businesses, teams, organizations and events.
+<p class="lead">
+Custom t-shirts, hoodies, polos, workwear and branded merchandise for businesses, teams, organizations and events.
 </p>
-        <div class="actions"><a class="button primary" href="#shop">Shop collection</a><a class="button secondary" href="#custom">Start a custom order</a></div>
+        <div class="hero-cta"><a class="btn btn-primary" href="#shop">Shop collection</a><a class="btn btn-secondary" href="#custom">Start a custom order</a></div>
       </div>
-      <div class="hero-art" aria-label="SHAPED apparel presentation">
-        <div class="shirt shirt-back"><span>SH</span></div><div class="shirt shirt-front"><span>SHAPED</span><small>BUILT BY INTENT</small></div>
-        <div class="stamp">CHICAGO<br>CUSTOM<br>APPAREL</div>
-      </div>
-    </section>
-
-    <!-- Featured product — Bright Colour Graphics Shirt -->
-    <section class="featured-product" aria-label="Featured product">
-      <div class="fp-card">
-        <img src="assets/bright-graphic-shirt.svg" alt="Bright Colour Graphics Shirt" class="fp-image" width="420" height="420"/>
-        <div class="fp-body">
-          <p class="eyebrow">NEW ARRIVAL</p>
-          <h2 class="fp-title">Bright Colour Graphics Shirt</h2>
-          <p class="fp-blurb">An eye-catching graphic tee in vivid colorways. Crafted from soft, breathable cotton — available in sizes S–XL.</p>
-          <div class="fp-meta">
-            <span class="fp-price">$29.99</span>
-            <div class="fp-actions">
-              <a class="button secondary" href="#shop">View product</a>
-              <button class="button primary add" data-id="9" type="button">Add to bag</button>
-            </div>
-          </div>
-        </div>
+      <div class="hero-visual" aria-hidden="true">
+        <!-- Simplified visual for a more professional look (removed bright shirt artwork) -->
+        <img src="assets/shaped-logo.svg" alt="SHAPED" style="max-width:220px;opacity:0.95;">
       </div>
     </section>
 
-    <section class="benefits" aria-label="Service benefits">
+    <!-- Removed Bright Colour Graphics Shirt featured product to keep site professional and focused -->
+
+    <section class="benefits container" aria-label="Service benefits">
       <div><b>Premium Quality</b><span>Carefully selected garments designed for comfort, durability, and fit.</span></div>
       <div><b>Professional Printing</b><span>Full-service design and print production tailored to your brand.</span></div>
       <div><b>Scale Ready</b><span>Streamlined ordering and fulfillment for teams, events, and organizations.</span></div>
     </section>
 
-    <section id="shop" class="section">
-      <div class="section-head"><div><p class="eyebrow">THE COLLECTION</p><h2>Wear the intent.</h2></div><div class="filters" role="group" aria-label="Product filters"><button class="active" data-filter="all">All</button><button data-filter="tees">T-shirts</button><button data-filter="hoodies">Hoodies</button><button data-filter="workwear">Workwear</button></div></div>
+    <section id="shop" class="section container">
+      <div class="section-head"><div><p class="kicker">THE COLLECTION</p><h2>Wear the intent.</h2></div><div class="filters" role="group" aria-label="Product filters"><button class="active" data-filter="all">All</button></div></div>
       <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <section id="design" class="section designer-section">
-      <div class="section-head"><div><p class="eyebrow">DESIGN STUDIO</p><h2>Make it yours.</h2></div><p class="designer-sub">Design online — add text and artwork, preview live on the garment, then request a quote with your design.</p></div>
+    <section id="design" class="section designer-section container">
+      <div class="section-head"><div><p class="kicker">DESIGN STUDIO</p><h2>Make it yours.</h2></div><p class="designer-sub">Design online — add text and artwork, preview live on the garment, then request a quote.</p></div>
       <div class="designer-grid">
         <div class="designer-preview">
           <div class="tee-canvas" id="teeCanvas">
@@ -86,39 +79,46 @@ for businesses, teams, organizations and events.
         </div>
         <div class="designer-panel">
           <div class="designer-actions">
-            <button type="button" class="button secondary" id="addTextBtn">+ Add text</button>
-            <button type="button" class="button secondary" id="addImageBtn">+ Add image</button>
+            <button type="button" class="btn btn-secondary" id="addTextBtn">+ Add text</button>
+            <button type="button" class="btn btn-secondary" id="addImageBtn">+ Add image</button>
             <input type="file" id="imageInput" accept="image/*" style="display:none">
           </div>
           <div class="designer-label">Layers</div>
           <div class="designer-layers" id="layerList"></div>
           <div class="designer-settings" id="layerSettings"></div>
-          <button type="button" class="button primary full" id="useDesignBtn">Use this design in my quote</button>
+          <button type="button" class="btn btn-primary btn-block" id="useDesignBtn">Use this design in my quote</button>
         </div>
       </div>
     </section>
 
-    <section id="custom" class="custom-section">
-      <div class="custom-copy"><p class="eyebrow">CUSTOM ORDERS</p><h2>Your idea.<br>Our craft.</h2><p>Tell us what you need for your business, team, school, or event — we’ll recommend garments, print methods, and timelines to meet your goals.</p>
-      <form class="quote-form" name="custom-order" method="POST" data-netlify="true" netlify-honeypot="company-website" action="/success.html">
+    <section id="custom" class="custom-section container">
+      <div class="custom-copy"><p class="kicker">CUSTOM ORDERS</p><h2>Your idea.<br>Our craft.</h2><p>Tell us what you need for your business, team, school, or event — we’ll recommend garments, printing methods, and timelines.</p></div>
+      <form class="form quote-form" name="custom-order" method="POST" data-netlify="true" netlify-honeypot="company-website" action="/success.html">
         <input type="hidden" name="form-name" value="custom-order"><p class="hidden"><label>Do not fill this out: <input name="company-website"></label></p>
         <h3>Request a quote</h3><div class="form-row"><label>Name<input required name="name" autocomplete="name"></label><label>Email<input required type="email" name="email" autocomplete="email"></label></div>
         <div class="form-row"><label>Phone<input type="tel" name="phone" autocomplete="tel"></label><label>Organization<input name="organization" autocomplete="organization"></label></div>
-        <div class="form-row"><label>Product<select name="product"><option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option></select></label>
+        <div class="form-row"><label>Product<select name="product"><option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option></select></label></div>
         <label>Project details<textarea required name="details" rows="5" placeholder="Colors, sizes, deadline, logo placement and anything else..."></textarea></label>
-        <button class="button primary full" type="submit">Send Quote Request</button><small>Submitting this form sends the details to the website owner through Netlify Forms.</small>
+        <button class="btn btn-primary btn-block" type="submit">Send Quote Request</button><small>Submitting this form sends the details to the website owner through Netlify Forms.</small>
       </form>
     </section>
 
-    <section id="about" class="about section">
-      <div class="about-mark">SH</div><div><p class="eyebrow">WHY SHAPED</p><h2>Apparel with purpose.</h2><p>SHAPED creates clean, professional custom apparel designed around people and organizations. We focus on durable garments, thoughtful branding, and production processes that scale.</p></div>
+    <section id="about" class="about section container">
+      <div class="about-mark">SH</div><div><p class="kicker">WHY SHAPED</p><h2>Apparel with purpose.</h2><p>SHAPED creates clean, professional custom apparel designed around people and organizations — from fit to fulfillment.</p></div>
     </section>
 
-    <section id="contact" class="contact section"><div><p class="eyebrow">Let’s build something great</p><h2>Ready to shape your next order?</h2></div><div class="contact-links"><a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a><a href="tel:+1234567890">(123) 456-7890</a></div></section>
+    <section id="contact" class="contact section container"><div><p class="kicker">Let’s build something great</p><h2>Ready to shape your next order?</h2></div><div class="contact-links"><a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a></div></section>
   </main>
 
-  <footer><img src="assets/shaped-logo.svg" alt="SHAPED"><p>Premium custom apparel for businesses, teams, and events.</p><div><a href="#shop">Shop</a><a href="#custom">Custom Orders</a><a href="#contact">Contact</a></div></footer>
+  <footer class="footer">
+    <div class="container">
+      <div class="brand"><img src="assets/shaped-logo.svg" alt="SHAPED"></div>
+      <div><p>Premium custom apparel for businesses, teams, and events.</p></div>
+      <div class="footer-links"><ul><li><a href="#shop">Shop</a></li><li><a href="#custom">Custom Orders</a></li><li><a href="#about">About</a></li></ul></div>
+    </div>
+    <div class="footer-bottom container">&copy; <span id="year">2026</span> SHAPED — All rights reserved.</div>
+  </footer>
 
-  <aside class="cart" aria-hidden="true"><div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="cart-foot"><div class="cart-total">Total: <span id="cart-total">$0.00</span></div><div class="cart-actions"><button class="button secondary" id="checkoutBtn">Checkout</button></div></div></aside>
+  <aside class="cart" aria-hidden="true"><div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="cart-footer"></div></aside>
   <div class="toast" role="status" aria-live="polite"></div>
 </body></html>
