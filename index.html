@@ -28,9 +28,30 @@
         <p>Premium custom apparel for businesses, teams, events and everyday wear.</p>
         <div class="actions"><a class="button primary" href="#shop">Shop Collection</a><a class="button secondary" href="#custom">Start a Custom Order</a></div>
       </div>
-      <div class="hero-art" aria-label="SHAPED apparel presentation">
-        <div class="shirt shirt-back"><span>SH</span></div><div class="shirt shirt-front"><span>SHAPED</span><small>BUILT BY INTENT</small></div>
-        <div class="stamp">CHICAGO<br>CUSTOM<br>APPAREL</div>
+
+      <div class="hero-slideshow" aria-label="SHAPED premium hero slideshow">
+        <div class="hero-slide is-active">
+          <img src="assets/shaped-black-tee.jpg" alt="SHAPED black tee">
+        </div>
+        <div class="hero-slide">
+          <img src="assets/shaped-white-tee.jpg" alt="SHAPED white tee">
+        </div>
+        <div class="hero-slide">
+          <img src="assets/hoodie-black.jpg" alt="SHAPED black hoodie">
+        </div>
+        <div class="hero-slide">
+          <img src="assets/polo-black.jpg" alt="SHAPED black polo">
+        </div>
+
+        <button class="hero-nav hero-prev" aria-label="Previous slide">‹</button>
+        <button class="hero-nav hero-next" aria-label="Next slide">›</button>
+
+        <div class="hero-dots" role="tablist" aria-label="Hero slideshow indicators">
+          <button class="hero-dot is-active" aria-label="Go to slide 1" aria-selected="true"></button>
+          <button class="hero-dot" aria-label="Go to slide 2" aria-selected="false"></button>
+          <button class="hero-dot" aria-label="Go to slide 3" aria-selected="false"></button>
+          <button class="hero-dot" aria-label="Go to slide 4" aria-selected="false"></button>
+        </div>
       </div>
     </section>
 
@@ -46,24 +67,25 @@
     </section>
 
     <section id="custom" class="custom-section">
-      <div class="custom-copy"><p class="eyebrow">CUSTOM ORDERS</p><h2>Your idea.<br>Our craft.</h2><p>Tell SHAPED what you need for your business, team, school, organization or event. We will use the details to discuss design, apparel, quantity and next steps.</p><ul><li>Logo and artwork placement</li><li>T-shirts, hoodies, polos and workwear</li><li>Bulk and recurring orders</li><li>Local Chicago-area service</li></ul></div>
+      <div class="custom-copy"><p class="eyebrow">CUSTOM ORDERS</p><h2>Your idea.<br>Our craft.</h2><p>Tell SHAPED what you need for your business, team, school, organization or event. We will use premium blanks and precise print methods to create apparel built by intent.</p><ul><li>Screen printing and embroidery</li><li>Bulk pricing for teams and businesses</li><li>Fast local communication</li></ul></div>
       <form class="quote-form" name="custom-order" method="POST" data-netlify="true" netlify-honeypot="company-website" action="/success.html">
         <input type="hidden" name="form-name" value="custom-order"><p class="hidden"><label>Do not fill this out: <input name="company-website"></label></p>
         <h3>Request a quote</h3><div class="form-row"><label>Name<input required name="name" autocomplete="name"></label><label>Email<input required type="email" name="email" autocomplete="email"></label></div>
         <div class="form-row"><label>Phone<input type="tel" name="phone" autocomplete="tel"></label><label>Organization<input name="organization" autocomplete="organization"></label></div>
-        <div class="form-row"><label>Product<select name="product"><option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option></select></label><label>Estimated quantity<select name="quantity"><option>1–11</option><option>12–24</option><option>25–49</option><option>50–99</option><option>100+</option></select></label></div>
+        <div class="form-row"><label>Product<select name="product"><option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option></select></label><label>Quantity<select name="quantity"><option>24+</option><option>50+</option><option>100+</option><option>250+</option><option>500+</option></select></label></div>
         <label>Project details<textarea required name="details" rows="5" placeholder="Colors, sizes, deadline, logo placement and anything else..."></textarea></label>
         <button class="button primary full" type="submit">Send Quote Request</button><small>Submitting this form sends the details to the website owner through Netlify Forms.</small>
       </form>
     </section>
 
-    <section id="about" class="about section"><div class="about-mark">SH</div><div><p class="eyebrow">WHY SHAPED</p><h2>Apparel with purpose.</h2><p>SHAPED creates clean, professional custom apparel designed around the people and organizations wearing it. Every product starts with a clear purpose and is finished with careful attention to fit, placement and presentation.</p><p>That is what <strong>Built by Intent</strong> means.</p></div></section>
+    <section id="about" class="about section"><div class="about-mark">SH</div><div><p class="eyebrow">WHY SHAPED</p><h2>Apparel with purpose.</h2><p>SHAPED creates clean, professional custom apparel designed to represent teams and brands with confidence. Every order is approached with craftsmanship, communication and intent.</p></div></section>
 
-    <section id="contact" class="contact section"><div><p class="eyebrow">LET'S BUILD SOMETHING</p><h2>Ready to shape your next order?</h2></div><div class="contact-links"><a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a><a href="tel:+13125550198">(312) 555-0198</a><span>Chicago, Illinois</span></div></section>
+    <section id="contact" class="contact section"><div><p class="eyebrow">LET'S BUILD SOMETHING</p><h2>Ready to shape your next order?</h2></div><div class="contact-links"><a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a><a href="tel:+13125550199">(312) 555-0199</a><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></div></section>
   </main>
 
-  <footer><img src="assets/shaped-logo.svg" alt="SHAPED"><p>Premium custom apparel for businesses, teams and events.</p><div><a href="#shop">Shop</a><a href="#custom">Custom Orders</a><a href="#contact">Contact</a></div><small>© <span id="year"></span> SHAPED. All rights reserved.</small></footer>
+  <footer><img src="assets/shaped-logo.svg" alt="SHAPED"><p>Premium custom apparel for businesses, teams and events.</p><div><a href="#shop">Shop</a><a href="#custom">Custom Orders</a><a href="#contact">Contact</a></div></footer>
 
-  <aside class="cart" aria-hidden="true"><div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="cart-footer"><div><span>Subtotal</span><strong id="cart-total">$0.00</strong></div><button class="button primary full" id="checkout">Request Order</button><small>Demo storefront. Connect a payment provider before accepting online payments.</small></div></aside><div class="overlay"></div>
+  <aside class="cart" aria-hidden="true"><div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="cart-foot"><button class="button primary full" id="checkout">Checkout</button></div></aside>
+  <div class="overlay"></div>
   <div class="toast" role="status" aria-live="polite"></div>
 </body></html>
