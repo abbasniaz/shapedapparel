@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="SHAPED premium custom apparel for businesses, teams and events. Built by Intent.">
-  <meta property="og:title" content="SHAPED | Built by Intent">
-  <meta property="og:description" content="Premium custom apparel, workwear and event merchandise.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/shaped-logo.svg">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="SHAPED premium custom apparel for businesses, teams and events. Built by Intent." />
+  <meta property="og:title" content="SHAPED | Built by Intent" />
+  <meta property="og:description" content="Premium custom apparel, workwear and event merchandise." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/shaped-logo.svg" />
   <title>SHAPED | Built by Intent</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -18,6 +19,11 @@
   <div class="announcement">FREE SAMPLE CONSULTATION • BULK & CORPORATE ORDERS WELCOME</div>
 
   <header class="site-header">
+    <!-- Left-most logo -->
+    <a class="brand-right" href="#home" aria-label="SHAPED home">
+      <img src="assets/Designer (18).png" alt="SHAPED logo" />
+    </a>
+
     <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
 
     <nav class="nav" aria-label="Main navigation">
@@ -29,15 +35,10 @@
       <a href="#contact">Contact</a>
     </nav>
 
-    <a class="brand brand-right" href="#home" aria-label="SHAPED home">
-      <img src="assets/Designer (18).png" alt="SHAPED logo">
-    </a>
-
     <button class="cart-button" aria-label="Open cart">Bag <span id="cart-count">0</span></button>
   </header>
 
   <main id="main">
-    <!-- HERO -->
     <section id="home" class="hero">
       <div class="hero-copy">
         <p class="eyebrow">SHAPED APPAREL</p>
@@ -50,10 +51,10 @@
       </div>
 
       <div class="hero-slideshow" aria-label="SHAPED hero slideshow">
-        <div class="hero-slide is-active"><img src="assets/shaped-black-tee.jpg" alt="Black SHAPED tee"></div>
-        <div class="hero-slide"><img src="assets/shaped-white-tee.jpg" alt="White SHAPED tee"></div>
-        <div class="hero-slide"><img src="assets/hoodie-black.jpg" alt="Black SHAPED hoodie"></div>
-        <div class="hero-slide"><img src="assets/polo-black.jpg" alt="Corporate black polo"></div>
+        <div class="hero-slide is-active"><img src="assets/shaped-black-tee.jpg" alt="Black SHAPED tee" /></div>
+        <div class="hero-slide"><img src="assets/shaped-white-tee.jpg" alt="White SHAPED tee" /></div>
+        <div class="hero-slide"><img src="assets/hoodie-black.jpg" alt="Black SHAPED hoodie" /></div>
+        <div class="hero-slide"><img src="assets/polo-black.jpg" alt="Corporate black polo" /></div>
 
         <button class="hero-nav hero-prev" aria-label="Previous slide">‹</button>
         <button class="hero-nav hero-next" aria-label="Next slide">›</button>
@@ -67,7 +68,6 @@
       </div>
     </section>
 
-    <!-- FEATURE ICONS -->
     <section class="feature-row" aria-label="Brand features">
       <article><h3>Premium Quality</h3><p>Curated garments with premium feel and durability.</p></article>
       <article><h3>Fast Turnaround</h3><p>Reliable production timelines for teams and events.</p></article>
@@ -75,7 +75,6 @@
       <article><h3>Custom Branding</h3><p>DTF, print and logo solutions built for brand consistency.</p></article>
     </section>
 
-    <!-- BEST SELLERS -->
     <section id="shop" class="section">
       <div class="section-head">
         <div>
@@ -92,9 +91,8 @@
       <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- FEATURED COLLECTION -->
     <section id="studio" class="collection-banner" aria-label="Featured collection">
-      <img src="assets/hoodie-black.jpg" alt="SHAPED featured collection">
+      <img src="assets/hoodie-black.jpg" alt="SHAPED featured collection" />
       <div class="collection-overlay">
         <p class="eyebrow">FEATURED COLLECTION</p>
         <h2>Built By Intent</h2>
@@ -102,7 +100,6 @@
       </div>
     </section>
 
-    <!-- WHY SHAPED -->
     <section id="about" class="why section">
       <div>
         <p class="eyebrow">WHY SHAPED</p>
@@ -116,7 +113,6 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS -->
     <section class="testimonials section" aria-label="Customer testimonials">
       <p class="eyebrow">TESTIMONIALS</p>
       <h2>Trusted by teams and businesses</h2>
@@ -127,7 +123,6 @@
       </div>
     </section>
 
-    <!-- CUSTOM ORDER CTA -->
     <section id="custom" class="custom-cta">
       <div>
         <p class="eyebrow">CUSTOM ORDERS</p>
@@ -137,26 +132,25 @@
       <a class="button primary" href="#quote-form">Request a Quote</a>
     </section>
 
-    <!-- QUOTE FORM -->
     <section class="custom-section" id="quote-form">
       <div class="custom-copy">
         <p class="eyebrow">START YOUR ORDER</p>
-        <h2>Your idea.<br>Our craft.</h2>
+        <h2>Your idea.<br />Our craft.</h2>
         <p>Submit your details and SHAPED will follow up with recommendations and pricing.</p>
       </div>
 
       <form class="quote-form" name="custom-order" method="POST" data-netlify="true" netlify-honeypot="company-website" action="/success.html">
-        <input type="hidden" name="form-name" value="custom-order">
-        <p class="hidden"><label>Do not fill this out: <input name="company-website"></label></p>
+        <input type="hidden" name="form-name" value="custom-order" />
+        <p class="hidden"><label>Do not fill this out: <input name="company-website" /></label></p>
 
         <h3>Request a quote</h3>
         <div class="form-row">
-          <label>Name<input required name="name" autocomplete="name"></label>
-          <label>Email<input required type="email" name="email" autocomplete="email"></label>
+          <label>Name<input required name="name" autocomplete="name" /></label>
+          <label>Email<input required type="email" name="email" autocomplete="email" /></label>
         </div>
         <div class="form-row">
-          <label>Phone<input type="tel" name="phone" autocomplete="tel"></label>
-          <label>Organization<input name="organization" autocomplete="organization"></label>
+          <label>Phone<input type="tel" name="phone" autocomplete="tel" /></label>
+          <label>Organization<input name="organization" autocomplete="organization" /></label>
         </div>
         <div class="form-row">
           <label>Product
@@ -190,7 +184,7 @@
   </main>
 
   <footer>
-    <img src="assets/shaped-logo.svg" alt="SHAPED">
+    <img src="assets/shaped-logo.svg" alt="SHAPED" />
     <p>SHAPED — Built By Intent</p>
     <p>Premium custom apparel for businesses, teams and events.</p>
     <div><a href="#shop">Shop</a> • <a href="#custom">Custom Orders</a> • <a href="#contact">Contact</a></div>
