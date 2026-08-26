@@ -35,6 +35,25 @@
       </div>
     </section>
 
+    <!-- Featured product — Bright Colour Graphics Shirt -->
+    <section class="featured-product" aria-label="Featured product">
+      <div class="fp-card">
+        <img src="assets/bright-graphic-shirt.svg" alt="Bright Colour Graphics Shirt" class="fp-image" width="420" height="420"/>
+        <div class="fp-body">
+          <p class="eyebrow">NEW ARRIVAL</p>
+          <h2 class="fp-title">Bright Colour Graphics Shirt</h2>
+          <p class="fp-blurb">Eye-catching bright graphic tee — soft, breathable, and available in S–XL.</p>
+          <div class="fp-meta">
+            <span class="fp-price">$29.99</span>
+            <div class="fp-actions">
+              <a class="button secondary" href="#shop">View product</a>
+              <button class="button primary add" data-id="9" type="button">Add to bag</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="benefits" aria-label="Service benefits">
       <div><b>Premium Quality</b><span>Apparel selected for comfort and durability</span></div>
       <div><b>Custom Printing</b><span>Design support for brands, teams and events</span></div>
@@ -42,12 +61,12 @@
     </section>
 
     <section id="shop" class="section">
-      <div class="section-head"><div><p class="eyebrow">THE COLLECTION</p><h2>Wear the intent.</h2></div><div class="filters" role="group" aria-label="Product filters"><button class="active" data-filter="all">All</button><button data-filter="tees">Tees</button><button data-filter="hoodies">Hoodies</button><button data-filter="workwear">Workwear</button></div></div>
+      <div class="section-head"><div><p class="eyebrow">THE COLLECTION</p><h2>Wear the intent.</h2></div><div class="filters" role="group" aria-label="Product filters"><button class="active" data-filter="all">All</button><button data-filter="tees">T-shirts</button><button data-filter="hoodies">Hoodies</button><button data-filter="workwear">Workwear</button></div></div>
       <div class="product-grid" id="product-grid"></div>
     </section>
 
     <section id="design" class="section designer-section">
-      <div class="section-head"><div><p class="eyebrow">DESIGN STUDIO</p><h2>Make it yours.</h2></div><p class="designer-sub">Drag on text and artwork, preview it on the garment, then send the design straight into a quote request.</p></div>
+      <div class="section-head"><div><p class="eyebrow">DESIGN STUDIO</p><h2>Make it yours.</h2></div><p class="designer-sub">Drag on text and artwork, preview it on the garment, then send the design to our team for a quote.</p></div>
       <div class="designer-grid">
         <div class="designer-preview">
           <div class="tee-canvas" id="teeCanvas">
@@ -71,26 +90,26 @@
     </section>
 
     <section id="custom" class="custom-section">
-      <div class="custom-copy"><p class="eyebrow">CUSTOM ORDERS</p><h2>Your idea.<br>Our craft.</h2><p>Tell SHAPED what you need for your business, team, school, organization or event. We will use the details to discuss design, apparel, quantity and next steps.</p><ul><li>Logo and artwork placement</li><li>T-shirts, hoodies, polos and workwear</li><li>Bulk and recurring orders</li><li>Local Chicago-area service</li></ul></div>
+      <div class="custom-copy"><p class="eyebrow">CUSTOM ORDERS</p><h2>Your idea.<br>Our craft.</h2><p>Tell SHAPED what you need for your business, team, school, organization or event. We will use our experience to recommend garments, print methods and production timelines to meet your needs.</p>
       <form class="quote-form" name="custom-order" method="POST" data-netlify="true" netlify-honeypot="company-website" action="/success.html">
         <input type="hidden" name="form-name" value="custom-order"><p class="hidden"><label>Do not fill this out: <input name="company-website"></label></p>
         <h3>Request a quote</h3><div class="form-row"><label>Name<input required name="name" autocomplete="name"></label><label>Email<input required type="email" name="email" autocomplete="email"></label></div>
         <div class="form-row"><label>Phone<input type="tel" name="phone" autocomplete="tel"></label><label>Organization<input name="organization" autocomplete="organization"></label></div>
-        <div class="form-row"><label>Product<select name="product"><option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option></select></label><label>Estimated quantity<select name="quantity"><option>1–11</option><option>12–24</option><option>25–49</option><option>50–99</option><option>100+</option></select></label></div>
+        <div class="form-row"><label>Product<select name="product"><option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option></select></label>
         <label>Project details<textarea required name="details" rows="5" placeholder="Colors, sizes, deadline, logo placement and anything else..."></textarea></label>
         <button class="button primary full" type="submit">Send Quote Request</button><small>Submitting this form sends the details to the website owner through Netlify Forms.</small>
       </form>
     </section>
 
     <section id="about" class="about section">
-      <div class="about-mark">SH</div><div><p class="eyebrow">WHY SHAPED</p><h2>Apparel with purpose.</h2><p>SHAPED creates clean, professional custom apparel designed around the people and organizations wearing it. Every product starts with a clear purpose and is finished with careful attention to fit, placement and presentation.</p><p>That is what <strong>Built by Intent</strong> means.</p></div>
+      <div class="about-mark">SH</div><div><p class="eyebrow">WHY SHAPED</p><h2>Apparel with purpose.</h2><p>SHAPED creates clean, professional custom apparel designed around the people and organizations we serve. We focus on durable garments, clear branding, and production processes that scale.</p></div>
     </section>
 
-    <section id="contact" class="contact section"><div><p class="eyebrow">LET'S BUILD SOMETHING</p><h2>Ready to shape your next order?</h2></div><div class="contact-links"><a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a><a href="tel:+13125550198">(312) 555-0198</a><span>Chicago, Illinois</span></div></section>
+    <section id="contact" class="contact section"><div><p class="eyebrow">LET'S BUILD SOMETHING</p><h2>Ready to shape your next order?</h2></div><div class="contact-links"><a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a><a href="tel:+1234567890">(123) 456-7890</a></div></section>
   </main>
 
-  <footer><img src="assets/shaped-logo.svg" alt="SHAPED"><p>Premium custom apparel for businesses, teams and events.</p><div><a href="#shop">Shop</a><a href="#custom">Custom Orders</a><a href="#contact">Contact</a></div><small>© <span id="year"></span> SHAPED. All rights reserved.</small></footer>
+  <footer><img src="assets/shaped-logo.svg" alt="SHAPED"><p>Premium custom apparel for businesses, teams and events.</p><div><a href="#shop">Shop</a><a href="#custom">Custom Orders</a><a href="#contact">Contact</a></div></footer>
 
-  <aside class="cart" aria-hidden="true"><div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="cart-footer"><div><span>Subtotal</span><strong id="cart-total">$0.00</strong></div><button class="button primary full" id="checkout">Request Order</button><small>Demo storefront. Connect a payment provider before accepting online payments.</small></div></aside><div class="overlay"></div>
+  <aside class="cart" aria-hidden="true"><div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div><div id="cart-items"></div><div class="cart-foot"><div class="cart-total">Total: <span id="cart-total">$0.00</span></div><div class="cart-actions"><button class="button secondary" id="checkoutBtn">Checkout</button></div></div></aside>
   <div class="toast" role="status" aria-live="polite"></div>
 </body></html>
