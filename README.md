@@ -18,6 +18,7 @@
 - `index.html`: website structure and content
 - `styles.css`: responsive visual design
 - `script.js`: product filtering, local shopping bag and interactions
+- `designer.js`: Design Studio interactions and design-to-quote summary flow
 - `success.html`: quote-form confirmation page
 - `assets/shaped-logo.svg`: legacy starter logo asset (not currently referenced)
 - `netlify.toml`: Netlify configuration
