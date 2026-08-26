@@ -7,8 +7,8 @@
   <title>SHAPED | Built by Intent</title>
 
   <!-- cache-bust -->
-  <link rel="stylesheet" href="styles.css?v=1001" />
-  <script defer src="script.js?v=1001"></script>
+  <link rel="stylesheet" href="styles.css?v=4001" />
+  <script defer src="script.js?v=4001"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -36,17 +36,17 @@
 
   <main id="main">
     <section id="home" class="hero">
-      <div class="hero-copy">
+      <div class="hero-copy reveal float-card">
         <p class="eyebrow">SHAPED APPAREL</p>
         <h1>BUILT BY <span>INTENT</span></h1>
         <p>Premium custom apparel for businesses, teams, events and everyday wear.</p>
         <div class="actions">
-          <a class="button primary" href="#shop">SHOP NOW</a>
+          <a class="button primary shine" href="#shop">SHOP NOW</a>
           <a class="button secondary" href="#custom">Start a Custom Order</a>
         </div>
       </div>
 
-      <div class="hero-slideshow" aria-label="SHAPED hero slideshow">
+      <div class="hero-slideshow reveal" aria-label="SHAPED hero slideshow">
         <div class="hero-slide is-active"><img src="assets/shaped-black-tee.jpg" alt="Black SHAPED tee" /></div>
         <div class="hero-slide"><img src="assets/shaped-white-tee.jpg" alt="White SHAPED tee" /></div>
         <div class="hero-slide"><img src="assets/hoodie-black.jpg" alt="Black SHAPED hoodie" /></div>
@@ -64,14 +64,14 @@
       </div>
     </section>
 
-    <section class="feature-row" aria-label="Brand features">
-      <article><h3>Premium Quality</h3><p>Curated garments with premium feel and durability.</p></article>
-      <article><h3>Fast Turnaround</h3><p>Reliable production timelines for teams and events.</p></article>
-      <article><h3>Bulk Discounts</h3><p>Competitive pricing for business and corporate orders.</p></article>
-      <article><h3>Custom Branding</h3><p>DTF, print and logo solutions built for brand consistency.</p></article>
+    <section class="feature-row stagger">
+      <article class="float-card"><h3>Premium Quality</h3><p>Curated garments with premium feel and durability.</p></article>
+      <article class="float-card"><h3>Fast Turnaround</h3><p>Reliable production timelines for teams and events.</p></article>
+      <article class="float-card"><h3>Bulk Discounts</h3><p>Competitive pricing for business and corporate orders.</p></article>
+      <article class="float-card"><h3>Custom Branding</h3><p>DTF, print and logo solutions built for brand consistency.</p></article>
     </section>
 
-    <section id="shop" class="section">
+    <section id="shop" class="section reveal">
       <div class="section-head">
         <div>
           <p class="eyebrow">BEST SELLERS</p>
@@ -84,104 +84,72 @@
           <button data-filter="workwear">Workwear</button>
         </div>
       </div>
-      <div class="product-grid" id="product-grid"></div>
+      <div class="product-grid stagger" id="product-grid"></div>
     </section>
 
-    <section id="studio" class="collection-banner" aria-label="Featured collection">
+    <section id="studio" class="collection-banner reveal float-card">
       <img src="assets/hoodie-black.jpg" alt="SHAPED featured collection" />
       <div class="collection-overlay">
         <p class="eyebrow">FEATURED COLLECTION</p>
         <h2>Built By Intent</h2>
-        <a class="button primary" href="#shop">Shop Collection</a>
+        <a class="button primary shine" href="#shop">Shop Collection</a>
       </div>
     </section>
 
-    <section id="about" class="why section">
+    <section id="about" class="why section reveal">
       <div>
         <p class="eyebrow">WHY SHAPED</p>
         <h2>Apparel with purpose.</h2>
       </div>
-      <div class="why-grid">
-        <article><h3>Professional Branding</h3><p>Consistent visual identity across every garment.</p></article>
-        <article><h3>Premium Garments</h3><p>High-quality materials selected for fit and longevity.</p></article>
-        <article><h3>DTF Printing</h3><p>Modern print methods for sharp, durable custom graphics.</p></article>
-        <article><h3>Corporate Solutions</h3><p>Uniform and promotional apparel systems for teams.</p></article>
+      <div class="why-grid stagger">
+        <article class="float-card"><h3>Professional Branding</h3><p>Consistent visual identity across every garment.</p></article>
+        <article class="float-card"><h3>Premium Garments</h3><p>High-quality materials selected for fit and longevity.</p></article>
+        <article class="float-card"><h3>DTF Printing</h3><p>Modern print methods for sharp, durable custom graphics.</p></article>
+        <article class="float-card"><h3>Corporate Solutions</h3><p>Uniform and promotional apparel systems for teams.</p></article>
       </div>
     </section>
 
-    <section class="testimonials section" aria-label="Customer testimonials">
+    <section class="testimonials section reveal">
       <p class="eyebrow">TESTIMONIALS</p>
       <h2>Trusted by teams and businesses</h2>
-      <div class="testimonial-grid">
-        <blockquote>“SHAPED delivered premium polos for our staff with fast turnaround and incredible quality.”<cite>— Corporate Client</cite></blockquote>
-        <blockquote>“Our event merch looked amazing and sold out quickly. Professional from start to finish.”<cite>— Event Organizer</cite></blockquote>
-        <blockquote>“The custom hoodie prints were clean, durable and exactly on brand.”<cite>— Team Manager</cite></blockquote>
+      <div class="testimonial-grid stagger">
+        <blockquote class="float-card">“SHAPED delivered premium polos for our staff with fast turnaround and incredible quality.”<cite>— Corporate Client</cite></blockquote>
+        <blockquote class="float-card">“Our event merch looked amazing and sold out quickly. Professional from start to finish.”<cite>— Event Organizer</cite></blockquote>
+        <blockquote class="float-card">“The custom hoodie prints were clean, durable and exactly on brand.”<cite>— Team Manager</cite></blockquote>
       </div>
     </section>
 
-    <section id="custom" class="custom-cta">
+    <section id="custom" class="custom-cta reveal float-card">
       <div>
         <p class="eyebrow">CUSTOM ORDERS</p>
         <h2>Need branded apparel for your business?</h2>
         <p>Tell us your quantity, timeline and style goals — we’ll shape the perfect order.</p>
       </div>
-      <a class="button primary" href="#quote-form">Request a Quote</a>
+      <a class="button primary shine" href="#quote-form">Request a Quote</a>
     </section>
 
     <section class="custom-section" id="quote-form">
-      <div class="custom-copy">
+      <div class="custom-copy reveal float-card">
         <p class="eyebrow">START YOUR ORDER</p>
         <h2>Your idea.<br />Our craft.</h2>
         <p>Submit your details and SHAPED will follow up with recommendations and pricing.</p>
       </div>
 
-      <form class="quote-form" name="custom-order" method="POST" data-netlify="true" netlify-honeypot="company-website" action="/success.html">
-        <input type="hidden" name="form-name" value="custom-order" />
-        <p class="hidden"><label>Do not fill this out: <input name="company-website" /></label></p>
-
+      <form class="quote-form reveal float-card">
         <h3>Request a quote</h3>
         <div class="form-row">
-          <label>Name<input required name="name" autocomplete="name" /></label>
-          <label>Email<input required type="email" name="email" autocomplete="email" /></label>
+          <label>Name<input required /></label>
+          <label>Email<input required type="email" /></label>
         </div>
         <div class="form-row">
-          <label>Phone<input type="tel" name="phone" autocomplete="tel" /></label>
-          <label>Organization<input name="organization" autocomplete="organization" /></label>
+          <label>Phone<input type="tel" /></label>
+          <label>Organization<input /></label>
         </div>
-        <div class="form-row">
-          <label>Product
-            <select name="product">
-              <option>T-shirts</option><option>Hoodies</option><option>Polos</option><option>Workwear</option><option>Mixed order</option>
-            </select>
-          </label>
-          <label>Quantity
-            <select name="quantity">
-              <option>24+</option><option>50+</option><option>100+</option><option>250+</option><option>500+</option>
-            </select>
-          </label>
-        </div>
-        <label>Project details<textarea required name="details" rows="5" placeholder="Colors, sizes, deadline, logo placement and anything else..."></textarea></label>
-        <button class="button primary full" type="submit">Send Quote Request</button>
+        <label>Project details<textarea required rows="5"></textarea></label>
+        <button class="button primary full shine" type="submit">Send Quote Request</button>
       </form>
     </section>
-
-    <section id="contact" class="contact section">
-      <div>
-        <p class="eyebrow">CONTACT</p>
-        <h2>Let’s build something.</h2>
-      </div>
-      <div class="contact-links">
-        <a href="mailto:hello@shapedapparel.com">hello@shapedapparel.com</a>
-        <a href="tel:+13125550199">(312) 555-0199</a>
-        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
-      </div>
-    </section>
   </main>
-
-  <footer>
-    <img src="assets/shaped-logo.svg" alt="SHAPED" />
-    <p>SHAPED — Built By Intent</p>
-  </footer>
 
   <aside class="cart" aria-hidden="true">
     <div class="cart-head"><h2>Your bag</h2><button class="cart-close" aria-label="Close cart">×</button></div>
