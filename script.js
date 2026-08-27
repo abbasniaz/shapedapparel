@@ -32,10 +32,7 @@ function renderProducts(filter="all"){
   observeReveals();
 }
 
-function saveCart(){
-  localStorage.setItem("shapedCart",JSON.stringify(cart));
-  renderCart();
-}
+function saveCart(){localStorage.setItem("shapedCart",JSON.stringify(cart));renderCart();}
 
 function renderCart(){
   const wrap=document.querySelector("#cart-items");
@@ -64,8 +61,7 @@ function toast(msg){
 }
 
 function toggleCart(open){
-  const c=document.querySelector(".cart");
-  const o=document.querySelector(".overlay");
+  const c=document.querySelector(".cart"), o=document.querySelector(".overlay");
   if(!c||!o) return;
   c.classList.toggle("open",open);
   o.classList.toggle("show",open);
@@ -128,7 +124,7 @@ function initHeroSlideshow(){
   if(!slides.length) return;
 
   let idx=0,timer=null,sx=0,ex=0;
-  const INTERVAL=4000,SWIPE=40;
+  const INTERVAL=4000, SWIPE=40;
 
   const go=(i)=>{
     idx=(i+slides.length)%slides.length;
@@ -140,10 +136,9 @@ function initHeroSlideshow(){
     });
   };
 
-  const n=()=>go(idx+1);
-  const p=()=>go(idx-1);
-  const stop=()=>{if(timer){clearInterval(timer);timer=null;}};
-  const start=()=>{stop();timer=setInterval(n,INTERVAL);};
+  const n=()=>go(idx+1), p=()=>go(idx-1);
+  const stop=()=>{ if(timer){clearInterval(timer);timer=null;} };
+  const start=()=>{ stop(); timer=setInterval(n,INTERVAL); };
 
   next?.addEventListener("click",()=>{n();start();});
   prev?.addEventListener("click",()=>{p();start();});
@@ -157,12 +152,11 @@ function initHeroSlideshow(){
   hero.addEventListener("touchend",(e)=>{
     ex=e.changedTouches[0].clientX;
     const dx=ex-sx;
-    if(Math.abs(dx)>=SWIPE){dx<0?n():p();}
+    if(Math.abs(dx)>=SWIPE){ dx<0?n():p(); }
     start();
   },{passive:true});
 
-  go(0);
-  start();
+  go(0); start();
 }
 
 let observer;
