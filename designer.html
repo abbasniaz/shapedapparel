@@ -4,49 +4,128 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SHAPED Design Studio</title>
-  <link rel="stylesheet" href="designer.css?v=12001" />
-  <script defer src="designer.js?v=12001"></script>
+  <link rel="stylesheet" href="designer.css?v=15001" />
+  <script defer src="designer.js?v=15001"></script>
 </head>
 <body class="designer-page">
   <main class="designer-wrap">
     <section class="designer-panel">
       <p class="eyebrow">DESIGN STUDIO</p>
       <h1>Create Your Custom Apparel</h1>
-      <p>This is now correctly linked. You can customize preview color/text and submit for production.</p>
+      <p>Paint, place logos, edit text, rotate preview, and export design.</p>
 
       <form id="designer-form" class="designer-form">
-        <label for="shirt-color">T-shirt Color</label>
+        <h3>Product</h3>
+
+        <label for="product-type">Product Type</label>
+        <select id="product-type">
+          <option value="tshirt">T-shirt</option>
+          <option value="hoodie">Hoodie</option>
+          <option value="tote">Tote Bag</option>
+        </select>
+
+        <label for="view-side">Design Side</label>
+        <select id="view-side">
+          <option value="front">Front</option>
+          <option value="back">Back</option>
+        </select>
+
+        <label for="shirt-color">Product Color</label>
         <select id="shirt-color">
           <option value="#111111">Black</option>
           <option value="#f3f4f6">White</option>
           <option value="#1f2937">Navy</option>
           <option value="#7c5a3a">Brown</option>
           <option value="#2f6b57">Green</option>
+          <option value="#8b1e3f">Maroon</option>
+          <option value="#395b8a">Royal Blue</option>
+          <option value="#9aa3ad">Gray</option>
         </select>
+        <label for="shirt-color-custom">Custom Product Color</label>
+        <input id="shirt-color-custom" type="color" value="#111111" />
 
+        <h3>Text</h3>
         <label for="print-text">Print Text</label>
-        <input id="print-text" type="text" value="SHAPED" maxlength="22" />
+        <input id="print-text" type="text" value="SHAPED" maxlength="40" />
 
-        <label for="print-color">Print Color</label>
+        <label for="print-color">Text Color</label>
         <select id="print-color">
           <option value="#ffffff">White</option>
           <option value="#111111">Black</option>
           <option value="#d4a64f">Gold</option>
           <option value="#2f6b57">Green</option>
           <option value="#2b6cb0">Blue</option>
+          <option value="#e11d48">Red</option>
+          <option value="#7c3aed">Purple</option>
         </select>
+        <label for="print-color-custom">Custom Text Color</label>
+        <input id="print-color-custom" type="color" value="#ffffff" />
 
+        <label for="text-size">Text Size</label>
+        <input id="text-size" type="range" min="16" max="96" value="42" />
+
+        <div class="inline-tools">
+          <button type="button" class="tool-btn active" id="text-bold">Bold</button>
+          <button type="button" class="tool-btn" id="text-italic">Italic</button>
+          <button type="button" class="tool-btn" id="text-uppercase">UPPER</button>
+          <button type="button" class="tool-btn" id="align-left">Left</button>
+          <button type="button" class="tool-btn active" id="align-center">Center</button>
+          <button type="button" class="tool-btn" id="align-right">Right</button>
+        </div>
+
+        <h3>Logo / Image</h3>
         <label for="design-upload">Upload Design (PNG)</label>
         <input id="design-upload" type="file" accept=".png,image/png" />
-        <small>Transparent PNG recommended</small>
+        <small>Transparent PNG recommended. In Move mode, drag on product.</small>
 
-        <button type="submit" class="cta">Continue to Quote Form</button>
+        <label for="design-size">Image Size</label>
+        <input id="design-size" type="range" min="15" max="80" value="48" />
+
+        <h3>Paint</h3>
+        <div class="inline-tools">
+          <button type="button" class="tool-btn active" id="mode-move">Move</button>
+          <button type="button" class="tool-btn" id="mode-draw">Draw</button>
+          <button type="button" class="tool-btn" id="mode-erase">Erase</button>
+        </div>
+
+        <label for="brush-color">Brush Color</label>
+        <input id="brush-color" type="color" value="#ff0000" />
+
+        <label for="brush-size">Brush Size</label>
+        <input id="brush-size" type="range" min="1" max="40" value="6" />
+
+        <div class="action-row">
+          <button type="button" id="undo-draw" class="cta cta-muted">Undo</button>
+          <button type="button" id="redo-draw" class="cta cta-muted">Redo</button>
+          <button type="button" id="clear-drawing" class="cta cta-muted">Clear</button>
+        </div>
+
+        <h3>Project</h3>
+        <div class="action-row">
+          <button type="button" id="save-draft" class="cta cta-muted">Save Draft</button>
+          <button type="button" id="load-draft" class="cta cta-muted">Load Draft</button>
+          <button type="button" id="download-design" class="cta">Download PNG</button>
+          <button type="button" id="reset-all" class="cta cta-muted">Reset All</button>
+        </div>
+
+        <button type="submit" class="cta full">Continue to Quote Form</button>
       </form>
     </section>
 
     <section class="preview-panel">
+      <div class="preview-title">
+        <strong id="preview-label">Preview • Front</strong>
+        <span>Tip: drag on product for 3D tilt</span>
+      </div>
+
       <div class="shirt-preview">
-        <div class="mock-shirt" id="mock-shirt">
+        <div class="mock-shirt tshirt" id="mock-shirt">
+          <div class="hoodie-pocket"></div>
+          <div class="tote-handle left"></div>
+          <div class="tote-handle right"></div>
+
+          <div class="safe-area" id="safe-area"></div>
+          <canvas id="draw-canvas"></canvas>
           <img id="shirt-design-image" alt="Uploaded design preview" />
           <span id="shirt-text">SHAPED</span>
         </div>
