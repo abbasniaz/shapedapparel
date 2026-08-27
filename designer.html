@@ -4,16 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SHAPED Design Studio</title>
-  <link rel="stylesheet" href="designer.css?v=16001" />
-  <script defer src="designer.js?v=16001"></script>
+  <link rel="stylesheet" href="designer.css?v=17001" />
+  <script defer src="designer.js?v=17001"></script>
 </head>
 <body class="designer-page">
+
+  <!-- TOP NAV -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html">SHAPED</a>
+
+      <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">☰</button>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#shop">Shop</a>
+        <a href="index.html#quote-form">Custom Orders</a>
+        <a href="designer.html" class="active">Design Studio</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="cart-button" href="index.html#shop">🛍️ <span>Bag</span></a>
+      </div>
+    </div>
+  </header>
+
   <main class="designer-shell">
     <section class="controls-panel">
       <div class="panel-head">
         <p class="eyebrow">DESIGN STUDIO</p>
         <h1>Create Your Custom Apparel</h1>
-        <p>Customize on the left, preview live on the right.</p>
+        <p>Customize on the left and preview live on the right.</p>
       </div>
 
       <form id="designer-form" class="controls-grid">
@@ -103,7 +125,7 @@
         <div class="field span-2">
           <label for="design-upload">Upload Design (PNG)</label>
           <input id="design-upload" type="file" accept=".png,image/png" />
-          <small>Tip: use transparent PNG. In Move mode, drag the image on product.</small>
+          <small>Transparent PNG recommended. In Move mode, drag image on product.</small>
         </div>
 
         <div class="field span-2">
@@ -159,7 +181,7 @@
     <section class="preview-panel">
       <div class="preview-top">
         <strong id="preview-label">Preview • Front</strong>
-        <span>Drag on preview for 3D tilt</span>
+        <span>Tip: drag on product for 3D tilt</span>
       </div>
 
       <div class="preview-stage">
