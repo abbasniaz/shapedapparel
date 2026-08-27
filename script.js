@@ -45,7 +45,7 @@ document.addEventListener("click",(e)=>{
 document.querySelector(".cart-button")?.addEventListener("click",()=>toggleCart(true));
 document.querySelector(".cart-close")?.addEventListener("click",()=>toggleCart(false));
 document.querySelector(".overlay")?.addEventListener("click",()=>toggleCart(false));
-document.querySelector(".menu-toggle")?.addEventListener("click",()=>{const nav=document.querySelector(".nav");if(!nav)return;nav.classList.toggle("open");document.querySelector(".menu-toggle")?.setAttribute("aria-expanded",String(nav.classList.contains("open")));});
+document.querySelector(".menu-toggle")?.addEventListener("click",()=>{const nav=document.querySelector(".nav");if(!nav)return;nav.classList.toggle("open");});
 document.querySelector("#checkout")?.addEventListener("click",()=>toast("Checkout is coming soon"));
 
 function initHeroSlideshow(){
