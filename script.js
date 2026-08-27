@@ -1,12 +1,6 @@
-/* =========================
-   SHAPED - Main Script
-   Consolidated version
-   ========================= */
-
 const $ = (s, p = document) => p.querySelector(s);
 const $$ = (s, p = document) => [...p.querySelectorAll(s)];
 
-/* ---------- Data ---------- */
 const products = [
   { id: 1, name: "Intent Essential Tee", category: "tees", price: 28, desc: "Premium everyday cotton tee", color: "#111111" },
   { id: 2, name: "Statement Tee", category: "tees", price: 32, desc: "Clean oversized streetwear fit", color: "#ece6da" },
@@ -21,12 +15,10 @@ const products = [
 const SIZED_CATEGORIES = new Set(["tees", "hoodies"]);
 const AVAILABLE_SIZES = ["S", "M", "L", "XL"];
 
-/* ---------- State ---------- */
 let activeFilter = "all";
 let cart = [];
 const CART_KEY = "shapedCartV1";
 
-/* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   loadCart();
   renderProducts();
@@ -35,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroSlideshow();
 });
 
-/* ---------- Nav / UI ---------- */
 function bindGlobalEvents() {
   const menuBtn = $(".menu-toggle");
   const nav = $(".nav");
@@ -53,25 +44,16 @@ function bindGlobalEvents() {
     });
   });
 
-  const cartBtn = $(".cart-button");
-  const cart = $(".cart");
-  const overlay = $(".overlay");
-  const closeBtn = $(".cart-close");
-
-  cartBtn?.addEventListener("click", openCart);
-  closeBtn?.addEventListener("click", closeCart);
-  overlay?.addEventListener("click", closeCart);
+  $(".cart-button")?.addEventListener("click", openCart);
+  $(".cart-close")?.addEventListener("click", closeCart);
+  $(".overlay")?.addEventListener("click", closeCart);
 
   $("#checkout")?.addEventListener("click", () => {
-    const quoteModal = $("#quote-modal");
-    quoteModal?.setAttribute("aria-hidden", "false");
-    document.body.classList.add("quote-open");
+    $("#quote-modal")?.setAttribute("aria-hidden", "false");
   });
 
   $("#quote-close")?.addEventListener("click", () => {
-    const quoteModal = $("#quote-modal");
-    quoteModal?.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("quote-open");
+    $("#quote-modal")?.setAttribute("aria-hidden", "true");
   });
 
   $("#quote-checkout-form")?.addEventListener("submit", (e) => {
@@ -79,8 +61,6 @@ function bindGlobalEvents() {
     const name = $("#q-name")?.value?.trim() || "Customer";
     const email = $("#q-email")?.value?.trim() || "-";
     const company = $("#q-company")?.value?.trim() || "-";
-    const items = cartSummaryText();
-
     const result = $("#quote-result");
     if (result) {
       result.innerHTML = `
@@ -88,12 +68,11 @@ function bindGlobalEvents() {
         <p><b>Name:</b> ${escapeHtml(name)}<br/>
            <b>Email:</b> ${escapeHtml(email)}<br/>
            <b>Company:</b> ${escapeHtml(company)}</p>
-        <p><b>Items:</b><br/>${escapeHtml(items).replace(/\n/g, "<br/>")}</p>
+        <p><b>Items:</b><br/>${escapeHtml(cartSummaryText()).replace(/\n/g, "<br/>")}</p>
       `;
     }
   });
 
-  // Card interactions
   $("#product-grid")?.addEventListener("click", (e) => {
     const t = e.target;
     if (!(t instanceof HTMLElement)) return;
@@ -108,13 +87,9 @@ function bindGlobalEvents() {
         selectedSize = sizeEl?.value || "M";
       }
 
-      // same product + same size => increase qty
       const found = cart.find((x) => x.id === p.id && (x.size || null) === (selectedSize || null));
-      if (found) {
-        found.qty++;
-      } else {
-        cart.push({ ...p, size: selectedSize, qty: 1 });
-      }
+      if (found) found.qty++;
+      else cart.push({ ...p, size: selectedSize, qty: 1 });
 
       saveCart();
       toast(`Added to bag${selectedSize ? ` (${selectedSize})` : ""}`);
@@ -147,14 +122,11 @@ function bindGlobalEvents() {
   });
 }
 
-/* ---------- Products ---------- */
 function renderProducts() {
   const grid = $("#product-grid");
   if (!grid) return;
 
-  const visible = activeFilter === "all"
-    ? products
-    : products.filter((p) => p.category === activeFilter);
+  const visible = activeFilter === "all" ? products : products.filter((p) => p.category === activeFilter);
 
   grid.innerHTML = visible.map((p) => `
     <article class="product-card float-card">
@@ -175,7 +147,7 @@ function renderProducts() {
                   </select>`
                 : ``
             }
-            <button class="add shine" data-id="${p.id}">Add to Cart</button>
+            <button class="add shine" data-id="${p.id}" type="button">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -183,23 +155,18 @@ function renderProducts() {
   `).join("");
 }
 
-/* ---------- Cart ---------- */
 function loadCart() {
   try {
     const raw = localStorage.getItem(CART_KEY);
     cart = raw ? JSON.parse(raw) : [];
     if (!Array.isArray(cart)) cart = [];
-  } catch {
-    cart = [];
-  }
+  } catch { cart = []; }
   renderCart();
 }
-
 function saveCart() {
   localStorage.setItem(CART_KEY, JSON.stringify(cart));
   renderCart();
 }
-
 function renderCart() {
   const itemsWrap = $("#cart-items");
   const countEl = $("#cart-count");
@@ -214,35 +181,27 @@ function renderCart() {
   if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
 
   if (!itemsWrap) return;
-
-  if (!cart.length) {
-    itemsWrap.innerHTML = `<p class="empty">Your bag is empty.</p>`;
-    return;
-  }
+  if (!cart.length) { itemsWrap.innerHTML = `<p class="empty">Your bag is empty.</p>`; return; }
 
   itemsWrap.innerHTML = cart.map((i, idx) => `
     <div class="cart-item">
       <div>
         <b>${escapeHtml(i.name)}</b>
-        <div>
-          $${i.price}${i.size ? ` • Size: ${escapeHtml(i.size)}` : ""}
-        </div>
+        <div>$${i.price}${i.size ? ` • Size: ${escapeHtml(i.size)}` : ""}</div>
       </div>
       <div class="qty">
-        <button class="qty-minus" data-i="${idx}" aria-label="Decrease quantity">−</button>
+        <button class="qty-minus" data-i="${idx}" aria-label="Decrease quantity" type="button">−</button>
         <span>${i.qty}</span>
-        <button class="qty-plus" data-i="${idx}" aria-label="Increase quantity">+</button>
+        <button class="qty-plus" data-i="${idx}" aria-label="Increase quantity" type="button">+</button>
       </div>
-      <button class="remove-item" data-i="${idx}" aria-label="Remove item">×</button>
+      <button class="remove-item" data-i="${idx}" aria-label="Remove item" type="button">×</button>
     </div>
   `).join("");
 }
 
 function cartSummaryText() {
   if (!cart.length) return "No items";
-  return cart
-    .map(i => `• ${i.name}${i.size ? ` (Size ${i.size})` : ""} x${i.qty} — $${(i.price * i.qty).toFixed(2)}`)
-    .join("\n");
+  return cart.map(i => `• ${i.name}${i.size ? ` (Size ${i.size})` : ""} x${i.qty} — $${(i.price * i.qty).toFixed(2)}`).join("\n");
 }
 
 function openCart() {
@@ -254,7 +213,6 @@ function closeCart() {
   document.body.classList.remove("cart-open");
 }
 
-/* ---------- Hero slideshow ---------- */
 function initHeroSlideshow() {
   const slides = $$(".hero-slide");
   const dots = $$(".hero-dot");
@@ -274,10 +232,7 @@ function initHeroSlideshow() {
     });
   };
 
-  const play = () => {
-    stop();
-    timer = setInterval(() => go(i + 1), 4000);
-  };
+  const play = () => { stop(); timer = setInterval(() => go(i + 1), 4000); };
   const stop = () => timer && clearInterval(timer);
 
   prev?.addEventListener("click", () => { go(i - 1); play(); });
@@ -288,7 +243,6 @@ function initHeroSlideshow() {
   play();
 }
 
-/* ---------- Reveal ---------- */
 function initReveal() {
   const items = $$(".reveal, .stagger > *");
   if (!("IntersectionObserver" in window) || !items.length) {
@@ -306,7 +260,6 @@ function initReveal() {
   items.forEach((el) => io.observe(el));
 }
 
-/* ---------- Toast ---------- */
 function toast(msg) {
   const t = $(".toast");
   if (!t) return;
@@ -315,93 +268,6 @@ function toast(msg) {
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => t.classList.remove("show"), 1600);
 }
-
-/* ---------- Utilities ---------- */
 function escapeHtml(v = "") {
-  return String(v)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+  return String(v).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 }
-
-/* ===== SHAPED: Designer -> Quote textarea autofill (safe) ===== */
-(function () {
-  try {
-    const quoteSection = document.querySelector("#quote-form");
-    if (!quoteSection) return;
-
-    const textarea = quoteSection.querySelector("textarea");
-    if (!textarea) return;
-
-    const summaryRaw = localStorage.getItem("shapedQuoteDesignSummary");
-    const draftRaw = localStorage.getItem("shapedDesignerDraftAdvanced");
-    if (!summaryRaw && !draftRaw) return;
-
-    if (textarea.value.includes("Design Studio Submission")) return;
-
-    let summary = null;
-    let draft = null;
-    try { summary = summaryRaw ? JSON.parse(summaryRaw) : null; } catch (e) {}
-    try { draft = draftRaw ? JSON.parse(draftRaw) : null; } catch (e) {}
-
-    let draftId = localStorage.getItem("shapedDesignerDraftId");
-    if (!draftId) {
-      const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
-      draftId = `SHAPED-${Date.now().toString().slice(-6)}-${rand}`;
-      localStorage.setItem("shapedDesignerDraftId", draftId);
-    }
-
-    const front = draft?.sides?.front || {};
-    const back = draft?.sides?.back || {};
-
-    const createdAt = new Date().toLocaleString();
-
-    const lines = [
-      "Design Studio Submission",
-      "------------------------",
-      `Draft ID: ${draftId}`,
-      `Created At: ${createdAt}`,
-      "",
-      `Product Type: ${summary?.productType || draft?.productType || "-"}`,
-      `Product Color: ${summary?.productColor || draft?.productColor || "-"}`,
-      "",
-      "Front Side:",
-      `- Text: ${front.text || summary?.frontText || "-"}`,
-      `- Text Color: ${front.textColor || "-"}`,
-      `- Text Size: ${front.textSize || "-"}`,
-      `- Bold: ${typeof front.bold === "boolean" ? (front.bold ? "Yes" : "No") : "-"}`,
-      `- Italic: ${typeof front.italic === "boolean" ? (front.italic ? "Yes" : "No") : "-"}`,
-      `- Uppercase: ${typeof front.upper === "boolean" ? (front.upper ? "Yes" : "No") : "-"}`,
-      `- Align: ${front.align || "-"}`,
-      `- Image Uploaded: ${summary?.hasFrontImage || front.imageSrc ? "Yes" : "No"}`,
-      "",
-      "Back Side:",
-      `- Text: ${back.text || summary?.backText || "-"}`,
-      `- Text Color: ${back.textColor || "-"}`,
-      `- Text Size: ${back.textSize || "-"}`,
-      `- Bold: ${typeof back.bold === "boolean" ? (back.bold ? "Yes" : "No") : "-"}`,
-      `- Italic: ${typeof back.italic === "boolean" ? (back.italic ? "Yes" : "No") : "-"}`,
-      `- Uppercase: ${typeof back.upper === "boolean" ? (back.upper ? "Yes" : "No") : "-"}`,
-      `- Align: ${back.align || "-"}`,
-      `- Image Uploaded: ${summary?.hasBackImage || back.imageSrc ? "Yes" : "No"}`,
-      "",
-      "Order Notes:",
-      "- Please include quantity and size breakdown.",
-      "- Mention required delivery date.",
-      ""
-    ];
-
-    textarea.value = lines.join("\n") + (textarea.value ? `\n${textarea.value}` : "");
-
-    localStorage.setItem("shapedQuoteSubmissionMeta", JSON.stringify({
-      draftId,
-      createdAtISO: new Date().toISOString(),
-      productType: summary?.productType || draft?.productType || null,
-      productColor: summary?.productColor || draft?.productColor || null
-    }));
-  } catch (err) {
-    console.warn("Designer quote prefill skipped:", err);
-  }
-})();
