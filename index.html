@@ -6,12 +6,13 @@
   <meta name="description" content="SHAPED premium custom apparel for businesses, teams and events. Built by Intent." />
   <title>SHAPED | Built by Intent</title>
 
-  <link rel="stylesheet" href="styles.css?v=12001" />
-  <script defer src="script.js?v=12001"></script>
+  <!-- Keep these files in same folder as index.html -->
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="announcement">FREE SAMPLE CONSULTATION • BULK & CORPORATE ORDERS WELCOME</div>
+  <div class="announcement">FREE SAMPLE CONSULTATION • BULK &amp; CORPORATE ORDERS WELCOME</div>
 
   <header class="site-header">
     <a class="brand-right" href="#home" aria-label="SHAPED home">
@@ -20,7 +21,7 @@
       <span class="logo-text">SHAPED</span>
     </a>
 
-    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" type="button">☰</button>
 
     <nav class="nav" aria-label="Main navigation">
       <a href="#home">Home</a>
@@ -29,7 +30,7 @@
       <a href="#contact">Contact</a>
     </nav>
 
-    <button class="cart-button" aria-label="Open cart">
+    <button class="cart-button" aria-label="Open cart" type="button">
       <span class="cart-icon">🛍️</span>
       <span>Bag</span>
       <span id="cart-count">0</span>
@@ -55,14 +56,14 @@
         <div class="hero-slide"><img src="assets/Designer (19).png" alt="SHAPED design preview 3" /></div>
         <div class="hero-slide"><img src="assets/Designer (20).png" alt="SHAPED design preview 4" /></div>
 
-        <button class="hero-nav hero-prev" aria-label="Previous slide">‹</button>
-        <button class="hero-nav hero-next" aria-label="Next slide">›</button>
+        <button class="hero-nav hero-prev" aria-label="Previous slide" type="button">‹</button>
+        <button class="hero-nav hero-next" aria-label="Next slide" type="button">›</button>
 
         <div class="hero-dots" role="tablist" aria-label="Slideshow indicators">
-          <button class="hero-dot is-active" aria-label="Go to slide 1" aria-selected="true"></button>
-          <button class="hero-dot" aria-label="Go to slide 2" aria-selected="false"></button>
-          <button class="hero-dot" aria-label="Go to slide 3" aria-selected="false"></button>
-          <button class="hero-dot" aria-label="Go to slide 4" aria-selected="false"></button>
+          <button class="hero-dot is-active" aria-label="Go to slide 1" aria-selected="true" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 2" aria-selected="false" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 3" aria-selected="false" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 4" aria-selected="false" type="button"></button>
         </div>
       </div>
     </section>
@@ -83,10 +84,10 @@
           <h2>Top picks from SHAPED</h2>
         </div>
         <div class="filters" role="group" aria-label="Product filters">
-          <button class="active" data-filter="all">All</button>
-          <button data-filter="tees">Tees</button>
-          <button data-filter="hoodies">Hoodies</button>
-          <button data-filter="workwear">Workwear</button>
+          <button class="active" data-filter="all" type="button">All</button>
+          <button data-filter="tees" type="button">Tees</button>
+          <button data-filter="hoodies" type="button">Hoodies</button>
+          <button data-filter="workwear" type="button">Workwear</button>
         </div>
       </div>
       <div class="product-grid stagger" id="product-grid"></div>
@@ -116,8 +117,10 @@
         </div>
       </div>
 
-      <!-- IMPORTANT: Replace YOUR_FORM_ID with real Formspree id -->
-     <form class="quote-form reveal float-card" action="https://formspree.io/f/meaqjyzg" method="POST">
+      <!-- Replace YOUR_REAL_FORM_ID with actual Formspree id -->
+      <form class="quote-form reveal float-card"
+            action="https://formspree.io/f/YOUR_REAL_FORM_ID"
+            method="POST">
         <h3>Request a quote</h3>
 
         <div class="form-row">
@@ -159,7 +162,7 @@
   <aside class="cart" aria-hidden="true">
     <div class="cart-head">
       <h2>Your bag</h2>
-      <button class="cart-close" aria-label="Close cart">×</button>
+      <button class="cart-close" aria-label="Close cart" type="button">×</button>
     </div>
 
     <div id="cart-items"></div>
@@ -170,7 +173,7 @@
     </div>
 
     <div class="cart-foot">
-      <button class="button primary full" id="checkout">Checkout</button>
+      <button class="button primary full" id="checkout" type="button">Checkout</button>
     </div>
   </aside>
 
@@ -182,7 +185,7 @@
     <div class="quote-panel">
       <div class="quote-head">
         <h3>Get your quotation</h3>
-        <button id="quote-close" aria-label="Close">×</button>
+        <button id="quote-close" aria-label="Close" type="button">×</button>
       </div>
 
       <form id="quote-checkout-form" class="quote-checkout-form">
