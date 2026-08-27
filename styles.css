@@ -34,14 +34,14 @@ img{max-width:100%;display:block}
   backdrop-filter:blur(10px);
 }
 
-/* Always-visible top toolbar */
+/* STICKY/FIXED TOOLBAR */
 .site-header{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:99999;
-  height:84px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  height: 84px;
   display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:14px;padding:0 22px;
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
@@ -76,11 +76,65 @@ img{max-width:100%;display:block}
 .cart-icon{font-size:14px;line-height:1}
 #cart-count{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:#1f2937;color:#fff;font-size:11px;font-weight:700;padding:0 6px}
 
-/* important for fixed header */
+/* prevent content hidden behind fixed header */
 main{width:100%;max-width:none;margin:0;padding:94px 0 0 0}
 .full-bleed{width:100%;margin:0;border-radius:0}
 .full-bleed-pad{width:100%;padding-left:24px;padding-right:24px}
 
 .eyebrow{margin:0 0 10px;font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
 
-/* keep your remaining original css below this point */
+.hero{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:start;
+  padding:28px 32px 30px;
+}
+.hero-copy{
+  margin-top:-10px;
+  background:var(--glass);border:1px solid var(--line);border-radius:28px;
+  padding:52px 52px;backdrop-filter:blur(12px);max-width:860px;
+}
+.hero h1{margin:0;font-family:'Space Grotesk',sans-serif;font-size:clamp(56px,7.2vw,112px);line-height:.9;color:#1b2432}
+.hero h1 span{background:linear-gradient(90deg,var(--gold),#ddb56b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:52ch;color:var(--muted)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+
+.button{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;font-weight:700;border:1px solid var(--line);backdrop-filter:blur(8px)}
+.button.primary{background:linear-gradient(90deg,#e8c78b,#f2d9aa);color:#2a200f;border:0}
+.button.secondary{color:#2d3648;background:rgba(255,255,255,.5)}
+.button.full{width:100%}
+
+.hero-slideshow{
+  position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--line);
+  height:clamp(380px,40vw,620px);min-height:340px;background:#dfe4ec;
+}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s}
+.hero-slide.is-active{opacity:1;z-index:1}
+.hero-slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 6s ease}
+.hero-slide.is-active img{transform:scale(1.06)}
+.hero-nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:42px;height:42px;border-radius:50%;
+  border:1px solid rgba(41,53,70,.35);background:rgba(255,255,255,.45);color:#243042;font-size:28px;cursor:pointer;backdrop-filter:blur(8px)
+}
+.hero-prev{left:14px}.hero-next{right:14px}
+.hero-dots{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:10px;z-index:2}
+.hero-dot{width:10px;height:10px;border-radius:50%;border:1px solid #233044;background:transparent;cursor:pointer}
+.hero-dot.is-active{background:#233044}
+
+@media(max-width:900px){
+  .site-header{height:76px;padding:0 12px}
+  .brand-right img{height:30px;max-width:150px}
+  .brand-right.logo-fallback .logo-text{font-size:18px}
+  .menu-toggle{display:block}
+  .nav{position:absolute;left:0;right:0;top:76px;display:none;flex-direction:column;align-items:flex-start;padding:14px 20px;background:rgba(255,255,255,.86);border-bottom:1px solid var(--line)}
+  .nav.open{display:flex}
+  .hero{grid-template-columns:1fr;padding:24px 16px}
+  .hero-copy{margin-top:0;max-width:none;padding:34px}
+  .hero h1{font-size:clamp(42px,11vw,72px)}
+  .hero-slideshow{height:58vw;min-height:280px;max-height:420px}
+  .full-bleed-pad{padding-left:16px;padding-right:16px}
+  main{padding-top:86px}
+}
+@media(max-width:620px){
+  .brand-right img{height:26px;max-width:130px}
+  .brand-right.logo-fallback .logo-text{font-size:16px}
+  .hero-slideshow{height:64vw;min-height:240px;max-height:360px}
+}
