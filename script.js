@@ -386,3 +386,85 @@
     init();
   }
 })();
+
+/* ===== SHAPED: Designer -> Quote textarea autofill (safe) ===== */
+(function () {
+  try {
+    const quoteSection = document.querySelector("#quote-form");
+    if (!quoteSection) return;
+
+    const textarea = quoteSection.querySelector("textarea");
+    if (!textarea) return;
+
+    const summaryRaw = localStorage.getItem("shapedQuoteDesignSummary");
+    const draftRaw = localStorage.getItem("shapedDesignerDraftAdvanced");
+    if (!summaryRaw && !draftRaw) return;
+
+    // prevent duplicate insertion
+    if (textarea.value.includes("Design Studio Submission")) return;
+
+    let summary = null;
+    let draft = null;
+    try { summary = summaryRaw ? JSON.parse(summaryRaw) : null; } catch (e) {}
+    try { draft = draftRaw ? JSON.parse(draftRaw) : null; } catch (e) {}
+
+    let draftId = localStorage.getItem("shapedDesignerDraftId");
+    if (!draftId) {
+      const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
+      draftId = `SHAPED-${Date.now().toString().slice(-6)}-${rand}`;
+      localStorage.setItem("shapedDesignerDraftId", draftId);
+    }
+
+    const front = draft?.sides?.front || {};
+    const back = draft?.sides?.back || {};
+
+    const createdAt = new Date().toLocaleString();
+
+    const lines = [
+      "Design Studio Submission",
+      "------------------------",
+      `Draft ID: ${draftId}`,
+      `Created At: ${createdAt}`,
+      "",
+      `Product Type: ${summary?.productType || draft?.productType || "-"}`,
+      `Product Color: ${summary?.productColor || draft?.productColor || "-"}`,
+      "",
+      "Front Side:",
+      `- Text: ${front.text || summary?.frontText || "-"}`,
+      `- Text Color: ${front.textColor || "-"}`,
+      `- Text Size: ${front.textSize || "-"}`,
+      `- Bold: ${typeof front.bold === "boolean" ? (front.bold ? "Yes" : "No") : "-"}`,
+      `- Italic: ${typeof front.italic === "boolean" ? (front.italic ? "Yes" : "No") : "-"}`,
+      `- Uppercase: ${typeof front.upper === "boolean" ? (front.upper ? "Yes" : "No") : "-"}`,
+      `- Align: ${front.align || "-"}`,
+      `- Image Uploaded: ${summary?.hasFrontImage || front.imageSrc ? "Yes" : "No"}`,
+      "",
+      "Back Side:",
+      `- Text: ${back.text || summary?.backText || "-"}`,
+      `- Text Color: ${back.textColor || "-"}`,
+      `- Text Size: ${back.textSize || "-"}`,
+      `- Bold: ${typeof back.bold === "boolean" ? (back.bold ? "Yes" : "No") : "-"}`,
+      `- Italic: ${typeof back.italic === "boolean" ? (back.italic ? "Yes" : "No") : "-"}`,
+      `- Uppercase: ${typeof back.upper === "boolean" ? (back.upper ? "Yes" : "No") : "-"}`,
+      `- Align: ${back.align || "-"}`,
+      `- Image Uploaded: ${summary?.hasBackImage || back.imageSrc ? "Yes" : "No"}`,
+      "",
+      "Order Notes:",
+      "- Please include quantity and size breakdown.",
+      "- Mention required delivery date.",
+      ""
+    ];
+
+    textarea.value = lines.join("\n") + (textarea.value ? `\n${textarea.value}` : "");
+
+    // optional meta for future use
+    localStorage.setItem("shapedQuoteSubmissionMeta", JSON.stringify({
+      draftId,
+      createdAtISO: new Date().toISOString(),
+      productType: summary?.productType || draft?.productType || null,
+      productColor: summary?.productColor || draft?.productColor || null
+    }));
+  } catch (err) {
+    console.warn("Designer quote prefill skipped:", err);
+  }
+})();
