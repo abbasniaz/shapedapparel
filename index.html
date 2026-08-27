@@ -6,8 +6,8 @@
   <meta name="description" content="SHAPED premium custom apparel for businesses, teams and events. Built by Intent." />
   <title>SHAPED | Built by Intent</title>
 
-  <link rel="stylesheet" href="styles.css?v=11001" />
-  <script defer src="script.js?v=11001"></script>
+  <link rel="stylesheet" href="styles.css?v=12001" />
+  <script defer src="script.js?v=12001"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -15,7 +15,8 @@
 
   <header class="site-header">
     <a class="brand-right" href="#home" aria-label="SHAPED home">
-      <img src="assets/dsigner 18.png" alt="SHAPED" onerror="this.style.display='none'; this.parentElement.classList.add('logo-fallback')" />
+      <img src="assets/dsigner 18.png" alt="SHAPED"
+           onerror="this.style.display='none'; this.parentElement.classList.add('logo-fallback')" />
       <span class="logo-text">SHAPED</span>
     </a>
 
@@ -36,6 +37,7 @@
   </header>
 
   <main id="main">
+    <!-- HERO -->
     <section id="home" class="hero bg-home full-bleed">
       <div class="hero-copy reveal float-card">
         <p class="eyebrow">SHAPED APPAREL</p>
@@ -43,6 +45,7 @@
         <p>Premium custom apparel for businesses, teams, events and everyday wear.</p>
         <div class="actions">
           <a class="button primary shine" href="#shop">SHOP NOW</a>
+          <a class="button secondary" href="#quote-form">GET A QUOTE</a>
         </div>
       </div>
 
@@ -64,6 +67,7 @@
       </div>
     </section>
 
+    <!-- FEATURES -->
     <section class="feature-row stagger full-bleed-pad">
       <article class="float-card"><h3>Premium Quality</h3><p>Curated garments with premium feel and durability.</p></article>
       <article class="float-card"><h3>Fast Turnaround</h3><p>Reliable production timelines for teams and events.</p></article>
@@ -71,6 +75,7 @@
       <article class="float-card"><h3>Custom Branding</h3><p>DTF, print and logo solutions built for brand consistency.</p></article>
     </section>
 
+    <!-- SHOP -->
     <section id="shop" class="section reveal bg-shop full-bleed">
       <div class="section-head">
         <div>
@@ -87,35 +92,72 @@
       <div class="product-grid stagger" id="product-grid"></div>
     </section>
 
-    <!-- Quote form kept intentionally -->
+    <!-- QUOTE -->
     <section class="custom-section full-bleed-pad" id="quote-form">
       <div class="custom-copy reveal float-card">
-        <p class="eyebrow">START YOUR ORDER</p>
+        <p class="eyebrow">GET A QUOTE</p>
         <h2>Your idea.<br />Our craft.</h2>
-        <p>Submit your details and SHAPED will follow up with recommendations and pricing.</p>
+        <p>Tell us your requirement and we’ll reply with pricing and recommendations.</p>
+
+        <div style="margin-top:14px;display:grid;gap:8px">
+          <a href="mailto:abbasniaz99@gmail.com"
+             class="button secondary"
+             style="text-decoration:none;display:inline-flex;justify-content:center;">
+            Email: abbasniaz99@gmail.com
+          </a>
+          <a href="https://wa.me/16269443531"
+             target="_blank"
+             rel="noopener"
+             class="button secondary"
+             style="text-decoration:none;display:inline-flex;justify-content:center;">
+            WhatsApp: +1 626 944 3531
+          </a>
+          <small style="color:#667085;">Typical response time: within 24 hours</small>
+        </div>
       </div>
 
-      <form class="quote-form reveal float-card">
+      <!-- IMPORTANT: Replace YOUR_FORM_ID with real Formspree id -->
+      <form class="quote-form reveal float-card"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST">
         <h3>Request a quote</h3>
+
         <div class="form-row">
-          <label>Name<input required /></label>
-          <label>Email<input required type="email" /></label>
+          <label>Name
+            <input name="name" required />
+          </label>
+          <label>Email
+            <input name="email" type="email" required />
+          </label>
         </div>
+
         <div class="form-row">
-          <label>Phone<input type="tel" /></label>
-          <label>Organization<input /></label>
+          <label>Phone
+            <input name="phone" type="tel" />
+          </label>
+          <label>Organization
+            <input name="organization" />
+          </label>
         </div>
-        <label>Project details<textarea required rows="5"></textarea></label>
+
+        <label>Project details
+          <textarea name="project_details" required rows="5"></textarea>
+        </label>
+
+        <input type="hidden" name="_subject" value="New SHAPED Quote Request" />
+
         <button class="button primary full shine" type="submit">Send Quote Request</button>
       </form>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact" class="section reveal full-bleed-pad">
       <p class="eyebrow">CONTACT</p>
       <h2>Let’s build something.</h2>
     </section>
   </main>
 
+  <!-- CART -->
   <aside class="cart" aria-hidden="true">
     <div class="cart-head">
       <h2>Your bag</h2>
@@ -137,6 +179,7 @@
   <div class="overlay"></div>
   <div class="toast" role="status" aria-live="polite"></div>
 
+  <!-- QUOTE MODAL -->
   <div class="quote-modal" id="quote-modal" aria-hidden="true">
     <div class="quote-panel">
       <div class="quote-head">
