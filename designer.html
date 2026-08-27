@@ -2,139 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SHAPED | Design Studio</title>
-  <meta name="description" content="Create your custom SHAPED apparel design." />
-  <link rel="stylesheet" href="styles.css?v=4003" />
-  <style>
-    .studio-wrap{max-width:1100px;margin:40px auto;padding:0 20px;color:#fff}
-    .studio-card{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:18px;
-      padding:24px;
-    }
-    .studio-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      margin-top:14px;
-    }
-    .studio-panel{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:14px;
-      padding:16px;
-    }
-    .studio-preview{
-      min-height:360px;
-      display:grid;
-      place-items:center;
-    }
-    .tee{
-      width:220px;height:250px;border-radius:34px 34px 42px 42px;
-      position:relative;display:grid;place-items:center;
-      font-weight:700;font-size:24px;
-      background:#111;color:#fff;
-    }
-    .tee::before,.tee::after{
-      content:"";position:absolute;top:26px;width:64px;height:64px;border-radius:16px;background:inherit;
-    }
-    .tee::before{left:-42px;transform:rotate(26deg)}
-    .tee::after{right:-42px;transform:rotate(-26deg)}
-    .row{display:grid;gap:8px;margin-bottom:12px}
-    input,select{
-      width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.24);
-      background:rgba(255,255,255,.06);color:#fff;font:inherit;
-    }
-    @media (max-width:900px){.studio-grid{grid-template-columns:1fr}}
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SHAPED Design Studio</title>
+  <link rel="stylesheet" href="designer.css?v=12001" />
+  <script defer src="designer.js?v=12001"></script>
 </head>
-<body>
-  <div class="announcement">DESIGN STUDIO • BUILD YOUR LOOK</div>
-
-  <header class="site-header">
-    <a class="brand-right" href="index.html" aria-label="SHAPED home">
-      <img src="assets/Designer (18).png" alt="SHAPED logo" />
-    </a>
-
-    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-
-    <nav class="nav" aria-label="Main navigation">
-      <a href="index.html#home">Home</a>
-      <a href="index.html#shop">Shop</a>
-      <a href="index.html#custom">Custom Orders</a>
-      <a href="designer.html">Design Studio</a>
-      <a href="index.html#contact">Contact</a>
-    </nav>
-
-    <a class="cart-button" href="index.html#custom">Quote</a>
-  </header>
-
-  <main class="studio-wrap">
-    <section class="studio-card">
+<body class="designer-page">
+  <main class="designer-wrap">
+    <section class="designer-panel">
       <p class="eyebrow">DESIGN STUDIO</p>
-      <h1 style="margin:0 0 8px 0;font-family:'Space Grotesk',sans-serif;">Create Your Custom Apparel</h1>
-      <p style="margin-top:0;color:#c7cedf">This is now correctly linked. You can customize preview color/text and submit for production.</p>
+      <h1>Create Your Custom Apparel</h1>
+      <p>This is now correctly linked. You can customize preview color/text and submit for production.</p>
 
-      <div class="studio-grid">
-        <div class="studio-panel">
-          <div class="row">
-            <label>T-shirt Color</label>
-            <select id="teeColor">
-              <option value="#111111">Black</option>
-              <option value="#f3f3ef">Off White</option>
-              <option value="#1d3a34">Forest</option>
-              <option value="#2f3542">Charcoal</option>
-              <option value="#7a5c43">Brown</option>
-            </select>
-          </div>
-          <div class="row">
-            <label>Print Text</label>
-            <input id="printText" type="text" value="SHAPED" maxlength="12" />
-          </div>
-          <div class="row">
-            <label>Print Color</label>
-            <select id="printColor">
-              <option value="#ffffff">White</option>
-              <option value="#111111">Black</option>
-              <option value="#d6b06b">Gold</option>
-              <option value="#4ecdc4">Teal</option>
-            </select>
-          </div>
+      <form id="designer-form" class="designer-form">
+        <label for="shirt-color">T-shirt Color</label>
+        <select id="shirt-color">
+          <option value="#111111">Black</option>
+          <option value="#f3f4f6">White</option>
+          <option value="#1f2937">Navy</option>
+          <option value="#7c5a3a">Brown</option>
+          <option value="#2f6b57">Green</option>
+        </select>
 
-          <a class="button primary shine" href="index.html#custom" style="margin-top:8px;">Continue to Quote Form</a>
-        </div>
+        <label for="print-text">Print Text</label>
+        <input id="print-text" type="text" value="SHAPED" maxlength="22" />
 
-        <div class="studio-panel studio-preview">
-          <div class="tee" id="teePreview">SHAPED</div>
+        <label for="print-color">Print Color</label>
+        <select id="print-color">
+          <option value="#ffffff">White</option>
+          <option value="#111111">Black</option>
+          <option value="#d4a64f">Gold</option>
+          <option value="#2f6b57">Green</option>
+          <option value="#2b6cb0">Blue</option>
+        </select>
+
+        <label for="design-upload">Upload Design (PNG)</label>
+        <input id="design-upload" type="file" accept=".png,image/png" />
+        <small>Transparent PNG recommended</small>
+
+        <button type="submit" class="cta">Continue to Quote Form</button>
+      </form>
+    </section>
+
+    <section class="preview-panel">
+      <div class="shirt-preview">
+        <div class="mock-shirt" id="mock-shirt">
+          <img id="shirt-design-image" alt="Uploaded design preview" />
+          <span id="shirt-text">SHAPED</span>
         </div>
       </div>
     </section>
   </main>
-
-  <script>
-    const tee = document.getElementById('teePreview');
-    const teeColor = document.getElementById('teeColor');
-    const printText = document.getElementById('printText');
-    const printColor = document.getElementById('printColor');
-
-    function updatePreview(){
-      tee.style.background = teeColor.value;
-      tee.style.color = printColor.value;
-      tee.textContent = (printText.value || 'SHAPED').toUpperCase();
-    }
-
-    teeColor.addEventListener('change', updatePreview);
-    printText.addEventListener('input', updatePreview);
-    printColor.addEventListener('change', updatePreview);
-    updatePreview();
-
-    document.querySelector('.menu-toggle')?.addEventListener('click', () => {
-      const nav = document.querySelector('.nav');
-      if (!nav) return;
-      nav.classList.toggle('open');
-    });
-  </script>
 </body>
 </html>
