@@ -282,3 +282,43 @@ input,textarea{
   .feature-row,.product-grid,.form-row{grid-template-columns:1fr}
   .brand-right img{height:46px}
 }
+
+/* ===== Logo treatment for light glass theme ===== */
+.brand-right{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:14px;
+  background:rgba(255,255,255,.52);
+  border:1px solid rgba(90,102,122,.22);
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 24px rgba(110,125,150,.12);
+}
+
+.brand-right img{
+  height:56px;
+  width:auto;
+  object-fit:contain;
+  mix-blend-mode:multiply; /* removes dark/white box feel on light bg */
+  filter:
+    contrast(1.08)
+    saturate(0.92)
+    brightness(0.98)
+    drop-shadow(0 1px 0 rgba(255,255,255,.7));
+}
+
+/* hover polish */
+.brand-right:hover{
+  transform:translateY(-1px);
+  box-shadow:0 12px 28px rgba(110,125,150,.16);
+  transition:.25s ease;
+}
+
+/* responsive logo sizing */
+@media (max-width:900px){
+  .brand-right{padding:5px 8px}
+  .brand-right img{height:46px}
+}
+@media (max-width:620px){
+  .brand-right img{height:42px}
+}
