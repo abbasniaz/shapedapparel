@@ -168,7 +168,7 @@ document.querySelector("#quote-checkout-form")?.addEventListener("submit", (e) =
   result.innerHTML = `
     <p><strong>Quotation for:</strong> ${name}${company ? ` (${company})` : ""}</p>
     <p><strong>Email:</strong> ${email}</p>
-    <hr style="border-color:rgba(255,255,255,.16)">
+    <hr style="border-color:rgba(95,109,130,.24)">
     <p>Items: <strong>${items}</strong></p>
     <p>Subtotal: <strong>$${subtotal.toFixed(2)}</strong></p>
     <p>Bulk Discount (${items >= 10 ? "10%" : "0%"}): <strong>-$${(subtotal * bulkDiscount).toFixed(2)}</strong></p>
