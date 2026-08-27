@@ -34,7 +34,7 @@ img{max-width:100%;display:block}
   backdrop-filter:blur(10px);
 }
 
-/* ==== FORCE STICKY/FIXED TOP TOOLBAR ==== */
+/* ===== FIXED ALWAYS-VISIBLE HEADER ===== */
 .site-header{
   position: fixed !important;
   top: 0 !important;
@@ -81,7 +81,7 @@ img{max-width:100%;display:block}
 .cart-icon{font-size:14px;line-height:1}
 #cart-count{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:#1f2937;color:#fff;font-size:11px;font-weight:700;padding:0 6px}
 
-/* push content below fixed header + announcement */
+/* Push page below fixed header */
 main{width:100%;max-width:none;margin:0;padding:94px 0 0 0 !important}
 .full-bleed{width:100%;margin:0;border-radius:0}
 .full-bleed-pad{width:100%;padding-left:24px;padding-right:24px}
