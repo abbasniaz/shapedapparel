@@ -34,12 +34,15 @@ img{max-width:100%;display:block}
   backdrop-filter:blur(10px);
 }
 
-/* STICKY TOOLBAR (always visible) */
+/* ==== FORCE STICKY/FIXED TOP TOOLBAR ==== */
 .site-header{
-  position:sticky;
-  top:0;
-  z-index:9999;
-  height:84px;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 99999 !important;
+  height: 84px;
   display:grid;
   grid-template-columns:auto auto 1fr auto;
   align-items:center;
@@ -47,7 +50,7 @@ img{max-width:100%;display:block}
   padding:0 22px;
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-  background:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.95) !important;
   border-bottom:1px solid var(--line);
 }
 
@@ -78,13 +81,13 @@ img{max-width:100%;display:block}
 .cart-icon{font-size:14px;line-height:1}
 #cart-count{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:#1f2937;color:#fff;font-size:11px;font-weight:700;padding:0 6px}
 
-main{width:100%;max-width:none;margin:0;padding:0}
+/* push content below fixed header + announcement */
+main{width:100%;max-width:none;margin:0;padding:94px 0 0 0 !important}
 .full-bleed{width:100%;margin:0;border-radius:0}
 .full-bleed-pad{width:100%;padding-left:24px;padding-right:24px}
 
 .eyebrow{margin:0 0 10px;font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
 
-/* HERO moved up + bigger card */
 .hero{
   display:grid;grid-template-columns:1fr 1.1fr;gap:32px;align-items:start;
   padding:28px 32px 30px;
@@ -104,7 +107,6 @@ main{width:100%;max-width:none;margin:0;padding:0}
 .button.secondary{color:#2d3648;background:rgba(255,255,255,.5)}
 .button.full{width:100%}
 
-/* Slideshow */
 .hero-slideshow{
   position:relative;overflow:hidden;border-radius:24px;border:1px solid var(--line);
   height:clamp(380px,40vw,620px);min-height:340px;background:#dfe4ec;
@@ -219,6 +221,7 @@ input,textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid 
   .custom-cta,.custom-section{grid-template-columns:1fr}
   .section{padding:36px 16px}
   .full-bleed-pad{padding-left:16px;padding-right:16px}
+  main{padding-top:86px !important}
 }
 @media(max-width:620px){
   .brand-right img{height:26px;max-width:130px}
