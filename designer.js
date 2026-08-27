@@ -1,5 +1,14 @@
 const $ = (id) => document.getElementById(id);
 
+/* nav mobile toggle */
+const menuBtn = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".nav");
+menuBtn?.addEventListener("click", () => {
+  nav?.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", nav?.classList.contains("open") ? "true" : "false");
+});
+
+/* controls */
 const form = $("designer-form");
 const productType = $("product-type");
 const viewSide = $("view-side");
@@ -81,6 +90,7 @@ function setActive(group, active){
 function syncCanvasSize() {
   const r = mock.getBoundingClientRect();
   const ratio = window.devicePixelRatio || 1;
+
   const backup = document.createElement("canvas");
   backup.width = canvas.width || 1;
   backup.height = canvas.height || 1;
@@ -310,7 +320,22 @@ window.addEventListener("mousemove", (e)=>{
 });
 window.addEventListener("mouseup", endDraw);
 
-/* undo actions */
+/* touch draw */
+canvas.addEventListener("touchstart", (e)=>{
+  if(state.mode==="move") return;
+  const t = e.touches[0];
+  const r = canvas.getBoundingClientRect();
+  startDraw(t.clientX-r.left, t.clientY-r.top);
+}, { passive:true });
+window.addEventListener("touchmove", (e)=>{
+  if(!state.drawing) return;
+  const t = e.touches[0];
+  const r = canvas.getBoundingClientRect();
+  moveDraw(t.clientX-r.left, t.clientY-r.top);
+}, { passive:true });
+window.addEventListener("touchend", endDraw, { passive:true });
+
+/* undo/redo/clear */
 undoBtn.addEventListener("click", undo);
 redoBtn.addEventListener("click", redo);
 clearBtn.addEventListener("click", ()=>{
@@ -341,7 +366,7 @@ window.addEventListener("pointermove", (e)=>{
 function getDraft(){
   activeSide().drawing = canvasToData();
   return {
-    version:3,
+    version: 4,
     productType: productType.value,
     productColor: shirtColorCustom.value || shirtColor.value,
     sides
@@ -415,6 +440,7 @@ downloadBtn.addEventListener("click", ()=>{
   const s = activeSide();
   const drawRest = ()=>{
     ex.drawImage(canvas,250,180,700,880);
+
     let txt = s.upper ? (s.text || "SHAPED").toUpperCase() : (s.text || "SHAPED");
     ex.fillStyle = s.textColor;
     ex.font = `${s.italic ? "italic " : ""}${s.bold ? "700":"500"} ${Math.round(s.textSize*1.55)}px Arial`;
@@ -446,9 +472,10 @@ downloadBtn.addEventListener("click", ()=>{
   }
 });
 
-/* submit to quote */
+/* submit to quote form */
 form.addEventListener("submit", (e)=>{
   e.preventDefault();
+
   localStorage.setItem("shapedDesignerDraftAdvanced", JSON.stringify(getDraft()));
   localStorage.setItem("shapedQuoteDesignSummary", JSON.stringify({
     productType: productType.value,
@@ -458,10 +485,11 @@ form.addEventListener("submit", (e)=>{
     hasFrontImage: !!sides.front.imageSrc,
     hasBackImage: !!sides.back.imageSrc
   }));
+
   window.location.href = "index.html#quote-form";
 });
 
-/* helpers */
+/* utils */
 function roundRect(ctx, x, y, w, h, r, fill, stroke){
   ctx.beginPath();
   ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
