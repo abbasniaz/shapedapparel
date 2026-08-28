@@ -192,15 +192,10 @@ body{
 /* =========================================================
    07) BACKGROUND IMAGES (EDIT HERE IF IMAGE CHANGES)
    ========================================================= */
-.bg-home{
-  background:
-    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,.34)),
-    url("./assets/Designer (19).png") center/cover no-repeat !important;
-}
 .bg-shop{
   background:
-    linear-gradient(rgba(255,255,255,.44), rgba(255,255,255,.44)),
-    url("./assets/Designer (20).png") center/cover no-repeat !important;
+    radial-gradient(800px 300px at 15% -10%, rgba(255,255,255,.9), transparent 60%),
+    linear-gradient(140deg,#f7f9fc,#edf2f8) !important;
 }
 
 
