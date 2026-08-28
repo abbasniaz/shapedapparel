@@ -1,23 +1,39 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- =========================================================
+       01) META / TITLE
+       ========================================================= -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="SHAPED premium custom apparel for businesses, teams and events. Built by Intent." />
   <title>SHAPED | Built by Intent</title>
 
-  <!-- cache-busting version -->
-  <link rel="stylesheet" href="styles.css?v=3001" />
-  <script defer src="script.js?v=3001"></script>
+  <!-- =========================================================
+       02) STYLES + SCRIPT (CACHE-BUSTING VERSION)
+       If you update files and browser shows old version,
+       change v= number (e.g., 5001 -> 5002)
+       ========================================================= -->
+  <link rel="stylesheet" href="styles.css?v=5001" />
+  <script defer src="script.js?v=5001"></script>
 </head>
 <body>
+  <!-- =========================================================
+       03) ACCESSIBILITY + TOP ANNOUNCEMENT
+       ========================================================= -->
   <a class="skip" href="#main">Skip to content</a>
   <div class="announcement">FREE SAMPLE CONSULTATION • BULK &amp; CORPORATE ORDERS WELCOME</div>
 
+  <!-- =========================================================
+       04) HEADER / NAV / LOGO / BAG BUTTON
+       ========================================================= -->
   <header class="site-header">
     <a class="brand-right" href="#home" aria-label="SHAPED home">
-      <img src="assets/dsigner 18.png" alt="SHAPED"
-           onerror="this.style.display='none'; this.parentElement.classList.add('logo-fallback')" />
+      <img
+        src="assets/dsigner 18.png"
+        alt="SHAPED"
+        onerror="this.style.display='none'; this.parentElement.classList.add('logo-fallback')"
+      />
       <span class="logo-text">SHAPED</span>
     </a>
 
@@ -38,7 +54,9 @@
   </header>
 
   <main id="main">
-    <!-- HERO -->
+    <!-- =========================================================
+         05) HERO SECTION (LEFT TEXT + RIGHT SLIDESHOW)
+         ========================================================= -->
     <section id="home" class="hero bg-home full-bleed">
       <div class="hero-copy reveal float-card">
         <p class="eyebrow">SHAPED APPAREL</p>
@@ -51,10 +69,18 @@
       </div>
 
       <div class="hero-slideshow reveal" aria-label="SHAPED hero slideshow">
-        <div class="hero-slide is-active"><img src="assets/Designer (19).png" alt="SHAPED design preview 1" /></div>
-        <div class="hero-slide"><img src="assets/Designer (20).png" alt="SHAPED design preview 2" /></div>
-        <div class="hero-slide"><img src="assets/Designer (19).png" alt="SHAPED design preview 3" /></div>
-        <div class="hero-slide"><img src="assets/Designer (20).png" alt="SHAPED design preview 4" /></div>
+        <div class="hero-slide is-active">
+          <img src="assets/Designer (19).png" alt="SHAPED design preview 1" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/Designer (20).png" alt="SHAPED design preview 2" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/Designer (19).png" alt="SHAPED design preview 3" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/Designer (20).png" alt="SHAPED design preview 4" />
+        </div>
 
         <button class="hero-nav hero-prev" aria-label="Previous slide" type="button">‹</button>
         <button class="hero-nav hero-next" aria-label="Next slide" type="button">›</button>
@@ -68,21 +94,39 @@
       </div>
     </section>
 
-    <!-- FEATURES -->
+    <!-- =========================================================
+         06) FEATURE STRIP
+         ========================================================= -->
     <section class="feature-row stagger full-bleed-pad">
-      <article class="float-card"><h3>Premium Quality</h3><p>Curated garments with premium feel and durability.</p></article>
-      <article class="float-card"><h3>Fast Turnaround</h3><p>Reliable production timelines for teams and events.</p></article>
-      <article class="float-card"><h3>Bulk Discounts</h3><p>Competitive pricing for business and corporate orders.</p></article>
-      <article class="float-card"><h3>Custom Branding</h3><p>DTF, print and logo solutions built for brand consistency.</p></article>
+      <article class="float-card">
+        <h3>Premium Quality</h3>
+        <p>Curated garments with premium feel and durability.</p>
+      </article>
+      <article class="float-card">
+        <h3>Fast Turnaround</h3>
+        <p>Reliable production timelines for teams and events.</p>
+      </article>
+      <article class="float-card">
+        <h3>Bulk Discounts</h3>
+        <p>Competitive pricing for business and corporate orders.</p>
+      </article>
+      <article class="float-card">
+        <h3>Custom Branding</h3>
+        <p>DTF, print and logo solutions built for brand consistency.</p>
+      </article>
     </section>
 
-    <!-- SHOP -->
+    <!-- =========================================================
+         07) SHOP SECTION + FILTER BUTTONS + PRODUCT GRID
+         NOTE: Product cards are rendered by script.js into #product-grid
+         ========================================================= -->
     <section id="shop" class="section reveal bg-shop full-bleed">
       <div class="section-head">
         <div>
           <p class="eyebrow">BEST SELLERS</p>
           <h2>Top picks from SHAPED</h2>
         </div>
+
         <div class="filters" role="group" aria-label="Product filters">
           <button class="active" data-filter="all" type="button">All</button>
           <button data-filter="tees" type="button">Tees</button>
@@ -90,10 +134,13 @@
           <button data-filter="workwear" type="button">Workwear</button>
         </div>
       </div>
+
       <div class="product-grid stagger" id="product-grid"></div>
     </section>
 
-    <!-- QUOTE -->
+    <!-- =========================================================
+         08) QUOTE SECTION (CONTACT LINKS + FORMSPREE FORM)
+         ========================================================= -->
     <section class="custom-section full-bleed-pad" id="quote-form">
       <div class="custom-copy reveal float-card">
         <p class="eyebrow">GET A QUOTE</p>
@@ -101,47 +148,59 @@
         <p>Tell us your requirement and we’ll reply with pricing and recommendations.</p>
 
         <div style="margin-top:14px;display:grid;gap:8px">
-          <a href="mailto:abbasniaz99@gmail.com"
-             class="button secondary"
-             style="text-decoration:none;display:inline-flex;justify-content:center;">
+          <a
+            href="mailto:abbasniaz99@gmail.com"
+            class="button secondary"
+            style="text-decoration:none;display:inline-flex;justify-content:center;"
+          >
             Email: abbasniaz99@gmail.com
           </a>
-          <a href="https://wa.me/16269443531"
-             target="_blank"
-             rel="noopener"
-             class="button secondary"
-             style="text-decoration:none;display:inline-flex;justify-content:center;">
+
+          <a
+            href="https://wa.me/16269443531"
+            target="_blank"
+            rel="noopener"
+            class="button secondary"
+            style="text-decoration:none;display:inline-flex;justify-content:center;"
+          >
             WhatsApp: +1 626 944 3531
           </a>
+
           <small style="color:#667085;">Typical response time: within 24 hours</small>
         </div>
       </div>
 
-      <!-- Replace with your real Formspree endpoint -->
-      <form class="quote-form reveal float-card"
-            action="https://formspree.io/f/YOUR_REAL_FORM_ID"
-            method="POST">
+      <form
+        class="quote-form reveal float-card"
+        action="https://formspree.io/f/meaqjyzg"
+        method="POST"
+      >
         <h3>Request a quote</h3>
 
         <div class="form-row">
-          <label>Name
+          <label>
+            Name
             <input name="name" required />
           </label>
-          <label>Email
+          <label>
+            Email
             <input name="email" type="email" required />
           </label>
         </div>
 
         <div class="form-row">
-          <label>Phone
+          <label>
+            Phone
             <input name="phone" type="tel" />
           </label>
-          <label>Organization
+          <label>
+            Organization
             <input name="organization" />
           </label>
         </div>
 
-        <label>Project details
+        <label>
+          Project details
           <textarea name="project_details" required rows="5"></textarea>
         </label>
 
@@ -151,14 +210,19 @@
       </form>
     </section>
 
-    <!-- CONTACT -->
+    <!-- =========================================================
+         09) CONTACT SECTION
+         ========================================================= -->
     <section id="contact" class="section reveal full-bleed-pad">
       <p class="eyebrow">CONTACT</p>
       <h2>Let’s build something.</h2>
     </section>
   </main>
 
-  <!-- CART -->
+  <!-- =========================================================
+       10) CART DRAWER
+       NOTE: Cart items are rendered by script.js into #cart-items
+       ========================================================= -->
   <aside class="cart" aria-hidden="true">
     <div class="cart-head">
       <h2>Your bag</h2>
@@ -168,8 +232,14 @@
     <div id="cart-items"></div>
 
     <div class="cart-summary">
-      <div class="summary-row"><span>Total items</span><strong id="summary-items">0</strong></div>
-      <div class="summary-row"><span>Subtotal</span><strong id="summary-subtotal">$0.00</strong></div>
+      <div class="summary-row">
+        <span>Total items</span>
+        <strong id="summary-items">0</strong>
+      </div>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <strong id="summary-subtotal">$0.00</strong>
+      </div>
     </div>
 
     <div class="cart-foot">
@@ -177,10 +247,15 @@
     </div>
   </aside>
 
+  <!-- =========================================================
+       11) OVERLAY + TOAST
+       ========================================================= -->
   <div class="overlay"></div>
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <!-- QUOTE MODAL -->
+  <!-- =========================================================
+       12) QUOTE MODAL (FROM CART CHECKOUT BUTTON)
+       ========================================================= -->
   <div class="quote-modal" id="quote-modal" aria-hidden="true">
     <div class="quote-panel">
       <div class="quote-head">
@@ -189,9 +264,19 @@
       </div>
 
       <form id="quote-checkout-form" class="quote-checkout-form">
-        <label>Name<input id="q-name" required /></label>
-        <label>Email<input id="q-email" type="email" required /></label>
-        <label>Company (optional)<input id="q-company" /></label>
+        <label>
+          Name
+          <input id="q-name" required />
+        </label>
+        <label>
+          Email
+          <input id="q-email" type="email" required />
+        </label>
+        <label>
+          Company (optional)
+          <input id="q-company" />
+        </label>
+
         <button class="button primary full" type="submit">Generate Quote</button>
       </form>
 
