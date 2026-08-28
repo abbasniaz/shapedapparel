@@ -159,6 +159,8 @@ function renderProducts() {
       </div>
     </article>
   `).join("");
+
+  revealGridItemsNow();
 }
 
 
@@ -488,3 +490,14 @@ function escapeHtml(v = "") {
     console.warn("Designer quote prefill skipped:", err);
   }
 })();
+
+
+/* =========================================================
+   20) GRID REVEAL FIX AFTER FILTER RE-RENDER
+   keeps newly injected .stagger children visible
+   ========================================================= */
+function revealGridItemsNow() {
+  const grid = $("#product-grid");
+  if (!grid) return;
+  $$(".product-card", grid).forEach((el) => el.classList.add("in"));
+}
