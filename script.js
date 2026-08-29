@@ -97,23 +97,7 @@ function bindGlobalEvents() {
   });
 
   // quote modal summary
-  $("#quote-checkout-form")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = $("#q-name")?.value?.trim() || "Customer";
-    const email = $("#q-email")?.value?.trim() || "-";
-    const company = $("#q-company")?.value?.trim() || "-";
-    const result = $("#quote-result");
-
-    if (result) {
-      result.innerHTML = `
-        <p><strong>Quote request ready ✅</strong></p>
-        <p><b>Name:</b> ${escapeHtml(name)}<br/>
-           <b>Email:</b> ${escapeHtml(email)}<br/>
-           <b>Company:</b> ${escapeHtml(company)}</p>
-        <p><b>Items:</b><br/>${escapeHtml(cartSummaryText()).replace(/\n/g, "<br/>")}</p>
-      `;
-    }
-  });
+ 
 
   // delegated clicks for product cards + cart row buttons
   $("#product-grid")?.addEventListener("click", onGridClick);
