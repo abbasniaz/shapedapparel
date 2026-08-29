@@ -145,104 +145,74 @@
     <!-- =========================================================
          08) QUOTE SECTION (CONTACT LINKS + FORMSPREE FORM)
          ========================================================= -->
-   <form class="quote-form" id="quoteForm">
-  <h3>Request a quote</h3>
+    <section class="custom-section full-bleed-pad" id="quote-form">
+      <div class="custom-copy reveal float-card">
+        <p class="eyebrow">GET A QUOTE</p>
+        <h2>Your idea.<br />Our craft.</h2>
+        <p>Tell us your requirement and we’ll reply with pricing and recommendations.</p>
 
-  <div class="form-row">
-    <label>
-      Name
-      <input
-        required
-        type="text"
-        name="name"
-        id="quoteName"
-        autocomplete="name"
-        placeholder="Your full name"
+        <div style="margin-top:14px;display:grid;gap:8px">
+          <a
+            href="mailto:abbasniaz99@gmail.com"
+            class="button secondary"
+            style="text-decoration:none;display:inline-flex;justify-content:center;"
+          >
+            Email: abbasniaz99@gmail.com
+          </a>
+
+          <a
+            href="https://wa.me/16269443531"
+            target="_blank"
+            rel="noopener"
+            class="button secondary"
+            style="text-decoration:none;display:inline-flex;justify-content:center;"
+          >
+            WhatsApp: +1 626 944 3531
+          </a>
+
+          <small style="color:#667085;">Typical response time: within 24 hours</small>
+        </div>
+      </div>
+
+      <form
+        class="quote-form reveal float-card"
+        action="https://formspree.io/f/meaqjyzg"
+        method="POST"
       >
-    </label>
+        <h3>Request a quote</h3>
 
-    <label>
-      Email
-      <input
-        required
-        type="email"
-        name="email"
-        id="quoteEmail"
-        autocomplete="email"
-        placeholder="you@example.com"
-      >
-    </label>
-  </div>
+        <div class="form-row">
+          <label>
+            Name
+            <input name="name" required />
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" required />
+          </label>
+        </div>
 
-  <div class="form-row">
-    <label>
-      Phone
-      <input
-        type="tel"
-        name="phone"
-        id="quotePhone"
-        autocomplete="tel"
-        placeholder="Your phone number"
-      >
-    </label>
+        <div class="form-row">
+          <label>
+            Phone
+            <input name="phone" type="tel" />
+          </label>
+          <label>
+            Organization
+            <input name="organization" />
+          </label>
+        </div>
 
-    <label>
-      Organization
-      <input
-        type="text"
-        name="organization"
-        id="quoteOrganization"
-        autocomplete="organization"
-        placeholder="Business, team or organization"
-      >
-    </label>
-  </div>
+        <label>
+          Project details
+          <textarea name="project_details" required rows="5"></textarea>
+        </label>
 
-  <div class="form-row">
-    <label>
-      Product
-      <select name="product" id="quoteProduct" required>
-        <option value="">Select a product</option>
-        <option value="T-shirts">T-shirts</option>
-        <option value="Hoodies">Hoodies</option>
-        <option value="Polos">Polos</option>
-        <option value="Workwear">Workwear</option>
-        <option value="Mixed order">Mixed order</option>
-      </select>
-    </label>
+        <input type="hidden" name="_subject" value="New SHAPED Quote Request" />
 
-    <label>
-      Estimated quantity
-      <select name="quantity" id="quoteQuantity" required>
-        <option value="">Select quantity</option>
-        <option value="1–11">1–11</option>
-        <option value="12–24">12–24</option>
-        <option value="25–49">25–49</option>
-        <option value="50–99">50–99</option>
-        <option value="100+">100+</option>
-      </select>
-    </label>
-  </div>
-
-  <label>
-    Project details
-    <textarea
-      required
-      name="details"
-      id="quoteDetails"
-      rows="5"
-      placeholder="Tell us about your colors, sizes, deadline, logo placement and other requirements..."
-    ></textarea>
-  </label>
-
-  <button class="button primary full" type="submit">
-    Send Quote Request
-  </button>
-
-  <small>
-    Your information will be used only to prepare your SHAPED apparel quote.
-  </small>
-</form>
+        <button class="button primary full shine" type="submit">Send Quote Request</button>
+      </form>
+    </section>
 
     <!-- =========================================================
          09) CONTACT SECTION
@@ -297,12 +267,8 @@
         <button id="quote-close" aria-label="Close" type="button">×</button>
       </div>
 
-      <form
-  id="quote-checkout-form"
-  class="quote-checkout-form"
-  action="https://formspree.io/f/meaqjyzg"
-  method="POST"
->
+      <form id="quote-checkout-form" class="quote-checkout-form">
+        <label>
           Name
           <input id="q-name" required />
         </label>
@@ -321,5 +287,4 @@
       <div id="quote-result" class="quote-result"></div>
     </div>
   </div>
-  </body>
-</html>
+</body>
