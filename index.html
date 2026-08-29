@@ -145,104 +145,122 @@
     <!-- =========================================================
          08) QUOTE SECTION (CONTACT LINKS + FORMSPREE FORM)
          ========================================================= -->
-   <form class="quote-form" id="quoteForm">
-  <h3>Request a quote</h3>
+  <!-- =========================================================
+     08) QUOTE SECTION
+     ========================================================= -->
 
-  <div class="form-row">
+<section id="quote-form" class="section reveal full-bleed-pad">
+
+  <p class="eyebrow">REQUEST A QUOTE</p>
+
+  <h2>Let's Build Something.</h2>
+
+  <form
+    class="quote-form"
+    action="https://formspree.io/f/meaqjyzg"
+    method="POST"
+  >
+
+    <div class="form-row">
+
+      <label>
+        Name
+        <input
+          type="text"
+          name="name"
+          required
+          placeholder="Your full name"
+        />
+      </label>
+
+      <label>
+        Email
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+        />
+      </label>
+
+    </div>
+
+    <div class="form-row">
+
+      <label>
+        Phone
+        <input
+          type="tel"
+          name="phone"
+          placeholder="Your phone number"
+        />
+      </label>
+
+      <label>
+        Organization
+        <input
+          type="text"
+          name="organization"
+          placeholder="Business, team or company"
+        />
+      </label>
+
+    </div>
+
+    <div class="form-row">
+
+      <label>
+        Product
+        <select name="product" required>
+          <option value="">Select Product</option>
+          <option>T-Shirts</option>
+          <option>Hoodies</option>
+          <option>Polos</option>
+          <option>Workwear</option>
+          <option>Mixed Order</option>
+        </select>
+      </label>
+
+      <label>
+        Quantity
+        <select name="quantity" required>
+          <option value="">Select Quantity</option>
+          <option>1-11</option>
+          <option>12-24</option>
+          <option>25-49</option>
+          <option>50-99</option>
+          <option>100+</option>
+        </select>
+      </label>
+
+    </div>
+
     <label>
-      Name
-      <input
+      Project Details
+
+      <textarea
+        name="details"
+        rows="5"
         required
-        type="text"
-        name="name"
-        id="quoteName"
-        autocomplete="name"
-        placeholder="Your full name"
-      >
+        placeholder="Tell us about your project, logo placement, colors, sizes, deadline and other requirements..."
+      ></textarea>
+
     </label>
 
-    <label>
-      Email
-      <input
-        required
-        type="email"
-        name="email"
-        id="quoteEmail"
-        autocomplete="email"
-        placeholder="you@example.com"
-      >
-    </label>
-  </div>
+    <button
+      class="button primary full"
+      type="submit"
+    >
+      Request Quote
+    </button>
 
-  <div class="form-row">
-    <label>
-      Phone
-      <input
-        type="tel"
-        name="phone"
-        id="quotePhone"
-        autocomplete="tel"
-        placeholder="Your phone number"
-      >
-    </label>
+    <small>
+      Your request will be reviewed by SHAPED and a custom quote will be sent to you.
+    </small>
 
-    <label>
-      Organization
-      <input
-        type="text"
-        name="organization"
-        id="quoteOrganization"
-        autocomplete="organization"
-        placeholder="Business, team or organization"
-      >
-    </label>
-  </div>
+  </form>
 
-  <div class="form-row">
-    <label>
-      Product
-      <select name="product" id="quoteProduct" required>
-        <option value="">Select a product</option>
-        <option value="T-shirts">T-shirts</option>
-        <option value="Hoodies">Hoodies</option>
-        <option value="Polos">Polos</option>
-        <option value="Workwear">Workwear</option>
-        <option value="Mixed order">Mixed order</option>
-      </select>
-    </label>
-
-    <label>
-      Estimated quantity
-      <select name="quantity" id="quoteQuantity" required>
-        <option value="">Select quantity</option>
-        <option value="1–11">1–11</option>
-        <option value="12–24">12–24</option>
-        <option value="25–49">25–49</option>
-        <option value="50–99">50–99</option>
-        <option value="100+">100+</option>
-      </select>
-    </label>
-  </div>
-
-  <label>
-    Project details
-    <textarea
-      required
-      name="details"
-      id="quoteDetails"
-      rows="5"
-      placeholder="Tell us about your colors, sizes, deadline, logo placement and other requirements..."
-    ></textarea>
-  </label>
-
-  <button class="button primary full" type="submit">
-    Send Quote Request
-  </button>
-
-  <small>
-    Your information will be used only to prepare your SHAPED apparel quote.
-  </small>
-</form>
+</section>
 
     <!-- =========================================================
          09) CONTACT SECTION
@@ -290,36 +308,6 @@
   <!-- =========================================================
        12) QUOTE MODAL (FROM CART CHECKOUT BUTTON)
        ========================================================= -->
-  <div class="quote-modal" id="quote-modal" aria-hidden="true">
-    <div class="quote-panel">
-      <div class="quote-head">
-        <h3>Get your quotation</h3>
-        <button id="quote-close" aria-label="Close" type="button">×</button>
-      </div>
 
-      <form
-  id="quote-checkout-form"
-  class="quote-checkout-form"
-  action="https://formspree.io/f/meaqjyzg"
-  method="POST"
->
-          Name
-          <input id="q-name" required />
-        </label>
-        <label>
-          Email
-          <input id="q-email" type="email" required />
-        </label>
-        <label>
-          Company (optional)
-          <input id="q-company" />
-        </label>
-
-        <button class="button primary full" type="submit">Generate Quote</button>
-      </form>
-
-      <div id="quote-result" class="quote-result"></div>
-    </div>
-  </div>
   </body>
 </html>
