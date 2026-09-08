@@ -489,7 +489,48 @@ body{
 
 
 /* =========================================================
-   14) QUOTE SECTION + FORM
+   14) PAYMENT SECTION
+   ========================================================= */
+#payment{
+  padding-top:10px;
+}
+.payment-panel{
+  padding:22px;
+}
+.payment-panel h2{
+  margin:4px 0 8px;
+  font-family:"Space Grotesk",sans-serif;
+  font-size:clamp(30px,5vw,56px);
+  line-height:1.02;
+}
+.payment-panel p{
+  margin:0;
+  color:var(--muted);
+}
+.payment-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin:18px 0;
+}
+.payment-grid article{
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.8);
+}
+.payment-grid h3{
+  margin:0 0 6px;
+  font-size:18px;
+}
+.payment-grid p{
+  margin:0;
+  font-size:15px;
+}
+
+
+/* =========================================================
+   15) QUOTE SECTION + FORM
    ========================================================= */
 .custom-section{
   display:grid;
@@ -535,7 +576,7 @@ body{
 
 
 /* =========================================================
-   15) CONTACT SECTION
+   16) CONTACT SECTION
    ========================================================= */
 #contact h2{
   margin:.2rem 0 0;
@@ -545,7 +586,7 @@ body{
 
 
 /* =========================================================
-   16) CART DRAWER + CART ITEMS
+   17) CART DRAWER + CART ITEMS
    ========================================================= */
 .cart{
   position:fixed;
@@ -620,7 +661,7 @@ body.cart-open .cart{right:0}
 
 
 /* =========================================================
-   17) OVERLAY + TOAST
+   18) OVERLAY + TOAST
    ========================================================= */
 .overlay{
   position:fixed;
@@ -652,7 +693,7 @@ body.cart-open .overlay{opacity:1;pointer-events:auto}
 
 
 /* =========================================================
-   18) CHECKOUT QUOTE MODAL
+   19) CHECKOUT QUOTE MODAL
    ========================================================= */
 .quote-modal{
   position:fixed;
@@ -704,11 +745,12 @@ body.cart-open .overlay{opacity:1;pointer-events:auto}
 
 
 /* =========================================================
-   19) TABLET RESPONSIVE
+   20) TABLET RESPONSIVE
    ========================================================= */
 @media (max-width:1200px){
   .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .feature-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .payment-grid{grid-template-columns:1fr}
 }
 @media (max-width:920px){
   .menu-toggle{display:inline-flex}
@@ -734,7 +776,7 @@ body.cart-open .overlay{opacity:1;pointer-events:auto}
 
 
 /* =========================================================
-   20) MOBILE RESPONSIVE (PHONE)
+   21) MOBILE RESPONSIVE (PHONE)
    ========================================================= */
 @media (max-width:640px){
   .brand-right img{height:20px}
