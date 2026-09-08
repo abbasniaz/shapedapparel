@@ -348,7 +348,6 @@ function cartSummaryText() {
 function openQuoteModal() {
   $("#quote-modal")?.setAttribute("aria-hidden", "false");
   resetQuoteForm(true);
-  $("#quote-result")?.removeAttribute("data-rendered");
 }
 
 function generateQuoteReference() {
@@ -394,10 +393,7 @@ function generateQuote() {
   renderQuoteResult(quote);
   populatePrintDoc(quote);
 
-  sendQuoteEmail(quote).catch((err) => {
-    console.warn("Quote email failed:", err);
-    toast("Quote generated, but email failed");
-  });
+  submitQuoteToFormspree(quote);
 }
 
 function generateQuoteLink(quote) {
@@ -450,23 +446,41 @@ function generateQuoteLink(quote) {
   return URL.createObjectURL(blob);
 }
 
-async function sendQuoteEmail(quote) {
-  const res = await fetch("/api/send-quote", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      quote,
-      quoteLink: generateQuoteLink(quote)
-    })
-  });
-
-  if (!res.ok) {
-    throw new Error(`Quote API returned ${res.status}`);
+function submitQuoteToFormspree(quote) {
+  const form = document.getElementById("formspree-quote-submit");
+  if (!form) {
+    toast("Quote generated, but Formspree form is missing");
+    return;
   }
 
-  toast("Quote emailed to customer");
+  const setVal = (name, value) => {
+    const input = form.querySelector(`[name="${name}"]`);
+    if (input) input.value = value;
+  };
+
+  setVal("name", quote.name);
+  setVal("email", quote.email);
+  setVal("customerEmail", quote.customerEmail || "");
+  setVal("company", quote.company || "");
+  setVal("quoteReference", quote.ref);
+  setVal("quoteSubtotal", `$${quote.subtotal.toFixed(2)}`);
+  setVal("quoteItems", cartSummaryText());
+  setVal("quoteNotes", quote.notes || "-");
+  setVal("quoteLink", generateQuoteLink(quote));
+
+  fetch(form.action, {
+    method: "POST",
+    body: new FormData(form),
+    headers: { Accept: "application/json" }
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`Formspree returned ${res.status}`);
+      toast("Quote sent to Formspree");
+    })
+    .catch((err) => {
+      console.warn(err);
+      toast("Quote generated, but Formspree send failed");
+    });
 }
 
 function saveQuote(quote) {
@@ -493,13 +507,6 @@ function loadLastQuote() {
   } catch {
     return null;
   }
-}
-
-function renderLastQuoteIfAny() {
-  const result = $("#quote-result");
-  if (!result || result.dataset.rendered === "true") return;
-  const last = loadLastQuote();
-  if (last) renderQuoteResult(last, true);
 }
 
 function renderQuoteResult(quote, isReopened = false) {
@@ -546,7 +553,7 @@ function resetQuoteForm(forceFresh = false) {
   const customerEmail = $("#q-customer-email");
   if (customerEmail) customerEmail.value = "";
   if (forceFresh) {
-    // intentionally do not restore the last quote when opening the modal
+    // intentionally left blank
   }
 }
 
