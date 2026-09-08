@@ -167,7 +167,10 @@
           </article>
         </div>
 
-        <a class="button primary" href="#quote-form">Continue with quote</a>
+        <div class="payment-actions">
+          <button class="button primary" id="payment-generate-quote" type="button">Generate Professional Quote</button>
+          <a class="button secondary" href="#quote-form">Continue with quote form</a>
+        </div>
       </div>
     </section>
 
@@ -309,11 +312,78 @@
           Company (optional)
           <input id="q-company" />
         </label>
+        <label>
+          Notes (optional)
+          <textarea id="q-notes" rows="3" placeholder="Quantities, sizes, deadlines, or any special requirements"></textarea>
+        </label>
 
         <button class="button primary full" type="submit">Generate Quote</button>
       </form>
 
       <div id="quote-result" class="quote-result"></div>
     </div>
+  </div>
+
+  <!-- =========================================================
+       14) PRINT-FRIENDLY QUOTE DOCUMENT
+       Hidden on screen, shown only via @media print when the
+       "quote-print-active" class is applied to <body>.
+       Populated dynamically by script.js.
+       ========================================================= -->
+  <div id="quote-print-doc" class="quote-print-doc">
+    <header class="quote-print-head">
+      <div class="quote-print-brand">
+        <span class="quote-print-logo">SHAPED</span>
+        <span>Built by Intent</span>
+      </div>
+      <div class="quote-print-meta">
+        <h1>QUOTATION</h1>
+        <p><b>Reference:</b> <span id="qp-ref"></span></p>
+        <p><b>Date:</b> <span id="qp-date"></span></p>
+      </div>
+    </header>
+
+    <section class="quote-print-parties">
+      <div>
+        <p class="quote-print-label">Prepared by</p>
+        <p><b>SHAPED Apparel</b></p>
+        <p>abbasniaz99@gmail.com</p>
+        <p>+1 626 944 3531</p>
+      </div>
+      <div>
+        <p class="quote-print-label">Prepared for</p>
+        <p><b id="qp-name"></b></p>
+        <p id="qp-email"></p>
+        <p id="qp-company"></p>
+      </div>
+    </section>
+
+    <table class="quote-print-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Size</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Line Total</th>
+        </tr>
+      </thead>
+      <tbody id="qp-items"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">Subtotal</td>
+          <td id="qp-subtotal"></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <section class="quote-print-notes">
+      <p class="quote-print-label">Notes</p>
+      <p id="qp-notes"></p>
+    </section>
+
+    <footer class="quote-print-foot">
+      <p>This quotation is valid for 14 days from the date above. Prices exclude shipping and rush production fees unless stated otherwise.</p>
+    </footer>
   </div>
 </body>

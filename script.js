@@ -47,6 +47,8 @@ const AVAILABLE_SIZES = ["S", "M", "L", "XL"];         // dropdown options
 let activeFilter = "all";
 let cart = [];
 const CART_KEY = "shapedCartV1";
+const QUOTES_KEY = "shapedQuotesV1";
+const LAST_QUOTE_KEY = "shapedLastQuoteV1";
 
 
 /* =========================================================
@@ -89,9 +91,8 @@ function bindGlobalEvents() {
   $(".overlay")?.addEventListener("click", closeCart);
 
   // quote modal
-  $("#checkout")?.addEventListener("click", () => {
-    $("#quote-modal")?.setAttribute("aria-hidden", "false");
-  });
+  $("#checkout")?.addEventListener("click", () => openQuoteModal());
+  $("#payment-generate-quote")?.addEventListener("click", () => openQuoteModal());
   $("#quote-close")?.addEventListener("click", () => {
     $("#quote-modal")?.setAttribute("aria-hidden", "true");
   });
@@ -99,20 +100,15 @@ function bindGlobalEvents() {
   // quote modal summary
   $("#quote-checkout-form")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = $("#q-name")?.value?.trim() || "Customer";
-    const email = $("#q-email")?.value?.trim() || "-";
-    const company = $("#q-company")?.value?.trim() || "-";
-    const result = $("#quote-result");
+    generateQuote();
+  });
 
-    if (result) {
-      result.innerHTML = `
-        <p><strong>Quote request ready ✅</strong></p>
-        <p><b>Name:</b> ${escapeHtml(name)}<br/>
-           <b>Email:</b> ${escapeHtml(email)}<br/>
-           <b>Company:</b> ${escapeHtml(company)}</p>
-        <p><b>Items:</b><br/>${escapeHtml(cartSummaryText()).replace(/\n/g, "<br/>")}</p>
-      `;
-    }
+  // quote result actions (print/download + start new quote)
+  $("#quote-result")?.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    if (t.matches(".quote-print-btn")) printQuote();
+    if (t.matches(".quote-new-btn")) resetQuoteForm();
   });
 
   // delegated clicks for product cards + cart row buttons
@@ -305,6 +301,169 @@ function cartSummaryText() {
   return cart
     .map(i => `• ${i.name}${i.size ? ` (Size ${i.size})` : ""} x${i.qty} — $${(i.price * i.qty).toFixed(2)}`)
     .join("\n");
+}
+
+
+/* =========================================================
+   13b) QUOTE GENERATION, STORAGE + PRINT/DOWNLOAD
+   ========================================================= */
+function openQuoteModal() {
+  $("#quote-modal")?.setAttribute("aria-hidden", "false");
+  renderLastQuoteIfAny();
+}
+
+function generateQuoteReference() {
+  const stamp = new Date();
+  const datePart = [
+    stamp.getFullYear(),
+    String(stamp.getMonth() + 1).padStart(2, "0"),
+    String(stamp.getDate()).padStart(2, "0")
+  ].join("");
+  const randomPart = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `SHAPED-${datePart}-${randomPart}`;
+}
+
+function generateQuote() {
+  const name = $("#q-name")?.value?.trim() || "Customer";
+  const email = $("#q-email")?.value?.trim() || "-";
+  const company = $("#q-company")?.value?.trim() || "";
+  const notes = $("#q-notes")?.value?.trim() || "";
+
+  const items = cart.map((i) => ({
+    name: i.name,
+    size: i.size || "",
+    qty: i.qty,
+    price: i.price,
+    lineTotal: +(i.qty * i.price).toFixed(2)
+  }));
+  const subtotal = +items.reduce((a, b) => a + b.lineTotal, 0).toFixed(2);
+
+  const quote = {
+    ref: generateQuoteReference(),
+    createdAtISO: new Date().toISOString(),
+    name,
+    email,
+    company,
+    notes,
+    items,
+    subtotal
+  };
+
+  saveQuote(quote);
+  renderQuoteResult(quote);
+  populatePrintDoc(quote);
+}
+
+function saveQuote(quote) {
+  try {
+    const raw = localStorage.getItem(QUOTES_KEY);
+    const all = raw ? JSON.parse(raw) : [];
+    (Array.isArray(all) ? all : []).push(quote);
+    localStorage.setItem(QUOTES_KEY, JSON.stringify(Array.isArray(all) ? all : [quote]));
+  } catch {
+    /* storage unavailable - continue without persistence */
+  }
+  try {
+    localStorage.setItem(LAST_QUOTE_KEY, JSON.stringify(quote));
+  } catch {
+    /* storage unavailable - continue without persistence */
+  }
+}
+
+function loadLastQuote() {
+  try {
+    const raw = localStorage.getItem(LAST_QUOTE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function renderLastQuoteIfAny() {
+  const result = $("#quote-result");
+  if (!result || result.dataset.rendered === "true") return;
+  const last = loadLastQuote();
+  if (last) renderQuoteResult(last, true);
+}
+
+function renderQuoteResult(quote, isReopened = false) {
+  const result = $("#quote-result");
+  if (!result) return;
+
+  const itemsHtml = quote.items.length
+    ? quote.items
+        .map(
+          (i) => `• ${escapeHtml(i.name)}${i.size ? ` (Size ${escapeHtml(i.size)})` : ""} x${i.qty} — $${i.lineTotal.toFixed(2)}`
+        )
+        .join("<br/>")
+    : "No items";
+
+  result.dataset.rendered = "true";
+  result.innerHTML = `
+    <p class="quote-ref-badge">Reference #: <strong>${escapeHtml(quote.ref)}</strong></p>
+    <p><strong>${isReopened ? "Your last quotation" : "Quotation ready"} ✅</strong></p>
+    <p><b>Name:</b> ${escapeHtml(quote.name)}<br/>
+       <b>Email:</b> ${escapeHtml(quote.email)}<br/>
+       <b>Company:</b> ${escapeHtml(quote.company || "-")}</p>
+    <p><b>Items:</b><br/>${itemsHtml}</p>
+    <p><b>Subtotal:</b> $${quote.subtotal.toFixed(2)}</p>
+    ${quote.notes ? `<p><b>Notes:</b> ${escapeHtml(quote.notes)}</p>` : ""}
+    <div class="quote-result-actions">
+      <button class="button primary quote-print-btn" type="button">Download / Print Quote (PDF)</button>
+      <button class="button secondary quote-new-btn" type="button">Start New Quote</button>
+    </div>
+  `;
+
+  populatePrintDoc(quote);
+}
+
+function resetQuoteForm() {
+  const result = $("#quote-result");
+  if (result) {
+    result.innerHTML = "";
+    delete result.dataset.rendered;
+  }
+  $("#quote-checkout-form")?.reset();
+}
+
+function populatePrintDoc(quote) {
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setText("qp-ref", quote.ref);
+  setText("qp-date", new Date(quote.createdAtISO).toLocaleString());
+  setText("qp-name", quote.name);
+  setText("qp-email", quote.email);
+  setText("qp-company", quote.company || "");
+  setText("qp-notes", quote.notes || "-");
+  setText("qp-subtotal", `$${quote.subtotal.toFixed(2)}`);
+
+  const rows = document.getElementById("qp-items");
+  if (rows) {
+    rows.innerHTML = quote.items.length
+      ? quote.items
+          .map(
+            (i) => `
+        <tr>
+          <td>${escapeHtml(i.name)}</td>
+          <td>${escapeHtml(i.size || "-")}</td>
+          <td>${i.qty}</td>
+          <td>$${i.price.toFixed(2)}</td>
+          <td>$${i.lineTotal.toFixed(2)}</td>
+        </tr>`
+          )
+          .join("")
+      : `<tr><td colspan="5">No items</td></tr>`;
+  }
+}
+
+function printQuote() {
+  const cleanup = () => document.body.classList.remove("quote-print-active");
+  window.addEventListener("afterprint", cleanup, { once: true });
+  document.body.classList.add("quote-print-active");
+  window.print();
 }
 
 
