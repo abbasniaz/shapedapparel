@@ -10,13 +10,11 @@
    - TOAST: Section 17
    ========================================================= */
 
-
 /* =========================================================
    01) HELPERS / SHORTCUTS
    ========================================================= */
 const $ = (s, p = document) => p.querySelector(s);
 const $$ = (s, p = document) => [...p.querySelectorAll(s)];
-
 
 /* =========================================================
    02) PRODUCT CATALOG (EDIT PRODUCTS HERE)
@@ -33,13 +31,11 @@ const products = [
   { id: 8, name: "Corporate Polo", category: "workwear", price: 42, desc: "Smart fit branded polo", color: "#e5e7eb" }
 ];
 
-
 /* =========================================================
    03) SIZE CONFIGURATION (EDIT AVAILABLE SIZES HERE)
    ========================================================= */
-const SIZED_CATEGORIES = new Set(["tees", "hoodies"]); // categories requiring size
-const AVAILABLE_SIZES = ["S", "M", "L", "XL"];         // dropdown options
-
+const SIZED_CATEGORIES = new Set(["tees", "hoodies"]);
+const AVAILABLE_SIZES = ["S", "M", "L", "XL"];
 
 /* =========================================================
    04) APP STATE / STORAGE
@@ -47,7 +43,9 @@ const AVAILABLE_SIZES = ["S", "M", "L", "XL"];         // dropdown options
 let activeFilter = "all";
 let cart = [];
 const CART_KEY = "shapedCartV1";
-
+const CART_KEEP_KEY = "shapedCartKeepV1";
+const QUOTES_KEY = "shapedQuotesV1";
+const LAST_QUOTE_KEY = "shapedLastQuoteV1";
 
 /* =========================================================
    05) APP INIT
@@ -59,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initReveal();
   initHeroSlideshow();
 });
-
 
 /* =========================================================
    06) GLOBAL EVENTS (NAV, FILTERS, CART BUTTONS, MODAL)
@@ -88,9 +85,39 @@ function bindGlobalEvents() {
   $(".cart-close")?.addEventListener("click", closeCart);
   $(".overlay")?.addEventListener("click", closeCart);
 
+  // clear bag
+  $("#clear-cart")?.addEventListener("click", () => {
+    if (!cart.length) return;
+    cart = [];
+    saveCart();
+    toast("Bag cleared");
+  });
+
+  // keep-bag persistence toggle
+  const keepToggle = $("#cart-keep-toggle");
+  if (keepToggle) {
+    keepToggle.checked = localStorage.getItem(CART_KEEP_KEY) === "1";
+    updateCartKeepNote(keepToggle.checked);
+    keepToggle.addEventListener("change", () => {
+      if (keepToggle.checked) {
+        localStorage.setItem(CART_KEEP_KEY, "1");
+        saveCart();
+        toast("Bag will be kept on this device");
+      } else {
+        localStorage.removeItem(CART_KEEP_KEY);
+        localStorage.removeItem(CART_KEY);
+        toast("Bag will clear when you leave");
+      }
+      updateCartKeepNote(keepToggle.checked);
+    });
+  }
+
   // quote modal
   $("#checkout")?.addEventListener("click", () => {
-    $("#quote-modal")?.setAttribute("aria-hidden", "false");
+    openQuoteModal();
+  });
+  $("#payment-generate-quote")?.addEventListener("click", () => {
+    openQuoteModal();
   });
   $("#quote-close")?.addEventListener("click", () => {
     $("#quote-modal")?.setAttribute("aria-hidden", "true");
@@ -99,26 +126,21 @@ function bindGlobalEvents() {
   // quote modal summary
   $("#quote-checkout-form")?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = $("#q-name")?.value?.trim() || "Customer";
-    const email = $("#q-email")?.value?.trim() || "-";
-    const company = $("#q-company")?.value?.trim() || "-";
-    const result = $("#quote-result");
-
-    if (result) {
-      result.innerHTML = `
-        <p><strong>Quote request ready ✅</strong></p>
-        <p><b>Name:</b> ${escapeHtml(name)}<br/>
-           <b>Email:</b> ${escapeHtml(email)}<br/>
-           <b>Company:</b> ${escapeHtml(company)}</p>
-        <p><b>Items:</b><br/>${escapeHtml(cartSummaryText()).replace(/\n/g, "<br/>")}</p>
-      `;
-    }
+    generateQuote();
   });
 
-  // delegated clicks for product cards + cart row buttons
-  $("#product-grid")?.addEventListener("click", onGridClick);
-}
+  // quote result actions
+  $("#quote-result")?.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    if (t.matches(".quote-print-btn")) printQuote();
+    if (t.matches(".quote-new-btn")) resetQuoteForm();
+  });
 
+  // delegated clicks
+  $("#product-grid")?.addEventListener("click", onGridClick);
+  $("#cart-items")?.addEventListener("click", onCartClick);
+}
 
 /* =========================================================
    07) PRODUCT GRID RENDER
@@ -163,7 +185,6 @@ function renderProducts() {
   revealGridItemsNow();
 }
 
-
 /* =========================================================
    08) GRID CLICK ROUTER
    ========================================================= */
@@ -172,16 +193,22 @@ function onGridClick(e) {
   if (!(t instanceof HTMLElement)) return;
 
   if (t.matches(".add")) handleAddToCart(t);
+}
+
+/* =========================================================
+   08b) CART DRAWER CLICK ROUTER (QTY +/-, REMOVE)
+   ========================================================= */
+function onCartClick(e) {
+  const t = e.target;
+  if (!(t instanceof HTMLElement)) return;
+
   if (t.matches(".qty-plus")) handleQtyPlus(t);
   if (t.matches(".qty-minus")) handleQtyMinus(t);
   if (t.matches(".remove-item")) handleRemoveItem(t);
 }
 
-
 /* =========================================================
    09) ADD TO CART LOGIC (SIZE-AWARE)
-   same product + same size => qty++
-   same product + different size => separate line in cart
    ========================================================= */
 function handleAddToCart(buttonEl) {
   const p = products.find((x) => x.id == buttonEl.dataset.id);
@@ -207,7 +234,6 @@ function handleAddToCart(buttonEl) {
   saveCart();
   toast(`Added to bag${selectedSize ? ` (${selectedSize})` : ""}`);
 }
-
 
 /* =========================================================
    10) CART ITEM BUTTON HANDLERS
@@ -235,11 +261,19 @@ function handleRemoveItem(btn) {
   }
 }
 
-
 /* =========================================================
    11) CART STORAGE (LOCALSTORAGE)
    ========================================================= */
 function loadCart() {
+  const keep = localStorage.getItem(CART_KEEP_KEY) === "1";
+
+  if (!keep) {
+    localStorage.removeItem(CART_KEY);
+    cart = [];
+    renderCart();
+    return;
+  }
+
   try {
     const raw = localStorage.getItem(CART_KEY);
     cart = raw ? JSON.parse(raw) : [];
@@ -249,11 +283,22 @@ function loadCart() {
   }
   renderCart();
 }
+
 function saveCart() {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  const keep = localStorage.getItem(CART_KEEP_KEY) === "1";
+  if (keep) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
   renderCart();
 }
 
+function updateCartKeepNote(isKept) {
+  const note = $("#cart-keep-note");
+  if (!note) return;
+  note.textContent = isKept
+    ? "Your bag is saved on this device and will still be here next time you visit."
+    : "Your bag clears automatically when you leave — turn this on to keep items for next time.";
+}
 
 /* =========================================================
    12) CART RENDER (SHOWS SIZE IF AVAILABLE)
@@ -296,7 +341,6 @@ function renderCart() {
   `).join("");
 }
 
-
 /* =========================================================
    13) CART SUMMARY STRING (FOR QUOTE MODAL)
    ========================================================= */
@@ -307,6 +351,168 @@ function cartSummaryText() {
     .join("\n");
 }
 
+/* =========================================================
+   13b) QUOTE GENERATION, STORAGE + PRINT/DOWNLOAD
+   ========================================================= */
+function openQuoteModal() {
+  $("#quote-modal")?.setAttribute("aria-hidden", "false");
+  renderLastQuoteIfAny();
+}
+
+function generateQuoteReference() {
+  const stamp = new Date();
+  const datePart = [
+    stamp.getFullYear(),
+    String(stamp.getMonth() + 1).padStart(2, "0"),
+    String(stamp.getDate()).padStart(2, "0")
+  ].join("");
+  const randomPart = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `SHAPED-${datePart}-${randomPart}`;
+}
+
+function generateQuote() {
+  const name = $("#q-name")?.value?.trim() || "Customer";
+  const email = $("#q-email")?.value?.trim() || "-";
+  const company = $("#q-company")?.value?.trim() || "";
+  const notes = $("#q-notes")?.value?.trim() || "";
+
+  const items = cart.map((i) => ({
+    name: i.name,
+    size: i.size || "",
+    qty: i.qty,
+    price: i.price,
+    lineTotal: +(i.qty * i.price).toFixed(2)
+  }));
+  const subtotal = +items.reduce((a, b) => a + b.lineTotal, 0).toFixed(2);
+
+  const quote = {
+    ref: generateQuoteReference(),
+    createdAtISO: new Date().toISOString(),
+    name,
+    email,
+    company,
+    notes,
+    items,
+    subtotal
+  };
+
+  saveQuote(quote);
+  renderQuoteResult(quote);
+  populatePrintDoc(quote);
+}
+
+function saveQuote(quote) {
+  try {
+    const raw = localStorage.getItem(QUOTES_KEY);
+    const all = raw ? JSON.parse(raw) : [];
+    (Array.isArray(all) ? all : []).push(quote);
+    localStorage.setItem(QUOTES_KEY, JSON.stringify(Array.isArray(all) ? all : [quote]));
+  } catch {
+    /* ignore */
+  }
+
+  try {
+    localStorage.setItem(LAST_QUOTE_KEY, JSON.stringify(quote));
+  } catch {
+    /* ignore */
+  }
+}
+
+function loadLastQuote() {
+  try {
+    const raw = localStorage.getItem(LAST_QUOTE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function renderLastQuoteIfAny() {
+  const result = $("#quote-result");
+  if (!result || result.dataset.rendered === "true") return;
+  const last = loadLastQuote();
+  if (last) renderQuoteResult(last, true);
+}
+
+function renderQuoteResult(quote, isReopened = false) {
+  const result = $("#quote-result");
+  if (!result) return;
+
+  const itemsHtml = quote.items.length
+    ? quote.items
+        .map(
+          (i) => `• ${escapeHtml(i.name)}${i.size ? ` (Size ${escapeHtml(i.size)})` : ""} x${i.qty} — $${i.lineTotal.toFixed(2)}`
+        )
+        .join("<br/>")
+    : "No items";
+
+  result.dataset.rendered = "true";
+  result.innerHTML = `
+    <p class="quote-ref-badge">Reference #: <strong>${escapeHtml(quote.ref)}</strong></p>
+    <p><strong>${isReopened ? "Your last quotation" : "Quotation ready"} ✅</strong></p>
+    <p><b>Name:</b> ${escapeHtml(quote.name)}<br/>
+       <b>Email:</b> ${escapeHtml(quote.email)}<br/>
+       <b>Company:</b> ${escapeHtml(quote.company || "-")}</p>
+    <p><b>Items:</b><br/>${itemsHtml}</p>
+    <p><b>Subtotal:</b> $${quote.subtotal.toFixed(2)}</p>
+    ${quote.notes ? `<p><b>Notes:</b> ${escapeHtml(quote.notes)}</p>` : ""}
+    <div class="quote-result-actions">
+      <button class="button primary quote-print-btn" type="button">Download / Print Quote (PDF)</button>
+      <button class="button secondary quote-new-btn" type="button">Start New Quote</button>
+    </div>
+  `;
+
+  populatePrintDoc(quote);
+}
+
+function resetQuoteForm() {
+  const result = $("#quote-result");
+  if (result) {
+    result.innerHTML = "";
+    delete result.dataset.rendered;
+  }
+  $("#quote-checkout-form")?.reset();
+}
+
+function populatePrintDoc(quote) {
+  const setText = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setText("qp-ref", quote.ref);
+  setText("qp-date", new Date(quote.createdAtISO).toLocaleString());
+  setText("qp-name", quote.name);
+  setText("qp-email", quote.email);
+  setText("qp-company", quote.company || "");
+  setText("qp-notes", quote.notes || "-");
+  setText("qp-subtotal", `$${quote.subtotal.toFixed(2)}`);
+
+  const rows = document.getElementById("qp-items");
+  if (rows) {
+    rows.innerHTML = quote.items.length
+      ? quote.items
+          .map(
+            (i) => `
+        <tr>
+          <td>${escapeHtml(i.name)}</td>
+          <td>${escapeHtml(i.size || "-")}</td>
+          <td>${i.qty}</td>
+          <td>$${i.price.toFixed(2)}</td>
+          <td>$${i.lineTotal.toFixed(2)}</td>
+        </tr>`
+          )
+          .join("")
+      : `<tr><td colspan="5">No items</td></tr>`;
+  }
+}
+
+function printQuote() {
+  const cleanup = () => document.body.classList.remove("quote-print-active");
+  window.addEventListener("afterprint", cleanup, { once: true });
+  document.body.classList.add("quote-print-active");
+  window.print();
+}
 
 /* =========================================================
    14) CART PANEL OPEN/CLOSE
@@ -319,7 +525,6 @@ function closeCart() {
   $(".cart")?.setAttribute("aria-hidden", "true");
   document.body.classList.remove("cart-open");
 }
-
 
 /* =========================================================
    15) HERO SLIDESHOW
@@ -358,7 +563,6 @@ function initHeroSlideshow() {
   play();
 }
 
-
 /* =========================================================
    16) SCROLL REVEAL ANIMATION
    ========================================================= */
@@ -382,7 +586,6 @@ function initReveal() {
   items.forEach((el) => io.observe(el));
 }
 
-
 /* =========================================================
    17) TOAST NOTIFICATION
    ========================================================= */
@@ -395,7 +598,6 @@ function toast(msg) {
   toast._timer = setTimeout(() => t.classList.remove("show"), 1600);
 }
 
-
 /* =========================================================
    18) ESCAPE HTML (XSS SAFETY)
    ========================================================= */
@@ -407,7 +609,6 @@ function escapeHtml(v = "") {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
-
 
 /* =========================================================
    19) OPTIONAL: DESIGNER -> QUOTE PREFILL (SAFE)
@@ -490,7 +691,6 @@ function escapeHtml(v = "") {
     console.warn("Designer quote prefill skipped:", err);
   }
 })();
-
 
 /* =========================================================
    20) GRID REVEAL FIX AFTER FILTER RE-RENDER
