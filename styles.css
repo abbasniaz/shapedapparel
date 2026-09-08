@@ -527,6 +527,12 @@ body{
   margin:0;
   font-size:15px;
 }
+.payment-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:6px;
+}
 
 
 /* =========================================================
@@ -750,6 +756,8 @@ body.cart-open .overlay{opacity:1;pointer-events:auto}
 .quote-modal[aria-hidden="false"]{opacity:1;pointer-events:auto}
 .quote-panel{
   width:min(92vw,520px);
+  max-height:90vh;
+  overflow-y:auto;
   background:#fff;
   border:1px solid var(--line);
   border-radius:16px;
@@ -770,11 +778,13 @@ body.cart-open .overlay{opacity:1;pointer-events:auto}
 }
 .quote-checkout-form{display:grid;gap:10px}
 .quote-checkout-form label{display:grid;gap:6px;font-weight:700}
-.quote-checkout-form input{
+.quote-checkout-form input,
+.quote-checkout-form textarea{
   border:1px solid var(--line);
   border-radius:10px;
   padding:9px 10px;
   font:inherit;
+  resize:vertical;
 }
 .quote-result{
   margin-top:10px;
@@ -782,6 +792,105 @@ body.cart-open .overlay{opacity:1;pointer-events:auto}
   border-radius:10px;
   padding:10px;
   color:#374151;
+}
+.quote-ref-badge{
+  display:inline-block;
+  background:#111827;
+  color:#fff;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:.02em;
+  padding:6px 10px;
+  border-radius:999px;
+  margin-bottom:8px;
+}
+.quote-result-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+
+/* =========================================================
+   19b) PRINT-FRIENDLY QUOTE DOCUMENT (SCREEN STYLES)
+   Hidden on screen; only shown via @media print below.
+   ========================================================= */
+.quote-print-doc{
+  display:none;
+}
+@media print{
+  body *{
+    visibility:hidden;
+  }
+  body.quote-print-active .quote-print-doc,
+  body.quote-print-active .quote-print-doc *{
+    visibility:visible;
+  }
+  body.quote-print-active .quote-print-doc{
+    display:block;
+    position:absolute;
+    inset:0;
+    margin:0 auto;
+    padding:24px;
+    max-width:800px;
+    color:#111827;
+    font-family:"Space Grotesk",Arial,sans-serif;
+  }
+  .quote-print-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:2px solid #111827;
+    padding-bottom:12px;
+    margin-bottom:16px;
+  }
+  .quote-print-brand{
+    display:flex;
+    flex-direction:column;
+    font-weight:700;
+  }
+  .quote-print-logo{font-size:26px;letter-spacing:.04em}
+  .quote-print-meta{text-align:right}
+  .quote-print-meta h1{margin:0 0 6px;font-size:22px;letter-spacing:.06em}
+  .quote-print-meta p{margin:0;font-size:13px}
+  .quote-print-parties{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .quote-print-label{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:#6b7280;
+    margin:0 0 4px;
+  }
+  .quote-print-parties p{margin:0 0 2px;font-size:14px}
+  .quote-print-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:18px;
+    font-size:13px;
+  }
+  .quote-print-table th,
+  .quote-print-table td{
+    border:1px solid #d1d5db;
+    padding:8px 10px;
+    text-align:left;
+  }
+  .quote-print-table tfoot td{
+    font-weight:700;
+    text-align:right;
+  }
+  .quote-print-notes{margin-bottom:18px;font-size:13px}
+  .quote-print-foot{
+    border-top:1px solid #d1d5db;
+    padding-top:10px;
+    font-size:11px;
+    color:#6b7280;
+  }
 }
 
 
