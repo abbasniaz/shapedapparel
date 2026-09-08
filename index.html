@@ -1,32 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- =========================================================
-       01) META / TITLE
-       ========================================================= -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="SHAPED premium custom apparel for businesses, teams and events. Built by Intent." />
   <title>SHAPED | Built by Intent</title>
-
-  <!-- =========================================================
-       02) STYLES + SCRIPT (CACHE-BUSTING VERSION)
-       If you update files and browser shows old version,
-       change v= number (e.g., 5001 -> 5002)
-       ========================================================= -->
   <link rel="stylesheet" href="styles.css?v=5001" />
   <script defer src="script.js?v=5001"></script>
 </head>
 <body>
-  <!-- =========================================================
-       03) ACCESSIBILITY + TOP ANNOUNCEMENT
-       ========================================================= -->
   <a class="skip" href="#main">Skip to content</a>
   <div class="announcement">FREE SAMPLE CONSULTATION • BULK &amp; CORPORATE ORDERS WELCOME</div>
 
-  <!-- =========================================================
-       04) HEADER / NAV / LOGO / BAG BUTTON
-       ========================================================= -->
   <header class="site-header">
     <a class="brand-right" href="#home" aria-label="SHAPED home">
       <img
@@ -55,9 +40,6 @@
   </header>
 
   <main id="main">
-    <!-- =========================================================
-         05) HERO SECTION (LEFT TEXT + RIGHT SLIDESHOW)
-         ========================================================= -->
     <section id="home" class="hero bg-home full-bleed">
       <div class="hero-copy reveal float-card">
         <p class="eyebrow">SHAPED APPAREL</p>
@@ -99,9 +81,6 @@
       </div>
     </section>
 
-    <!-- =========================================================
-         06) FEATURE STRIP
-         ========================================================= -->
     <section class="feature-row stagger full-bleed-pad">
       <article class="float-card">
         <h3>Premium Quality</h3>
@@ -121,10 +100,6 @@
       </article>
     </section>
 
-    <!-- =========================================================
-         07) SHOP SECTION + FILTER BUTTONS + PRODUCT GRID
-         NOTE: Product cards are rendered by script.js into #product-grid
-         ========================================================= -->
     <section id="shop" class="section reveal bg-shop full-bleed">
       <div class="section-head">
         <div>
@@ -143,9 +118,6 @@
       <div class="product-grid stagger" id="product-grid"></div>
     </section>
 
-    <!-- =========================================================
-         08) PAYMENT SECTION
-         ========================================================= -->
     <section id="payment" class="section reveal full-bleed-pad">
       <div class="payment-panel float-card">
         <p class="eyebrow">PAYMENT</p>
@@ -174,9 +146,6 @@
       </div>
     </section>
 
-    <!-- =========================================================
-         09) QUOTE SECTION (CONTACT LINKS + FORMSPREE FORM)
-         ========================================================= -->
     <section class="custom-section full-bleed-pad" id="quote-form">
       <div class="custom-copy reveal float-card">
         <p class="eyebrow">GET A QUOTE</p>
@@ -241,24 +210,16 @@
         </label>
 
         <input type="hidden" name="_subject" value="New SHAPED Quote Request" />
-
         <button class="button primary full shine" type="submit">Send Quote Request</button>
       </form>
     </section>
 
-    <!-- =========================================================
-         10) CONTACT SECTION
-         ========================================================= -->
     <section id="contact" class="section reveal full-bleed-pad">
       <p class="eyebrow">CONTACT</p>
       <h2>Let’s build something.</h2>
     </section>
   </main>
 
-  <!-- =========================================================
-       11) CART DRAWER
-       NOTE: Cart items are rendered by script.js into #cart-items
-       ========================================================= -->
   <aside class="cart" aria-hidden="true">
     <div class="cart-head">
       <h2>Your bag</h2>
@@ -291,15 +252,9 @@
     </div>
   </aside>
 
-  <!-- =========================================================
-       12) OVERLAY + TOAST
-       ========================================================= -->
   <div class="overlay"></div>
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <!-- =========================================================
-       13) QUOTE MODAL (FROM CART CHECKOUT BUTTON)
-       ========================================================= -->
   <div class="quote-modal" id="quote-modal" aria-hidden="true">
     <div class="quote-panel">
       <div class="quote-head">
@@ -336,16 +291,13 @@
     </div>
   </div>
 
-  <!-- =========================================================
-       14) PRINT-FRIENDLY QUOTE DOCUMENT
-       Hidden on screen, shown only via @media print when the
-       "quote-print-active" class is applied to <body>.
-       Populated dynamically by script.js.
-       ========================================================= -->
   <div id="quote-print-doc" class="quote-print-doc">
     <header class="quote-print-head">
       <div class="quote-print-brand">
-        <span class="quote-print-logo">SHAPED</span>
+        <div class="quote-print-logo-wrap">
+          <img class="quote-print-logo-img" src="assets/dsigner 18.png" alt="SHAPED logo" />
+          <span class="quote-print-logo">SHAPED</span>
+        </div>
         <span>Built by Intent</span>
       </div>
       <div class="quote-print-meta">
@@ -399,9 +351,6 @@
     </footer>
   </div>
 
-  <!-- =========================================================
-       15) HIDDEN FORMSPREE SUBMIT FORM (QUOTE DATA)
-       ========================================================= -->
   <form
     id="formspree-quote-submit"
     action="https://formspree.io/f/meaqjyzg"
