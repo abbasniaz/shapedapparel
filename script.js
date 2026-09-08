@@ -365,6 +365,7 @@ function generateQuote() {
   const name = $("#q-name")?.value?.trim() || "Customer";
   const email = $("#q-email")?.value?.trim() || "-";
   const company = $("#q-company")?.value?.trim() || "";
+  const customerEmail = $("#q-customer-email")?.value?.trim() || "";
   const notes = $("#q-notes")?.value?.trim() || "";
 
   const items = cart.map((i) => ({
@@ -382,6 +383,7 @@ function generateQuote() {
     name,
     email,
     company,
+    customerEmail,
     notes,
     items,
     subtotal
@@ -390,6 +392,93 @@ function generateQuote() {
   saveQuote(quote);
   renderQuoteResult(quote);
   populatePrintDoc(quote);
+
+  const quoteLink = generateQuoteLink(quote);
+
+  submitQuoteToFormspree({
+    name,
+    email,
+    company,
+    customerEmail,
+    quoteReference: quote.ref,
+    quoteSubtotal: `$${quote.subtotal.toFixed(2)}`,
+    quoteItems: cartSummaryText(),
+    quoteNotes: notes || "-",
+    quoteLink
+  }).catch((err) => {
+    console.warn("Quote submission failed:", err);
+    toast("Quote generated, but email submit failed");
+  });
+}
+
+function generateQuoteLink(quote) {
+  const html = `
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quote ${escapeHtml(quote.ref)}</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:24px;color:#111827}
+    h1{margin:0 0 8px}
+    .muted{color:#6b7280}
+    table{width:100%;border-collapse:collapse;margin-top:16px}
+    th,td{border:1px solid #d1d5db;padding:8px;text-align:left}
+    th{background:#f3f4f6}
+  </style>
+</head>
+<body>
+  <h1>SHAPED Quote</h1>
+  <p class="muted">Reference: ${escapeHtml(quote.ref)}<br/>Date: ${escapeHtml(new Date(quote.createdAtISO).toLocaleString())}</p>
+  <p><b>Name:</b> ${escapeHtml(quote.name)}<br/>
+     <b>Email:</b> ${escapeHtml(quote.email)}<br/>
+     <b>Company:</b> ${escapeHtml(quote.company || "-")}</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th><th>Size</th><th>Qty</th><th>Unit</th><th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${quote.items.map(i => `
+        <tr>
+          <td>${escapeHtml(i.name)}</td>
+          <td>${escapeHtml(i.size || "-")}</td>
+          <td>${i.qty}</td>
+          <td>$${i.price.toFixed(2)}</td>
+          <td>$${i.lineTotal.toFixed(2)}</td>
+        </tr>
+      `).join("")}
+    </tbody>
+  </table>
+  <p><b>Subtotal:</b> $${quote.subtotal.toFixed(2)}</p>
+  ${quote.notes ? `<p><b>Notes:</b> ${escapeHtml(quote.notes)}</p>` : ""}
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: "text/html" });
+  return URL.createObjectURL(blob);
+}
+
+async function submitQuoteToFormspree(payload) {
+  const res = await fetch("https://formspree.io/f/meaqjyzg", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      ...payload,
+      _subject: `New SHAPED Quote Request - ${payload.quoteReference}`
+    })
+  });
+
+  if (!res.ok) {
+    throw new Error(`Formspree returned ${res.status}`);
+  }
+
+  toast("Quote sent via Formspree");
 }
 
 function saveQuote(quote) {
@@ -429,6 +518,8 @@ function renderQuoteResult(quote, isReopened = false) {
   const result = $("#quote-result");
   if (!result) return;
 
+  const quoteLink = generateQuoteLink(quote);
+
   const itemsHtml = quote.items.length
     ? quote.items
         .map(
@@ -447,6 +538,7 @@ function renderQuoteResult(quote, isReopened = false) {
     <p><b>Items:</b><br/>${itemsHtml}</p>
     <p><b>Subtotal:</b> $${quote.subtotal.toFixed(2)}</p>
     ${quote.notes ? `<p><b>Notes:</b> ${escapeHtml(quote.notes)}</p>` : ""}
+    <p><a class="button secondary" href="${quoteLink}" target="_blank" rel="noopener">Open Quote Link</a></p>
     <div class="quote-result-actions">
       <button class="button primary quote-print-btn" type="button">Download / Print Quote (PDF)</button>
       <button class="button secondary quote-new-btn" type="button">Start New Quote</button>
