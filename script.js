@@ -347,7 +347,8 @@ function cartSummaryText() {
    ========================================================= */
 function openQuoteModal() {
   $("#quote-modal")?.setAttribute("aria-hidden", "false");
-  renderLastQuoteIfAny();
+  resetQuoteForm(true);
+  $("#quote-result")?.removeAttribute("data-rendered");
 }
 
 function generateQuoteReference() {
@@ -393,21 +394,9 @@ function generateQuote() {
   renderQuoteResult(quote);
   populatePrintDoc(quote);
 
-  const quoteLink = generateQuoteLink(quote);
-
-  submitQuoteToFormspree({
-    name,
-    email,
-    company,
-    customerEmail,
-    quoteReference: quote.ref,
-    quoteSubtotal: `$${quote.subtotal.toFixed(2)}`,
-    quoteItems: cartSummaryText(),
-    quoteNotes: notes || "-",
-    quoteLink
-  }).catch((err) => {
-    console.warn("Quote submission failed:", err);
-    toast("Quote generated, but email submit failed");
+  sendQuoteEmail(quote).catch((err) => {
+    console.warn("Quote email failed:", err);
+    toast("Quote generated, but email failed");
   });
 }
 
@@ -461,24 +450,23 @@ function generateQuoteLink(quote) {
   return URL.createObjectURL(blob);
 }
 
-async function submitQuoteToFormspree(payload) {
-  const res = await fetch("https://formspree.io/f/meaqjyzg", {
+async function sendQuoteEmail(quote) {
+  const res = await fetch("/api/send-quote", {
     method: "POST",
     headers: {
-      "Accept": "application/json",
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      ...payload,
-      _subject: `New SHAPED Quote Request - ${payload.quoteReference}`
+      quote,
+      quoteLink: generateQuoteLink(quote)
     })
   });
 
   if (!res.ok) {
-    throw new Error(`Formspree returned ${res.status}`);
+    throw new Error(`Quote API returned ${res.status}`);
   }
 
-  toast("Quote sent via Formspree");
+  toast("Quote emailed to customer");
 }
 
 function saveQuote(quote) {
@@ -548,13 +536,18 @@ function renderQuoteResult(quote, isReopened = false) {
   populatePrintDoc(quote);
 }
 
-function resetQuoteForm() {
+function resetQuoteForm(forceFresh = false) {
   const result = $("#quote-result");
   if (result) {
     result.innerHTML = "";
-    delete result.dataset.rendered;
+    result.removeAttribute("data-rendered");
   }
   $("#quote-checkout-form")?.reset();
+  const customerEmail = $("#q-customer-email");
+  if (customerEmail) customerEmail.value = "";
+  if (forceFresh) {
+    // intentionally do not restore the last quote when opening the modal
+  }
 }
 
 function populatePrintDoc(quote) {
