@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
    06) GLOBAL EVENTS (NAV, FILTERS, CART BUTTONS, MODAL)
    ========================================================= */
 function bindGlobalEvents() {
-  // mobile menu
   const menuBtn = $(".menu-toggle");
   const nav = $(".nav");
   menuBtn?.addEventListener("click", () => {
@@ -70,7 +69,6 @@ function bindGlobalEvents() {
     menuBtn.setAttribute("aria-expanded", nav?.classList.contains("open") ? "true" : "false");
   });
 
-  // filters
   $$(".filters button").forEach((btn) => {
     btn.addEventListener("click", () => {
       $$(".filters button").forEach((b) => b.classList.remove("active"));
@@ -80,12 +78,10 @@ function bindGlobalEvents() {
     });
   });
 
-  // cart open/close
   $(".cart-button")?.addEventListener("click", openCart);
   $(".cart-close")?.addEventListener("click", closeCart);
   $(".overlay")?.addEventListener("click", closeCart);
 
-  // clear bag
   $("#clear-cart")?.addEventListener("click", () => {
     if (!cart.length) return;
     cart = [];
@@ -93,7 +89,6 @@ function bindGlobalEvents() {
     toast("Bag cleared");
   });
 
-  // keep-bag persistence toggle
   const keepToggle = $("#cart-keep-toggle");
   if (keepToggle) {
     keepToggle.checked = localStorage.getItem(CART_KEEP_KEY) === "1";
@@ -112,7 +107,6 @@ function bindGlobalEvents() {
     });
   }
 
-  // quote modal
   $("#checkout")?.addEventListener("click", () => {
     openQuoteModal();
   });
@@ -123,13 +117,11 @@ function bindGlobalEvents() {
     $("#quote-modal")?.setAttribute("aria-hidden", "true");
   });
 
-  // quote modal summary
   $("#quote-checkout-form")?.addEventListener("submit", (e) => {
     e.preventDefault();
     generateQuote();
   });
 
-  // quote result actions
   $("#quote-result")?.addEventListener("click", (e) => {
     const t = e.target;
     if (!(t instanceof HTMLElement)) return;
@@ -137,7 +129,6 @@ function bindGlobalEvents() {
     if (t.matches(".quote-new-btn")) resetQuoteForm();
   });
 
-  // delegated clicks
   $("#product-grid")?.addEventListener("click", onGridClick);
   $("#cart-items")?.addEventListener("click", onCartClick);
 }
