@@ -42,6 +42,7 @@
     <nav class="nav" aria-label="Main navigation">
       <a href="#home">Home</a>
       <a href="#shop">Shop</a>
+      <a href="#payment">Payment</a>
       <a href="designer.html">Design Studio</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -68,34 +69,34 @@
         </div>
       </div>
 
-     <div class="hero-slideshow reveal" aria-label="SHAPED hero slideshow">
-  <div class="hero-slide is-active">
-    <img src="assets/Designer (19).png" alt="SHAPED design preview 1" />
-  </div>
-  <div class="hero-slide">
-    <img src="assets/Designer (20).png" alt="SHAPED design preview 2" />
-  </div>
-  <div class="hero-slide">
-    <img src="assets/slideshow pic3.png" alt="SHAPED design preview 3" />
-  </div>
-  <div class="hero-slide">
-    <img src="assets/Designer (19).png" alt="SHAPED design preview 4" />
-  </div>
-  <div class="hero-slide">
-    <img src="assets/Designer (20).png" alt="SHAPED design preview 5" />
-  </div>
+      <div class="hero-slideshow reveal" aria-label="SHAPED hero slideshow">
+        <div class="hero-slide is-active">
+          <img src="assets/Designer (19).png" alt="SHAPED design preview 1" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/Designer (20).png" alt="SHAPED design preview 2" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/slideshow pic3.png" alt="SHAPED design preview 3" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/Designer (19).png" alt="SHAPED design preview 4" />
+        </div>
+        <div class="hero-slide">
+          <img src="assets/Designer (20).png" alt="SHAPED design preview 5" />
+        </div>
 
-  <button class="hero-nav hero-prev" aria-label="Previous slide" type="button">‹</button>
-  <button class="hero-nav hero-next" aria-label="Next slide" type="button">›</button>
+        <button class="hero-nav hero-prev" aria-label="Previous slide" type="button">‹</button>
+        <button class="hero-nav hero-next" aria-label="Next slide" type="button">›</button>
 
-  <div class="hero-dots" role="tablist" aria-label="Slideshow indicators">
-    <button class="hero-dot is-active" aria-label="Go to slide 1" aria-selected="true" type="button"></button>
-    <button class="hero-dot" aria-label="Go to slide 2" aria-selected="false" type="button"></button>
-    <button class="hero-dot" aria-label="Go to slide 3" aria-selected="false" type="button"></button>
-    <button class="hero-dot" aria-label="Go to slide 4" aria-selected="false" type="button"></button>
-    <button class="hero-dot" aria-label="Go to slide 5" aria-selected="false" type="button"></button>
-  </div>
-</div>
+        <div class="hero-dots" role="tablist" aria-label="Slideshow indicators">
+          <button class="hero-dot is-active" aria-label="Go to slide 1" aria-selected="true" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 2" aria-selected="false" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 3" aria-selected="false" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 4" aria-selected="false" type="button"></button>
+          <button class="hero-dot" aria-label="Go to slide 5" aria-selected="false" type="button"></button>
+        </div>
+      </div>
     </section>
 
     <!-- =========================================================
@@ -143,7 +144,38 @@
     </section>
 
     <!-- =========================================================
-         08) QUOTE SECTION (CONTACT LINKS + FORMSPREE FORM)
+         08) PAYMENT SECTION
+         ========================================================= -->
+    <section id="payment" class="section reveal full-bleed-pad">
+      <div class="payment-panel float-card">
+        <p class="eyebrow">PAYMENT</p>
+        <h2>Secure checkout options</h2>
+        <p>Choose a payment method after your bag is ready. This page is a placeholder for future online payments.</p>
+
+        <div class="payment-grid">
+          <article>
+            <h3>Card Payment</h3>
+            <p>Accept Visa, Mastercard, and AmEx through a checkout provider.</p>
+          </article>
+          <article>
+            <h3>Apple Pay / Google Pay</h3>
+            <p>Fast mobile-friendly checkout for repeat customers.</p>
+          </article>
+          <article>
+            <h3>Invoice / Bank Transfer</h3>
+            <p>Good for wholesale, bulk orders, and corporate clients.</p>
+          </article>
+        </div>
+
+        <div class="payment-actions">
+          <button class="button primary" id="payment-generate-quote" type="button">Generate Professional Quote</button>
+          <a class="button secondary" href="#quote-form">Continue with quote form</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         09) QUOTE SECTION (CONTACT LINKS + FORMSPREE FORM)
          ========================================================= -->
     <section class="custom-section full-bleed-pad" id="quote-form">
       <div class="custom-copy reveal float-card">
@@ -215,7 +247,7 @@
     </section>
 
     <!-- =========================================================
-         09) CONTACT SECTION
+         10) CONTACT SECTION
          ========================================================= -->
     <section id="contact" class="section reveal full-bleed-pad">
       <p class="eyebrow">CONTACT</p>
@@ -224,7 +256,7 @@
   </main>
 
   <!-- =========================================================
-       10) CART DRAWER
+       11) CART DRAWER
        NOTE: Cart items are rendered by script.js into #cart-items
        ========================================================= -->
   <aside class="cart" aria-hidden="true">
@@ -247,18 +279,26 @@
     </div>
 
     <div class="cart-foot">
+      <button class="button secondary full" id="clear-cart" type="button">Clear bag</button>
       <button class="button primary full" id="checkout" type="button">Checkout</button>
+
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;margin-top:8px;">
+        <input id="cart-keep-toggle" type="checkbox" />
+        Keep my bag saved on this device
+      </label>
+
+      <p id="cart-keep-note" style="margin:8px 0 0;color:#667085;font-size:13px;"></p>
     </div>
   </aside>
 
   <!-- =========================================================
-       11) OVERLAY + TOAST
+       12) OVERLAY + TOAST
        ========================================================= -->
   <div class="overlay"></div>
   <div class="toast" role="status" aria-live="polite"></div>
 
   <!-- =========================================================
-       12) QUOTE MODAL (FROM CART CHECKOUT BUTTON)
+       13) QUOTE MODAL (FROM CART CHECKOUT BUTTON)
        ========================================================= -->
   <div class="quote-modal" id="quote-modal" aria-hidden="true">
     <div class="quote-panel">
@@ -280,6 +320,10 @@
           Company (optional)
           <input id="q-company" />
         </label>
+        <label>
+          Notes (optional)
+          <textarea id="q-notes" rows="3" placeholder="Quantities, sizes, deadlines, or any special requirements"></textarea>
+        </label>
 
         <button class="button primary full" type="submit">Generate Quote</button>
       </form>
@@ -287,4 +331,68 @@
       <div id="quote-result" class="quote-result"></div>
     </div>
   </div>
+
+  <!-- =========================================================
+       14) PRINT-FRIENDLY QUOTE DOCUMENT
+       Hidden on screen, shown only via @media print when the
+       "quote-print-active" class is applied to <body>.
+       Populated dynamically by script.js.
+       ========================================================= -->
+  <div id="quote-print-doc" class="quote-print-doc">
+    <header class="quote-print-head">
+      <div class="quote-print-brand">
+        <span class="quote-print-logo">SHAPED</span>
+        <span>Built by Intent</span>
+      </div>
+      <div class="quote-print-meta">
+        <h1>QUOTATION</h1>
+        <p><b>Reference:</b> <span id="qp-ref"></span></p>
+        <p><b>Date:</b> <span id="qp-date"></span></p>
+      </div>
+    </header>
+
+    <section class="quote-print-parties">
+      <div>
+        <p class="quote-print-label">Prepared by</p>
+        <p><b>SHAPED Apparel</b></p>
+        <p>abbasniaz99@gmail.com</p>
+        <p>+1 626 944 3531</p>
+      </div>
+      <div>
+        <p class="quote-print-label">Prepared for</p>
+        <p><b id="qp-name"></b></p>
+        <p id="qp-email"></p>
+        <p id="qp-company"></p>
+      </div>
+    </section>
+
+    <table class="quote-print-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Size</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Line Total</th>
+        </tr>
+      </thead>
+      <tbody id="qp-items"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">Subtotal</td>
+          <td id="qp-subtotal"></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <section class="quote-print-notes">
+      <p class="quote-print-label">Notes</p>
+      <p id="qp-notes"></p>
+    </section>
+
+    <footer class="quote-print-foot">
+      <p>This quotation is valid for 14 days from the date above. Prices exclude shipping and rush production fees unless stated otherwise.</p>
+    </footer>
+  </div>
 </body>
+</html>
