@@ -119,6 +119,7 @@ function renderProducts() {
 
         <div class="product-foot">
           <span>$${p.price}</span>
+
           <div style="display:flex;gap:8px;align-items:center">
             ${
               SIZED_CATEGORIES.has(p.category)
@@ -279,7 +280,7 @@ function cartSummaryText() {
 
 function openQuoteModal() {
   $("#quote-modal")?.setAttribute("aria-hidden", "false");
-  resetQuoteForm(true);
+  resetQuoteForm();
 }
 
 function generateQuoteReference() {
@@ -421,7 +422,6 @@ function saveQuote(quote) {
     (Array.isArray(all) ? all : []).push(quote);
     localStorage.setItem(QUOTES_KEY, JSON.stringify(Array.isArray(all) ? all : [quote]));
   } catch {}
-
   try {
     localStorage.setItem(LAST_QUOTE_KEY, JSON.stringify(quote));
   } catch {}
