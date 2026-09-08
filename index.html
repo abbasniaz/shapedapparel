@@ -276,7 +276,16 @@
     </div>
 
     <div class="cart-foot">
-      <button class="button primary full" id="checkout" type="button">Checkout</button>
+      <label class="cart-keep">
+        <input type="checkbox" id="cart-keep-toggle" />
+        <span>Keep my bag saved on this device</span>
+      </label>
+      <p class="cart-keep-note" id="cart-keep-note">Your bag clears automatically when you leave — turn this on to keep items for next time.</p>
+
+      <div class="cart-foot-actions">
+        <button class="button secondary full" id="clear-cart" type="button">Clear bag</button>
+        <button class="button primary full" id="checkout" type="button">Checkout</button>
+      </div>
     </div>
   </aside>
 
