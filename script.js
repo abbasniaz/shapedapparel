@@ -47,8 +47,11 @@ const AVAILABLE_SIZES = ["S", "M", "L", "XL"];         // dropdown options
 let activeFilter = "all";
 let cart = [];
 const CART_KEY = "shapedCartV1";
+copilot/implement-payment-flow-homepage
 const QUOTES_KEY = "shapedQuotesV1";
 const LAST_QUOTE_KEY = "shapedLastQuoteV1";
+const CART_KEEP_KEY = "shapedCartKeepV1"; // "1" = user opted to persist bag across visits
+feature/payment-quote-download
 
 
 /* =========================================================
@@ -90,6 +93,33 @@ function bindGlobalEvents() {
   $(".cart-close")?.addEventListener("click", closeCart);
   $(".overlay")?.addEventListener("click", closeCart);
 
+  // clear bag
+  $("#clear-cart")?.addEventListener("click", () => {
+    if (!cart.length) return;
+    cart = [];
+    saveCart();
+    toast("Bag cleared");
+  });
+
+  // keep-bag persistence toggle
+  const keepToggle = $("#cart-keep-toggle");
+  if (keepToggle) {
+    keepToggle.checked = localStorage.getItem(CART_KEEP_KEY) === "1";
+    updateCartKeepNote(keepToggle.checked);
+    keepToggle.addEventListener("change", () => {
+      if (keepToggle.checked) {
+        localStorage.setItem(CART_KEEP_KEY, "1");
+        saveCart(); // persist current bag right away
+        toast("Bag will be kept on this device");
+      } else {
+        localStorage.removeItem(CART_KEEP_KEY);
+        localStorage.removeItem(CART_KEY);
+        toast("Bag will clear when you leave");
+      }
+      updateCartKeepNote(keepToggle.checked);
+    });
+  }
+
   // quote modal
   $("#checkout")?.addEventListener("click", () => openQuoteModal());
   $("#payment-generate-quote")?.addEventListener("click", () => openQuoteModal());
@@ -111,8 +141,11 @@ function bindGlobalEvents() {
     if (t.matches(".quote-new-btn")) resetQuoteForm();
   });
 
-  // delegated clicks for product cards + cart row buttons
+  // delegated clicks for product cards
   $("#product-grid")?.addEventListener("click", onGridClick);
+
+  // delegated clicks for cart row buttons (qty +/-, remove)
+  $("#cart-items")?.addEventListener("click", onCartClick);
 }
 
 
@@ -168,6 +201,16 @@ function onGridClick(e) {
   if (!(t instanceof HTMLElement)) return;
 
   if (t.matches(".add")) handleAddToCart(t);
+}
+
+
+/* =========================================================
+   08b) CART DRAWER CLICK ROUTER (QTY +/-, REMOVE)
+   ========================================================= */
+function onCartClick(e) {
+  const t = e.target;
+  if (!(t instanceof HTMLElement)) return;
+
   if (t.matches(".qty-plus")) handleQtyPlus(t);
   if (t.matches(".qty-minus")) handleQtyMinus(t);
   if (t.matches(".remove-item")) handleRemoveItem(t);
@@ -234,8 +277,21 @@ function handleRemoveItem(btn) {
 
 /* =========================================================
    11) CART STORAGE (LOCALSTORAGE)
+   By default the bag does NOT persist across visits — it only
+   auto-loads from localStorage if the user has explicitly opted
+   in via the "Keep my bag saved on this device" toggle.
    ========================================================= */
 function loadCart() {
+  const keep = localStorage.getItem(CART_KEEP_KEY) === "1";
+
+  if (!keep) {
+    // clean slate: ignore/clear any stale cart data from previous sessions
+    localStorage.removeItem(CART_KEY);
+    cart = [];
+    renderCart();
+    return;
+  }
+
   try {
     const raw = localStorage.getItem(CART_KEY);
     cart = raw ? JSON.parse(raw) : [];
@@ -246,8 +302,18 @@ function loadCart() {
   renderCart();
 }
 function saveCart() {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  const keep = localStorage.getItem(CART_KEEP_KEY) === "1";
+  if (keep) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  }
   renderCart();
+}
+function updateCartKeepNote(isKept) {
+  const note = $("#cart-keep-note");
+  if (!note) return;
+  note.textContent = isKept
+    ? "Your bag is saved on this device and will still be here next time you visit."
+    : "Your bag clears automatically when you leave — turn this on to keep items for next time.";
 }
 
 
