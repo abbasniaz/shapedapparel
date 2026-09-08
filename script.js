@@ -1,25 +1,6 @@
-/* =========================================================
-   SHAPED WEBSITE SCRIPT (CONSOLIDATED + SECTION HEADERS)
-   HOW TO EDIT QUICKLY:
-   - PRODUCTS LIST: Section 02
-   - SIZE OPTIONS (S/M/L/XL): Section 03
-   - FILTER BEHAVIOR: Section 06
-   - ADD TO CART LOGIC: Section 09
-   - CART RENDER / SIZE IN CART: Section 12
-   - HERO SLIDER: Section 15
-   - TOAST: Section 17
-   ========================================================= */
-
-/* =========================================================
-   01) HELPERS / SHORTCUTS
-   ========================================================= */
 const $ = (s, p = document) => p.querySelector(s);
 const $$ = (s, p = document) => [...p.querySelectorAll(s)];
 
-/* =========================================================
-   02) PRODUCT CATALOG (EDIT PRODUCTS HERE)
-   category must be one of: tees, hoodies, workwear
-   ========================================================= */
 const products = [
   { id: 1, name: "Intent Essential Tee", category: "tees", price: 28, desc: "Premium everyday cotton tee", color: "#111111" },
   { id: 2, name: "Statement Tee", category: "tees", price: 32, desc: "Clean oversized streetwear fit", color: "#ece6da" },
@@ -31,15 +12,9 @@ const products = [
   { id: 8, name: "Corporate Polo", category: "workwear", price: 42, desc: "Smart fit branded polo", color: "#e5e7eb" }
 ];
 
-/* =========================================================
-   03) SIZE CONFIGURATION (EDIT AVAILABLE SIZES HERE)
-   ========================================================= */
 const SIZED_CATEGORIES = new Set(["tees", "hoodies"]);
 const AVAILABLE_SIZES = ["S", "M", "L", "XL"];
 
-/* =========================================================
-   04) APP STATE / STORAGE
-   ========================================================= */
 let activeFilter = "all";
 let cart = [];
 const CART_KEY = "shapedCartV1";
@@ -47,9 +22,6 @@ const CART_KEEP_KEY = "shapedCartKeepV1";
 const QUOTES_KEY = "shapedQuotesV1";
 const LAST_QUOTE_KEY = "shapedLastQuoteV1";
 
-/* =========================================================
-   05) APP INIT
-   ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   loadCart();
   renderProducts();
@@ -58,9 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroSlideshow();
 });
 
-/* =========================================================
-   06) GLOBAL EVENTS (NAV, FILTERS, CART BUTTONS, MODAL)
-   ========================================================= */
 function bindGlobalEvents() {
   const menuBtn = $(".menu-toggle");
   const nav = $(".nav");
@@ -107,12 +76,8 @@ function bindGlobalEvents() {
     });
   }
 
-  $("#checkout")?.addEventListener("click", () => {
-    openQuoteModal();
-  });
-  $("#payment-generate-quote")?.addEventListener("click", () => {
-    openQuoteModal();
-  });
+  $("#checkout")?.addEventListener("click", openQuoteModal);
+  $("#payment-generate-quote")?.addEventListener("click", openQuoteModal);
   $("#quote-close")?.addEventListener("click", () => {
     $("#quote-modal")?.setAttribute("aria-hidden", "true");
   });
@@ -133,9 +98,6 @@ function bindGlobalEvents() {
   $("#cart-items")?.addEventListener("click", onCartClick);
 }
 
-/* =========================================================
-   07) PRODUCT GRID RENDER
-   ========================================================= */
 function renderProducts() {
   const grid = $("#product-grid");
   if (!grid) return;
@@ -157,7 +119,6 @@ function renderProducts() {
 
         <div class="product-foot">
           <span>$${p.price}</span>
-
           <div style="display:flex;gap:8px;align-items:center">
             ${
               SIZED_CATEGORIES.has(p.category)
@@ -176,31 +137,20 @@ function renderProducts() {
   revealGridItemsNow();
 }
 
-/* =========================================================
-   08) GRID CLICK ROUTER
-   ========================================================= */
 function onGridClick(e) {
   const t = e.target;
   if (!(t instanceof HTMLElement)) return;
-
   if (t.matches(".add")) handleAddToCart(t);
 }
 
-/* =========================================================
-   08b) CART DRAWER CLICK ROUTER (QTY +/-, REMOVE)
-   ========================================================= */
 function onCartClick(e) {
   const t = e.target;
   if (!(t instanceof HTMLElement)) return;
-
   if (t.matches(".qty-plus")) handleQtyPlus(t);
   if (t.matches(".qty-minus")) handleQtyMinus(t);
   if (t.matches(".remove-item")) handleRemoveItem(t);
 }
 
-/* =========================================================
-   09) ADD TO CART LOGIC (SIZE-AWARE)
-   ========================================================= */
 function handleAddToCart(buttonEl) {
   const p = products.find((x) => x.id == buttonEl.dataset.id);
   if (!p) return;
@@ -212,9 +162,7 @@ function handleAddToCart(buttonEl) {
     selectedSize = sizeEl?.value || "M";
   }
 
-  const found = cart.find(
-    (x) => x.id === p.id && (x.size || null) === (selectedSize || null)
-  );
+  const found = cart.find((x) => x.id === p.id && (x.size || null) === (selectedSize || null));
 
   if (found) {
     found.qty++;
@@ -226,9 +174,6 @@ function handleAddToCart(buttonEl) {
   toast(`Added to bag${selectedSize ? ` (${selectedSize})` : ""}`);
 }
 
-/* =========================================================
-   10) CART ITEM BUTTON HANDLERS
-   ========================================================= */
 function handleQtyPlus(btn) {
   const idx = Number(btn.dataset.i);
   if (!Number.isNaN(idx) && cart[idx]) {
@@ -252,12 +197,8 @@ function handleRemoveItem(btn) {
   }
 }
 
-/* =========================================================
-   11) CART STORAGE (LOCALSTORAGE)
-   ========================================================= */
 function loadCart() {
   const keep = localStorage.getItem(CART_KEEP_KEY) === "1";
-
   if (!keep) {
     localStorage.removeItem(CART_KEY);
     cart = [];
@@ -291,9 +232,6 @@ function updateCartKeepNote(isKept) {
     : "Your bag clears automatically when you leave — turn this on to keep items for next time.";
 }
 
-/* =========================================================
-   12) CART RENDER (SHOWS SIZE IF AVAILABLE)
-   ========================================================= */
 function renderCart() {
   const itemsWrap = $("#cart-items");
   const countEl = $("#cart-count");
@@ -332,9 +270,6 @@ function renderCart() {
   `).join("");
 }
 
-/* =========================================================
-   13) CART SUMMARY STRING (FOR QUOTE MODAL)
-   ========================================================= */
 function cartSummaryText() {
   if (!cart.length) return "No items";
   return cart
@@ -342,9 +277,6 @@ function cartSummaryText() {
     .join("\n");
 }
 
-/* =========================================================
-   13b) QUOTE GENERATION, STORAGE + PRINT/DOWNLOAD
-   ========================================================= */
 function openQuoteModal() {
   $("#quote-modal")?.setAttribute("aria-hidden", "false");
   resetQuoteForm(true);
@@ -392,7 +324,6 @@ function generateQuote() {
   saveQuote(quote);
   renderQuoteResult(quote);
   populatePrintDoc(quote);
-
   submitQuoteToFormspree(quote);
 }
 
@@ -489,15 +420,11 @@ function saveQuote(quote) {
     const all = raw ? JSON.parse(raw) : [];
     (Array.isArray(all) ? all : []).push(quote);
     localStorage.setItem(QUOTES_KEY, JSON.stringify(Array.isArray(all) ? all : [quote]));
-  } catch {
-    /* ignore */
-  }
+  } catch {}
 
   try {
     localStorage.setItem(LAST_QUOTE_KEY, JSON.stringify(quote));
-  } catch {
-    /* ignore */
-  }
+  } catch {}
 }
 
 function loadLastQuote() {
@@ -517,9 +444,7 @@ function renderQuoteResult(quote, isReopened = false) {
 
   const itemsHtml = quote.items.length
     ? quote.items
-        .map(
-          (i) => `• ${escapeHtml(i.name)}${i.size ? ` (Size ${escapeHtml(i.size)})` : ""} x${i.qty} — $${i.lineTotal.toFixed(2)}`
-        )
+        .map((i) => `• ${escapeHtml(i.name)}${i.size ? ` (Size ${escapeHtml(i.size)})` : ""} x${i.qty} — $${i.lineTotal.toFixed(2)}`)
         .join("<br/>")
     : "No items";
 
@@ -543,7 +468,7 @@ function renderQuoteResult(quote, isReopened = false) {
   populatePrintDoc(quote);
 }
 
-function resetQuoteForm(forceFresh = false) {
+function resetQuoteForm() {
   const result = $("#quote-result");
   if (result) {
     result.innerHTML = "";
@@ -552,9 +477,6 @@ function resetQuoteForm(forceFresh = false) {
   $("#quote-checkout-form")?.reset();
   const customerEmail = $("#q-customer-email");
   if (customerEmail) customerEmail.value = "";
-  if (forceFresh) {
-    // intentionally left blank
-  }
 }
 
 function populatePrintDoc(quote) {
@@ -575,31 +497,30 @@ function populatePrintDoc(quote) {
   if (rows) {
     rows.innerHTML = quote.items.length
       ? quote.items
-          .map(
-            (i) => `
+          .map((i) => `
         <tr>
           <td>${escapeHtml(i.name)}</td>
           <td>${escapeHtml(i.size || "-")}</td>
           <td>${i.qty}</td>
           <td>$${i.price.toFixed(2)}</td>
           <td>$${i.lineTotal.toFixed(2)}</td>
-        </tr>`
-          )
+        </tr>`)
           .join("")
       : `<tr><td colspan="5">No items</td></tr>`;
   }
 }
 
 function printQuote() {
-  const cleanup = () => document.body.classList.remove("quote-print-active");
+  const cleanup = () => {
+    document.body.classList.remove("quote-print-active");
+    window.removeEventListener("afterprint", cleanup);
+  };
+
   window.addEventListener("afterprint", cleanup, { once: true });
   document.body.classList.add("quote-print-active");
   window.print();
 }
 
-/* =========================================================
-   14) CART PANEL OPEN/CLOSE
-   ========================================================= */
 function openCart() {
   $(".cart")?.setAttribute("aria-hidden", "false");
   document.body.classList.add("cart-open");
@@ -609,9 +530,6 @@ function closeCart() {
   document.body.classList.remove("cart-open");
 }
 
-/* =========================================================
-   15) HERO SLIDESHOW
-   ========================================================= */
 function initHeroSlideshow() {
   const slides = $$(".hero-slide");
   const dots = $$(".hero-dot");
@@ -646,9 +564,6 @@ function initHeroSlideshow() {
   play();
 }
 
-/* =========================================================
-   16) SCROLL REVEAL ANIMATION
-   ========================================================= */
 function initReveal() {
   const items = $$(".reveal, .stagger > *");
 
@@ -669,9 +584,6 @@ function initReveal() {
   items.forEach((el) => io.observe(el));
 }
 
-/* =========================================================
-   17) TOAST NOTIFICATION
-   ========================================================= */
 function toast(msg) {
   const t = $(".toast");
   if (!t) return;
@@ -681,9 +593,6 @@ function toast(msg) {
   toast._timer = setTimeout(() => t.classList.remove("show"), 1600);
 }
 
-/* =========================================================
-   18) ESCAPE HTML (XSS SAFETY)
-   ========================================================= */
 function escapeHtml(v = "") {
   return String(v)
     .replaceAll("&", "&amp;")
@@ -693,10 +602,6 @@ function escapeHtml(v = "") {
     .replaceAll("'", "&#39;");
 }
 
-/* =========================================================
-   19) OPTIONAL: DESIGNER -> QUOTE PREFILL (SAFE)
-   (kept for compatibility with your existing designer flow)
-   ========================================================= */
 (function () {
   try {
     const quoteSection = document.querySelector("#quote-form");
@@ -713,8 +618,8 @@ function escapeHtml(v = "") {
 
     let summary = null;
     let draft = null;
-    try { summary = summaryRaw ? JSON.parse(summaryRaw) : null; } catch (e) {}
-    try { draft = draftRaw ? JSON.parse(draftRaw) : null; } catch (e) {}
+    try { summary = summaryRaw ? JSON.parse(summaryRaw) : null; } catch {}
+    try { draft = draftRaw ? JSON.parse(draftRaw) : null; } catch {}
 
     let draftId = localStorage.getItem("shapedDesignerDraftId");
     if (!draftId) {
@@ -775,10 +680,6 @@ function escapeHtml(v = "") {
   }
 })();
 
-/* =========================================================
-   20) GRID REVEAL FIX AFTER FILTER RE-RENDER
-   keeps newly injected .stagger children visible
-   ========================================================= */
 function revealGridItemsNow() {
   const grid = $("#product-grid");
   if (!grid) return;
